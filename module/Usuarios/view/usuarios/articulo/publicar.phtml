@@ -1,0 +1,454 @@
+<div class="page-header">
+    <h1>
+        Publicaciones
+        <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            Publicar Articulos
+        </small>
+    </h1>
+</div>
+<div class="row-fluid">
+    <div>
+        <label>Filtros</label>
+        <div class="row-fluid">
+            <select name="opt-categorias" required>
+                <option value="">Categoria</option>
+				<option value="todas">Todas</option>
+                <?php foreach($this->categorias as $categoria):?>
+                    <?php
+                    $class_mapeada = "";
+                    if($categoria->mlCategorias[0]->id){
+                        $class_mapeada = "cat_mapeada";
+                    }
+                    ?>
+                <option class="<?php echo $class_mapeada ?>" value="<?php echo $categoria->getCategorias() ?>"><?php echo $categoria->getCategorias() ?></option>
+                <?php endforeach;?>
+            </select>
+            <select name="opt-estado" required>
+                <option value="">Estado</option>
+                <?php foreach($this->estados as $estado):?>
+                    <?php if(isset($estado["estado"])): ?>
+                        <option value="<?php echo $estado["id"] ?>"><?php echo $estado["estado"] ?></option>
+                    <?php endif; ?>
+                <?php endforeach;?>
+            </select>
+			<select name="opt-accion" required>
+                <option value="">Accion</option>
+            </select>
+			<button name="play-pause-publish-publicacion" status="play" type="button" class="btn btn-success btn-small btn-next" value="">
+				<i class="icon-play"></i>
+				<span>Iniciar</span>
+			</button>
+        </div>
+
+    </div>
+	<div id="msgBarraProgreso" style="display:none">
+		<label><span id="item-publicados">0</span> items procesados de <span id="total-item-publicados">0</span></label>
+	</div>
+    <div class="progress">
+        <div
+            class="progress-bar"
+            role="progressbar"
+            aria-valuenow="2"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            style="min-width: 2em;
+            width: 0%;">
+            0%
+        </div>
+    </div>
+
+    <div class="col-sm-6 widget-container-col ui-sortable">
+        <div class="widget-box transparent ui-sortable-handle">
+            <div class="widget-header">
+                <h4 class="widget-title lighter">Detalles</h4>
+
+                <div class="widget-toolbar no-border">
+                    <ul class="nav nav-tabs" id="myTab2">
+                        <li class="active">
+                            <a data-toggle="tab" href="#home2" aria-expanded="true">Estados</a>
+                        </li>
+
+                        <li class="">
+                            <a class="tabl-procesados"data-toggle="tab" href="#profile2" aria-expanded="false">Procesados<span class="num"></span></a>
+                        </li>
+
+                        <li class="">
+                            <a class="tabl-error" data-toggle="tab" href="#info2" aria-expanded="false">Error<span class="num"></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main padding-12 no-padding-left no-padding-right">
+                    <div class="tab-content padding-4">
+                        <div id="home2" class="tab-pane active">
+                            <!-- #section:custom/scrollbar.horizontal -->
+                            <div id="tabla-estados" class="row-fluid">
+                                <div class="col-xs-12">
+                                    <!-- PAGE CONTENT BEGINS -->
+                                    <div class="row-fluid">
+                                        <div class="col-xs-12">
+                                            <table id="simple-table" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>Categoria</th>
+                                                    <th>Sin publicar</th>
+                                                    <th>Publicados</th>
+                                                    <th>Pausados</th>
+                                                    <th>Finalizados</th>
+                                                </tr>
+                                                </thead>
+
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div><!-- /.span -->
+                                    </div><!-- /.row -->
+
+                                    <div class="hr hr-18 dotted hr-double"></div>
+
+                                    <h4 class="pink">
+                                        <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+                                    </h4>
+
+                                </div><!-- /.col -->
+                            </div>
+
+                            <!-- /section:custom/scrollbar.horizontal -->
+                        </div>
+
+                        <div id="profile2" class="tab-pane">
+
+                        </div>
+
+                        <div id="info2" class="tab-pane">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    jQuery(document).ready(function(){
+
+        var id_evento,
+            filters = {},
+			play = false,
+            errores = 0,
+            numProcesados = 0,
+            globalEstados,
+			procesados = false;
+
+        function resetProgressBar(){
+            filters.estado = "";//jQuery("select[name=opt-estado]").val();
+            filters.categorias = jQuery("select[name=opt-categorias]").val();
+            jQuery.ajax({
+                url:"<?php echo $this->url("usuarios", array("controller" => "articulo", "action" => "getTotalArticulosFilter")) ?>",
+                type:"post",
+                async:false,
+                data:{filters:filters},
+                success:function(data){
+                    console.log("total:");
+                    console.log(data);
+                    globalEstados = data;
+                }
+            });
+        }
+
+        /* START FILTRAR */
+        jQuery("select[name=opt-categorias]").change(function(){
+            //jQuery("#total-item-publicados").text("0");
+
+            jQuery("#msgBarraProgreso, #tabla-estados").show();
+            filters.estado = "";//jQuery("select[name=opt-estado]").val();
+            filters.categorias = jQuery("select[name=opt-categorias]").val();
+            jQuery.ajax({
+                url:"<?php echo $this->url("usuarios", array("controller" => "articulo", "action" => "getTotalArticulosFilter")) ?>",
+                type:"post",
+                data:{filters:filters},
+                success:function(data){
+                    jQuery("select[name=opt-estado").trigger("change");
+                    //{"ret":[{"estado":"active","total":"6"},{"estado":"not_published","total":"4"}]}
+                    //{"ret":[{"estado":"todos","total":"6"}]}
+                    data = data.ret;
+                    data = data[0];
+                    var tabla = jQuery("#tabla-estados"),
+                        body = tabla.find("tbody"),
+                        html = "";
+
+                    for(var i in data){
+                        var tr = "<tr>",
+                            tmpActive = "",
+                            tmpClosed = "",
+                            tmpPaused = "";
+
+
+                        //{"not_published":"9","active":0,"paused":0,"closed":0}
+                        tr += '<td>'+i+'</td>';
+                        tr += '<td class="total-not_published"> <a href="#">'+data[i].estados.not_published+'</a> </td>';
+
+
+                            if(data[i].estados.active){
+                                tmpActive = "label label-sm label-success";
+                            }
+                        tr += '<td class="total-actived"> <span class="'+tmpActive+'">'+data[i].estados.active+'</span></td>';
+
+                            if(data[i].estados.paused){
+                                tmpPaused = "label label-sm label-warning";
+                            }
+                        tr += '<td class="total-paused"> <span class="'+tmpPaused+'">'+data[i].estados.paused+'</span></td>';
+
+                            if(data[i].estados.closed){
+                                tmpClosed = "label label-sm label-info";
+                            }
+                        tr += '<td class="total-closed"> <span class="'+tmpClosed+'">'+data[i].estados.closed+'</span></td>';
+                        tr += "</tr>";
+                        html += tr;
+                    }
+                    body.html(html);
+                }
+            })
+        });
+        /* END FILTRAR */
+
+		/* Click en boton de iniciar */
+        jQuery("button[name=play-pause-publish-publicacion]").click(function(){
+			//Si esta en play lo pongo en stop y vice versa
+
+            jQuery("#msgBarraProgreso").show();
+            jQuery(".progress div").attr("aria-valuemax",0);
+            jQuery(".progress div").text(parseInt(0)+"%");
+            jQuery(".progress div").css("width",parseInt(0)+"%")
+
+            if(jQuery(this).attr("status")=="play"){
+                errores = 0;
+                jQuery("select[name=opt-estado").trigger("change");
+                numProcesados = 0;
+                jQuery("#item-publicados").text(0);
+				procesados = 0;
+				play = true;
+				//Valido se haya seleccionado los select
+				estado = jQuery("select[name=opt-estado]").val();
+				categorias = jQuery("select[name=opt-categorias]").val();
+				if(!estado){
+					alert("Seleccione un estado");
+					return false;
+				}
+
+				if(!categorias){
+					alert("Seleccione la(s) categorias");
+					return false;
+				}
+
+				jQuery(this).attr("status","stop");
+                jQuery(this).find("i").attr("class","icon-stop");
+				jQuery(this).find("span").text("Detener");
+                id_evento = getMaxIdEventoAction("logs");
+
+                publicar(id_evento);
+                jQuery(".tabl-error .num").html('')
+                jQuery("#info2").html("");
+
+                jQuery(".tabl-procesados .num").html('')
+                jQuery("#profile2").html("");
+            }else{
+				play = false;
+				jQuery(this).attr("status","play");
+                jQuery(this).find("i").attr("class","icon-play");
+				jQuery(this).find("span").text("Iniciar");
+            }
+        });
+
+		jQuery("select[name=opt-estado").change(function(){
+            resetProgressBar();
+            var cate = jQuery("select[name=opt-categorias]").val(),
+                estados = false;
+
+            if(!cate)return false;
+            if(typeof globalEstados.ret === "undefined" || typeof globalEstados.ret === undefined)return false;
+            if(!globalEstados.ret.length) return false;
+
+            var cats = globalEstados.ret[0];
+
+            for(var i in cats){
+                if(i == cate){
+                    estados = cats[i].estados;
+                }
+            }
+			var estado = jQuery("select[name=opt-estado").val();
+			if(estado){
+				var html = '<option value="">Accion</option>';
+                switch(estado){
+                    case 'not_published':
+                        html += '<option value="PUBLICAR">PUBLICAR</option>';
+                        jQuery("#total-item-publicados").text(estados.not_published);
+                        break;
+                    case 'active':
+                        html += '<option value="FINALIZAR">FINALIZAR</option>';
+                        html += '<option value="PAUSAR">PAUSAR</option>';
+                        jQuery("#total-item-publicados").text(estados.active);
+                        break;
+                    case 'closed':
+                        html += '<option value="REPUBLICAR">REPUBLICAR</option>';
+                        jQuery("#total-item-publicados").text(estados.closed);
+                        break;
+                    case 'paused':
+                        html += '<option value="DESPAUSAR">DESPAUSAR</option>';
+                        jQuery("#total-item-publicados").text(estados.paused);
+                        break;
+                }
+				jQuery("select[name=opt-accion]").html(html);
+			}
+		});
+
+        function getMaxIdEventoAction(table){
+            var ret = null;
+            jQuery.ajax({
+                async:false,
+                url:"<?php echo $this->url("usuarios", array("controller" => "articulo", "action" => "getMaxIdEvento")) ?>",
+                data:{table:table},
+                type:"post",
+                success:function(data){
+                    ret = data.id_evento;
+                }
+            });
+
+            return ret;
+        }
+
+		function publicar(id_evento){
+			filters.estado = jQuery("select[name=opt-estado]").val();
+            filters.categorias = jQuery("select[name=opt-categorias]").val();
+			filters.accion = jQuery("select[name=opt-accion]").val();
+			
+			jQuery.ajax({
+				url:"<?php echo $this->url("usuarios", array("controller" => "articulo", "action" => "publicarArticulo")) ?>",
+				data:{filters:filters,id_evento:id_evento},
+				type:"post",
+				success:function(data){
+                    var total = jQuery("#total-item-publicados").text();
+					if(typeof data.httpCode !== "undefined"){
+						if(data.httpCode == "101"){
+							//procesados = total;
+                            procesados = jQuery("#total-item-publicados").text();
+						}
+					}
+
+					var errorData = false;
+
+                    if (typeof data === 'string' || data instanceof String){
+                        data = JSON.parse(data);
+                        if (typeof data !== 'undefined'){
+                            if(data.error){
+                                errorData = {
+                                    error:true,
+                                    message:data.message,
+                                    id:data.id
+                                };
+
+                            }
+                        }
+                    }
+
+					if(data.error == true || data.error.length || errorData){
+					    console.log("Error:");
+                        console.log(data);
+					    if(errores < total){
+                            errores++;
+                            if(data.body){
+                                if(data.body.cause.length){
+                                    mensaje = data.body.cause[0].message;
+                                }else{
+                                    mensaje = data.body.message
+                                }
+                                jQuery("#info2").append(' <div class="alert alert-danger"> Sku: '+data.id+' | HttpCode:'+data.httpCode+' | Error:'+mensaje+'</div> ');
+                            }else{
+                                jQuery("#info2").append(' <div class="alert alert-danger"> Sku: '+data.id+' | HttpCode:'+data.httpCode+' | Error: Error de conexion</div> ');
+                            }
+
+                            jQuery(".tabl-error .num").html('<span class="badge badge-danger">'+errores+'</span>')
+
+                        }
+					}
+					
+					if(play){
+
+						total = total * 1;
+						if(total>procesados){
+
+                                procesados++;
+                                var porcentaje = ((procesados/total) * 100).toFixed(3);
+                                jQuery(".progress div").attr("aria-valuemax",porcentaje);
+                                jQuery(".progress div").text(parseInt(porcentaje)+"%");
+                                jQuery(".progress div").css("width",parseInt(porcentaje)+"%")
+                                jQuery("#total-item-publicados").text(total);
+                                jQuery("#item-publicados").text(procesados);
+
+                                respId = data.id
+                                if(!errorData) {
+                                    if (!respId) {
+                                        respId = data.body.id;
+                                    }
+                                }else{
+                                    respId = errorData.id;
+                                    data = {
+                                        httpCode:"400"
+                                    }
+
+                                }
+
+                            if(data.httpCode == "201" || data.httpCode == "200" || data.error == false){
+                                jQuery("#profile2").append(' <div class="alert alert-info"> Sku: '+respId+' | HttpCode:'+data.httpCode+' | Titulo: '+data.body.title+'</div> ');
+                                numProcesados++;
+
+                                //procesados_succes = procesados - errores;
+                                //if(procesados_succes > 0){
+                                    jQuery(".tabl-procesados .num").html('<span class="badge badge-info">'+numProcesados+'</span>')
+                                //}
+                            }
+                            publicar(id_evento);
+						}else{
+							play = false;
+							jQuery("button[name=play-pause-publish-publicacion]").attr("status","play");
+							jQuery("button[name=play-pause-publish-publicacion]").find("i").attr("class","icon-play");
+							jQuery("button[name=play-pause-publish-publicacion]").find("span").text("Iniciar");
+                            errores = 0;
+                            jQuery("select[name=opt-estado").change();
+                            jQuery("select[name=opt-categorias]").change();
+                            alert("Proceso finalizado");
+                            //jQuery("#msgBarraProgreso label").append('<span id="ver-log"><a target="_blank" href="'+id_evento+'">&nbsp;Ver Log</a></span>')
+						}
+					}
+					console.log(data);
+				},
+				error:function(){
+					play = false;
+                    jQuery("button[name=play-pause-publish-publicacion]").attr("status","play");
+                    jQuery("button[name=play-pause-publish-publicacion]").find("i").attr("class","icon-play");
+                    jQuery("button[name=play-pause-publish-publicacion]").find("span").text("Iniciar");
+					alert("Ocurrio un error. Por favor, vuelva a intentarlo mas tarde.");
+				}
+			});
+		}
+
+    });
+</script>
+<style>
+.progress{
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+}
+.cat_mapeada{
+    background-color: darkseagreen;
+}
+.badge-danger{
+    background-color: red !important;
+}
+</style>

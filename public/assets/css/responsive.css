@@ -1,0 +1,492 @@
+/*============================================================================
+                        RESPONSIVE CSS WITH MEDIA 
+=============================================================================*/
+
+/*=============  MEDIA 1400px   =============*/
+@media(min-width:1200px) and (max-width:1400px) {
+}
+/*=============  MEDIA 1200px   =============*/
+@media(max-width:1200px) {
+}
+/*=============  MEDIA 1024px   =============*/
+@media(max-width:1024px) {
+}
+/*=============  MEDIA 992px - 1199px   =============*/
+@media(min-width:992px) and (max-width:1199px) {
+    #testimonials .feed-text {
+        float: right;
+        width: 78%;
+        margin-top: 10px;
+    }
+    .inspectors .teach .img-sec {
+        height: 170px;
+        width: 170px;
+    }
+    .inspectors .teach-over a {
+        line-height: 180px;
+    }
+    #banner .text-slider h3 {
+        font-size: 20px;
+    }
+    .boxed {
+        width: 100%;
+    }
+    header .navbar-nav > li > a {
+        padding: 44px 10px;
+    }
+    .is-sticky header .navbar-nav > li > a {
+        padding: 29px 10px;
+    }
+}
+/*=============  MEDIA MINIMUM 768px  =============*/
+@media(min-width:768px){
+    header .navbar-default li.dropdown:hover .dropdown-menu {
+        display: block;
+    } 
+    .text-slider .get-form{
+        visibility: hidden;
+    }
+}
+/*=============  MEDIA 768px - 991px   =============*/
+@media(min-width:768px) and (max-width:991px) {
+    .navbar-header .logo {
+        width: 150px;
+    }
+    #banner .text-slider h3 {
+        font-size: 15px;
+    }
+    .navbar-header .logo img {
+        width: 100%;
+    }
+    header .navbar-nav > li > a {
+        padding: 48px 10px;
+    }
+    .top-bar {
+        display: none;
+    }
+    header .navbar-nav > li > a {
+        padding: 30px 10px;
+        font-size: 13px;
+    }
+    .is-sticky header .navbar-nav > li > a {
+        padding: 29px 10px;
+        font-size: 13px;
+    }
+    /*    header {
+            height: 82px;
+        }*/
+    .is-sticky header .logo {
+        margin-top: 15px;
+    }
+    #testimonials .feed-text {
+        float: right;
+        width: 70%;
+        margin-top: 0px;
+    }
+    #feature li .inner {
+        margin-bottom: 30px;
+    }
+    .col-4 li.item {
+        width: 50%;
+        margin-bottom: 30px;
+    }
+    .tittle {
+        margin-bottom: 10px;
+    }
+    #pricing .price-inner {
+        margin-bottom: 30px;
+    }
+    .inspectors .teach {
+        margin-bottom: 30px;
+    }
+    .panel-default > .panel-heading a {
+        text-decoration: none;
+        font-size: 18px;
+        width: 100%;
+        font-weight: 400;
+        padding: 0px;
+        color: #647382;
+        display: inline-block;
+        line-height: 25px;
+        padding: 5px 0px;
+    }
+    .quote {
+        text-align: center;
+    }
+    footer h5 {
+        margin-top: 30px;
+    }
+    footer .rights {
+        text-align: center;
+    }
+    footer .social_icons {
+        text-align: center;
+        margin-top: 10px;
+    }
+    .products .prodct {
+        margin-bottom: 30px;
+    }
+    #banner .text-slider p {
+        width: 100%;
+    }
+    #banner li img {
+        display: none;
+    }
+    #banner {
+        background: url(../images/slide-1.jpg) center center no-repeat;
+    }
+    .sub-banner {
+        text-align: center;
+    }
+    .sub-banner .links {
+        float: none;
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+    .courses .intres-lesson li {
+        display: inline-block;
+        width: 100%;
+    }
+    .products .prodct {
+        margin-top: 50px;
+    }
+    .quote-sim {
+        text-align: center;
+    }
+    .quote-sim h3 {
+        width: 100%;
+    }
+    .quote-sim .btn {
+        display: inline-block;
+        float: none !important;
+    }
+    .boxed {
+        width: 100%;
+    }
+    .logo-hex {
+        height: 29px;
+    }
+    .logo .fa-stack {
+        width: 48px;
+        height: 51px;
+        line-height: 55px;
+    }
+    .logo a .logo-fa {
+        font-size: 24px;
+    }
+    .logo a {
+        line-height: 40px;
+    }
+    .logo {
+        font-size: 20px;
+        text-align: left;
+    }
+    .prodct-single .prodct {
+        margin-top: 0px !important;
+    }
+    /*new start*/
+    .srch {
+        left: 0;
+        width: 400px !important;
+    }
+    /*new end*/
+}
+/*=============  MEDIA 767px   =============*/
+@media(max-width:767px) {
+    .top-bar {
+        display: none;
+    }
+    .boxed {
+        width: 100%;
+    }
+    header {
+        height: 80px;
+    }
+    header .navbar-header .logo {
+        width: 150px;
+        margin-top: 12px;
+    }
+    header .navbar-header .logo img {
+        width: 100%;
+    }
+    header .navbar-nav {
+        width: 100%;
+        float: left;
+        background: #fff;
+    }
+    header .navbar-nav {
+        margin: 0px;
+    }
+    header .navbar-nav > li > a {
+        padding: 10px 0;
+        width: 100%;
+    }
+    .is-sticky header .navbar-nav > li > a {
+        padding: 10px 0;
+        width: 100%;
+    }
+    header .dropdown-menu {
+        width: 100%;
+        text-align: center;
+        position: static;
+        float: none;
+    }  
+    #testimonials {
+        text-align: center;
+    }
+    #testimonials .feed-text {
+        text-align: center;
+        width: 100%;
+    }
+    #testimonials .avatr {
+        float: none;
+    }
+    .navbar-toggle {
+        margin: 0px;
+        margin-top: 17px;
+        padding: 10px 30px;
+    }
+    .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+        background: #0096ff;
+        color: #fff;
+        border-color: #0096ff;
+    }
+    /*    .find-drive {
+        display: none;
+    }*/
+
+    /*new start*/
+    #banner .text-slider p{
+        display: none;
+    }
+    #banner .text-slider{
+        display: block;
+    }
+    .flex-control-nav{
+        bottom: -30px;
+    }
+    #banner .text-slider h3 {
+        display: table;
+        font-size: 14px;
+        line-height: normal;
+        margin: 0 auto;      
+    }
+    .navbar-collapse{
+        max-height: 340px;
+        margin-top: 15px;
+    }
+    header .navbar-default .srch {
+        width: 100% !important;
+    }
+    header .navbar-default  .navbar-nav .open .dropdown-menu{
+        border-bottom: 1px solid rgba(0, 0, 0, 0.15)
+
+    }
+    #banner .text-slider .btn-1 {        
+        margin-right: 30px;
+    }
+    /*new end*/
+
+    #testimonials .testi {
+        text-align: center;
+    }
+    #testimonials .testi p {
+        text-align: center;
+    }
+    .quote {
+        text-align: center;
+    }
+    footer h5 {
+        margin-top: 30px;
+        display: inline-block;
+        width: 100%;
+    }
+    footer li {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        overflow: hidden;
+    }
+    footer .rights {
+        text-align: center;
+    }
+    footer .rights li {
+        width: auto;
+    }
+    footer .social_icons {
+        text-align: center;
+        margin-top: 10px;
+    }
+    .products .prodct {
+        margin-bottom: 30px;
+    }
+    #feature li .inner {
+        margin-bottom: 30px;
+    }
+    .col-4 li.item {
+        width: 50%;
+        margin-bottom: 30px;
+    }
+    .tittle {
+        margin-bottom: 10px;
+    }
+    #pricing .price-inner {
+        margin-bottom: 30px;
+    }
+    .intres-lesson li, .intres-lesson .btn {
+        margin-top: 10px;
+    }
+    .inspectors .teach {
+        margin-bottom: 30px;
+    }
+    .intres-lesson ul {
+        margin-top: 20px;
+    }
+    #banner .text-slider {
+        text-align: center;
+    }
+
+    #banner .text-slider p {
+        width: 100%;
+    }
+    /*    #banner .text-slider h3 {
+            font-size: 15px;
+        }*/
+    .sub-banner {
+        text-align: center;
+    }
+    .sub-banner .links {
+        float: none;
+        margin-top: 20px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+    .sub-banner .links li {
+        float: none;
+    }
+    .products .prodct {
+        margin-top: 50px;
+    }
+    .quote-sim {
+        text-align: center;
+    }
+    .quote-sim h3 {
+        width: 100%;
+    }
+    .quote-sim .btn {
+        display: inline-block;
+        float: none !important;
+    }
+    .billing-info .nav-tabs > li > a {
+        padding: 0px 16px;
+        font-size: 14px;
+    }
+    .courses .intres-lesson .btn {
+        margin-bottom: 40px;
+    }
+    .testi-small #testimonials .avatr {
+        float: none;
+        margin-top: 20px;
+    }
+    .nav-tabs .nav-pills > li > a {
+        padding: 0 15px;
+    }
+    .logo-hex {
+        height: 29px;
+    }
+    .logo .fa-stack {
+        width: 48px;
+        height: 51px;
+        line-height: 55px;
+    }
+    .logo a .logo-fa {
+        font-size: 24px;
+    }
+    .logo a {
+        line-height: 40px;
+    }
+    .logo {
+        font-size: 20px;
+        text-align: left;
+    }
+    .billing-info .prodct {
+        display: inline-block;
+        width: 100%;
+    }
+}
+/*=============  MEDIA 600px   =============*/
+@media (max-width:600px) {
+    #banner .text-slider .btn-1 {
+        margin-left:15px;
+        margin-right: 15px;
+    }
+      #banner .text-slider .btn {
+        padding: 10px;
+      }
+}
+/*=============  MEDIA 540px   =============*/
+@media(max-width:540px) {
+    #banner .text-slider h3 i {
+        display: none;
+    }
+    #banner .text-slider h3 {
+        padding: 0 10px;
+    }
+    #banner .text-slider .btn-1 {
+        margin-left: 2px;
+        margin-right: 3px;
+    }
+    #banner .text-slider .btn {
+        padding: 10px 5px;
+        font-size: 12px;
+    }
+    .col-2 li.item {
+        width: 100%;
+    }
+    .col-3 li.item {
+        width: 100%;
+    }
+    .col-4 li.item {
+        width: 100%;
+    }
+    .col-5 li.item {
+        width: 100%;
+    }
+    .nav-tabs .nav-pills > li > a {
+        padding: 0 10px;
+        font-size: 14px;
+        line-height: 40px;
+    }
+    .billing-info .prodct {
+        display: inline-block;
+        width: 100%;
+    }
+}
+/*=============  MEDIA 480px   =============*/
+@media(max-width:480px) {
+    #banner .text-slider p, .flex-direction-nav a{
+        display: none;
+    }
+    #banner .text-slider h3 {
+        padding: 10px;
+    }
+    .text-slider .col-sm-7 {
+        padding: 0;
+    }
+    #banner .text-slider .btn{
+        margin-top: 15px;
+    }
+
+}
+/*=============  MEDIA 320px   =============*/
+@media(max-width:320px) {
+    #banner .text-slider{
+        padding-top: 20px;
+    }
+}
+/* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select {
+        padding-right: 18px
+    }
+}

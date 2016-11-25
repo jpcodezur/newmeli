@@ -1,0 +1,155 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <?php echo $this->headTitle(); ?>
+
+        <meta name="description" content="overview &amp; stats" />
+
+        <?php echo $this->headTitle('ZF2 ' . $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php
+        echo $this->headMeta()
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+        <script>
+            var basepath_javascript = "<?php echo $this->basePath(); ?>";
+        </script>
+        <!-- Le styles -->
+        <?php
+        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                
+				->prependStylesheet($this->basePath() . '/assets/css/select2.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/jquery-mentions/jquery.mentionsInput.css')
+                //->prependStylesheet($this->basePath() . '/assets/css/jquery-mentions/style.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/main.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/jquery-ui-1.10.3.custom.min.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/jquery.alerts.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/chosen.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/ace-skins.min.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/ace-responsive.min.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/ace.min.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/daterangepicker.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/font-awesome.min.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/bootstrap-responsive.min.css')
+                ->prependStylesheet($this->basePath() . '/assets/css/bootstrap.min.css')
+        ?>
+
+        <!--[if IE 7]>
+          <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+        <![endif]-->
+
+        <!--page specific plugin styles-->
+
+        <!--fonts-->
+
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300" />
+
+        <!--[if lte IE 8]>
+          <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+        <![endif]-->
+
+        <!--inline styles related to this page-->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <!-- Scripts -->
+        <?php
+        echo $this->headScript()
+                
+                // PAGES
+                //->prependFile($this->basePath() . '/assets/js/jquery.multiSelect.min.js')
+				->prependFile($this->basePath() . '/assets/js/select2.min.js')
+				/*->prependFile($this->basePath() . '/assets/js/jquery-mentions/jquery.mentionsInput.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery-mentions/jquery.elastic.source.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery-mentions/underscore-min.js')
+                ->prependFile($this->basePath() . '/assets/js/pages/evaluation.js')
+                ->prependFile($this->basePath() . '/assets/js/additional-methods.min.js')
+                ->prependFile($this->basePath() . '/assets/js/bootbox.min.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery.maskedinput.min.js')
+                ->prependFile($this->basePath() . '/assets/js/fuelux/fuelux.wizard.min.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery.validate.min.js')
+                
+                ->prependFile($this->basePath() . '/assets/js/jquery-migrate-1.2.1.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery.alerts.js')
+                
+                ->prependFile($this->basePath() . '/assets/js/x-editable/ace-editable.min.js')
+                ->prependFile($this->basePath() . '/assets/js/x-editable/bootstrap-editable.min.js')
+                
+                ->prependFile($this->basePath() . '/assets/js/flot/jquery.flot.resize.min.js')
+                ->prependFile($this->basePath() . '/assets/js/flot/jquery.flot.categories.js')
+                ->prependFile($this->basePath() . '/assets/js/flot/jquery.flot.pie.min.js')
+                ->prependFile($this->basePath() . '/assets/js/flot/jquery.flot.min.js')*/
+                ->prependFile($this->basePath() . '/assets/js/ace.min.js')
+                ->prependFile($this->basePath() . '/assets/js/ace-elements.min.js')
+                
+                ->prependFile($this->basePath() . '/assets/js/jquery.sparkline.min.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery.easy-pie-chart.min.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery.slimscroll.min.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery.ui.touch-punch.min.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery-ui-1.10.3.custom.min.js')
+                ->prependFile($this->basePath() . '/assets/js/bootstrap.min.js')
+                ->prependFile($this->basePath() . '/assets/js/additional-methods.min.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery.validate.min.js')
+                ->prependFile($this->basePath() . '/js/excanvas.min.js', 'text/javascript', array('conditional' => 'lte IE 8',))
+                
+                ->prependFile($this->basePath() . '/assets/js/main.js')
+                ->prependFile($this->basePath() . '/assets/js/ace.min.js')
+                ->prependFile($this->basePath() . '/assets/js/ace-elements.min.js')
+                ->prependFile($this->basePath() . '/assets/js/bootstrap-tag.min.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery.maskedinput.min.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery.inputlimiter.1.3.1.min.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery.autosize-min.js')
+                ->prependFile($this->basePath() . '/assets/js/jquery.knob.min.js')
+                ->prependFile($this->basePath() . '/assets/js/bootstrap-colorpicker.min.js')
+                ->prependFile($this->basePath() . '/assets/js/date-time/daterangepicker.min.js')
+                ->prependFile($this->basePath() . '/assets/js/date-time/moment.min.js')
+                ->prependFile($this->basePath() . '/assets/js/date-time/bootstrap-timepicker.min.js')
+                ->prependFile($this->basePath() . '/assets/js/date-time/bootstrap-datepicker.min.js')
+                ->prependFile($this->basePath() . '/assets/js/fuelux/fuelux.spinner.min.js')
+                
+                ->prependFile($this->basePath() . '/assets/js/jquery.base64.js')
+                
+                ->prependFile($this->basePath() . '/assets/js/jquery.ui.touch-punch.min.js')
+				/**/
+                ->prependFile($this->basePath() . '/assets/js/jquery-ui-1.10.3.custom.min.js')
+                ->prependFile($this->basePath() . '/assets/js/bootstrap.min.js')
+                
+                ->prependFile($this->basePath() . '/assets/js/chosen.jquery.min.js')
+//                ->prependFile($this->basePath() . '/assets/js/jquery.min.2.0.3.js')
+			//->prependFile($this->basePath() . '/assets/js/jquery-2.1.4.min.js')
+			->prependFile($this->basePath() . '/assets/js/jquery.js')
+			
+			;
+		
+        ?>
+        <script type="text/javascript">
+            if ("ontouchend" in document)
+                document.write("&lt;script src='assets/js/jquery.mobile.custom.min.js'&gt;" + "&lt;" + "/script&gt;");
+        </script>
+        
+    </head>
+    <body>
+<?php echo $this->partial('layout/navbar'); ?>
+        <div class="main-container container-fluid">
+            <a href="#" id="menu-toggler" class="menu-toggler">
+                <span class="menu-text"></span>
+            </a>
+<?php echo $this->partial('layout/sidebar'); ?>
+            <div class="main-content">
+            <?php echo $this->partial('layout/breadcrumb'); ?>
+            <?php echo $this->partial('layout/modal'); ?>
+                
+                <div class="page-content">
+                    
+                <?php echo $this->content; ?>
+                </div>
+                    <?php echo $this->partial('layout/footer'); ?>
+            </div>
+        </div> <!-- /container -->
+<?php echo $this->inlineScript() ?>
+        <div id='ajax_loader' style="position: fixed; left: 50%; top: 50%; display: none;">
+            <img src="<?php echo $this->basePath() ?>/assets/images/ajax-loader.gif"></img>
+        </div>
+    </body>
+</html>

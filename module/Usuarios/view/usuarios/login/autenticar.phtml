@@ -1,0 +1,43 @@
+<?php 
+$form = $this->form;
+$form->prepare();        
+?>
+
+<?php $form->setAttribute('action',$this->url('usuarios',array('controller'=>'login','action'=>'autenticar'))); ?>
+<?php $form->setAttribute('method', 'post'); ?>
+<?php echo $this->form()->openTag($form); ?>
+<fieldset>
+    <label>
+        <span class="block input-icon input-icon-right">
+            <?php $nombre = $form->get('nombre'); ?>
+            <?php echo $this->formInput( $nombre->setAttribute('placeholder','Username')->setAttribute('class','span12') ) ?>
+            <i class="icon-user"></i>
+        </span>
+    </label>
+    
+    <label>
+        <span class="block input-icon input-icon-right">
+            <?php $password = $form->get('clave'); ?>
+            <?php echo $this->formInput( $password->setAttribute('placeholder','Password')->setAttribute('class','span12') ) ?>
+            <i class="icon-lock"></i>
+        </span>
+    </label>
+    
+    <p><?php echo $this->formElementErrors($nombre); ?></p>
+    
+    <p><?php echo $this->formElementErrors($password); ?></p>
+
+    <div class="space"></div>
+    
+    <div class="clearfix">
+        <label class="inline">
+            <input type="checkbox" />
+            <span class="lbl"> Remember Me</span>
+        </label>
+
+        <?php echo $this->formInput( $form->get('send')->setAttribute('class','width-35 pull-right btn btn-small btn-primary')->setAttribute('value','Enviar') ) ?>
+        
+    </div>
+
+    <div class="space-4"></div>
+</fieldset>

@@ -1,0 +1,16 @@
+<div id="breadcrumbs" class="breadcrumbs">
+    <ul class="breadcrumb">
+        <li class="active">
+            <i class="icon-home home-icon"></i><?php echo $this->navigation('navigation')->breadcrumbs()->setMinDepth(1); // <-- Add this!! ?>
+        </li>
+    </ul><!--.breadcrumb-->
+
+    <div id="nav-search" class="nav-search">
+        <form class="form-search">
+            <!--<span class="input-icon">
+                <input type="text" autocomplete="off" id="nav-search-input" class="input-small nav-search-input" placeholder="Search ...">
+                <i class="icon-search nav-search-icon"></i>
+            </span>-->
+        </form>
+    </div><!--#nav-search-->
+</div>

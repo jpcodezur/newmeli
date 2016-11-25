@@ -1,0 +1,169 @@
+.controls .ace-file-input label{
+    width:218px;
+}
+.controls .tooltip-error{
+    width: 220px;
+}
+.controls .select-user-form{
+    height: 29px;
+}
+#id-input-file-2{
+    margin-bottom: 13px;
+    margin-left: 20px;
+    position: relative;
+    width: 200px;
+    z-index: 1;
+}
+.ace-file-input {
+    width: 235px;
+}
+.widget-main {
+    padding: 0;
+}
+.error .controls .help-inline ul{
+    list-style: none outside none;
+    margin: 0;
+
+}
+.wizard-actions {
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: right;
+    width: 100%;
+}
+.wizard-actions-top a{
+    cursor:pointer;
+}
+.label_float_left{float: left; width: 300px;}
+#form-field-select-1,textarea.mention{width: 530px !important;}
+input[name=nombre],input[name=ayuda]{width: 516px;}
+.h4-action-paginas{
+    width: 100%;
+}
+.action-paginas{
+    float: right;
+    margin-right: 5px;
+}
+.popup-label{
+    float: left;
+    margin-right:10px;
+}
+#close-modal{
+    margin-top:10px;
+}
+.mentions-input-box .mentions > div > strong {
+    background: none repeat scroll 0 0 steelblue;
+    border: 1px solid silver;
+    border-radius: 4px;
+    font-weight: normal;
+    
+    margin-left: -7px;
+}
+.step-content .step-pane {
+    min-height: 200px;
+    padding: 10px 8px 12px;
+}
+.inputs-text-control{
+    margin-top:10px;
+}
+.action-paginas a{
+    cursor:pointer;
+}
+#values-select{
+    margin-top: 10px;
+    max-height: 75px;
+    overflow-y: scroll;
+}
+.modal.fade.in {
+    top: 3% !important;
+}
+span.resp-span {
+    float: none !important;
+    margin-left: 0px  !important;
+    min-height: 1px;
+    width: auto !important;
+    display: inline !important;
+}
+.modal-body input[name=nombre]{
+    width: 47%;
+}
+.modal-body input[name=ayuda]{
+    width: 47.5%;
+}
+input[name=ejemplo]{
+    width: 47%;
+}
+select.validacion{
+    width: 49.9%;
+}
+.modal-body input[name=nombre],.modal-body input[name=ayuda], input[name=ejemplo]{
+    padding: 1%;
+}
+.mentions-input-box {
+    clear: both;
+}
+.input-icon.input-icon-right > [class*="icon-"] {
+    right: -26px !important;
+}
+::-webkit-input-placeholder { 
+    color:#BCBCBC;
+    font-style: italic;
+}
+::-moz-placeholder { 
+    color:#BCBCBC;
+    font-style: italic;
+} /* firefox 19+ */
+:-ms-input-placeholder {
+    color:#BCBCBC;
+    font-style: italic;
+} /* ie */
+input:-moz-placeholder { 
+    color:#BCBCBC;
+    font-style: italic;
+}
+.link_ayuda{
+    float: left;
+    padding-left: 32px;
+    padding-top: 4px;
+}
+.tab-content {
+    overflow: visible !important;
+}
+
+#allow_files_chzn ul{
+    margin-top: -11px;
+}
+@media screen and ( max-height: 700px ){
+  .modal-body{
+            font-size: 11px !important;
+            padding: 5px !important;
+    }
+    .inputs-text-control {
+            margin-top: 0 !important;
+    }
+    .tab-content {
+            padding: 5px !important;
+    }
+}
+
+.tabbable-bottom{
+    position: relative;
+    z-index: 1;
+}
+
+.mentions-input-box .mentions {
+    display:none !important;
+}
+.form-categorias{
+    width: 45%;
+}
+button[name=btn-mapeo-categoria]{
+    margin-bottom:10px;
+}
+button[name=play-pause-publish-publicacion]{
+	margin-top: -10px;
+}
+.progress div{
+	color:white;
+}

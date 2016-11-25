@@ -1,0 +1,232 @@
+<div class="">
+    <div class="table-header table-popup">
+        <button data-dismiss="modal" class="close" type="button">×</button>
+        Nuevo Control
+    </div>
+    <div class="tabbable">
+        <ul class="nav nav-tabs" id="myTabOption">
+            <li class="active">
+                <a data-toggle="tab" href="#basico" tipo="texto">
+                    Basico
+                </a>
+            </li>
+            <li>
+                <a data-toggle="tab" href="#avanzado" tipo="dropdown">
+                    Avanzado
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="basico" class="tab-pane in active">
+                <div class="inputs-text-control inputs-text-control-add">
+                    <input type="text" name="nombre" placeholder="Nombre" value="<?php echo $this->input->getNombre() ?>">
+                    <input type="text" name="ayuda" placeholder="Ayuda" value="<?php echo $this->input->getAyuda() ?>">
+                    <textarea name="nombre" placeholder="Etiqueta" class='mention'></textarea>
+                    <input type="hidden" class="textarea-mention" value="<?php echo $this->input->getLabel() ?>">
+                    <input type="hidden" id="idinput" value="<?php echo $this->input->getId() ?>">
+                    <input type="hidden" id="tipoinput" value="<?php echo $this->input->getTipo() ?>">
+                    <div class="">
+                        <label class="popup-label">Obligatorio</label>
+                        <label>
+                            <input name="obligatorio" class="ace-switch" type="checkbox" <?php echo ($this->input->getRequired()) ? "checked='checked'" : "" ?> />
+                            <!--<input name="obligatorio" class="ace-switch ace-switch-2" type="checkbox"  />-->
+                            <span class="lbl"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="avanzado" class="tab-pane row">
+                
+                <div class="control-group">
+                    <label class="control-label" for="form-field-4">Tamaño</label>
+                    <input type="hidden" value="<?php echo $this->input->getTamanio() ?>" id="tamanio-hidden">
+                    <div class="controls">
+                        <label id="tamanio-label">Pequeño</label>
+                        <div class="help-block" id="input-size-slider"></div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <input type="text" name="link_ayuda" placeholder="Link Ayuda" style="width: 350px;" value="<?php echo $this->input->getLinkAyuda() ?>">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tabbable tabbable-bottom">
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active">
+                <a data-toggle="tab" href="#home" tipo="texto">
+                    Texto
+                </a>
+            </li>
+
+            <li>
+                <a data-toggle="tab" href="#profile" tipo="dropdown">
+                    Dropdown
+                </a>
+            </li>
+
+            <li>
+                <a data-toggle="tab" href="#fecha" tipo="fecha">
+                    Fecha
+                </a>
+            </li>
+            
+            <li>
+                <a data-toggle="tab" href="#imagen" tipo="imagen">
+                    Imagen
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="home" class="tab-pane in active">
+                <div class="widget-main">
+                    <?php if($this->input->getTipo()=="texto"):?>
+                    <input type="text" name="ejemplo" placeholder="Ejemplo" value="<?php echo $this->input->getControl()->getEjemplo()?>">
+                    <script>
+                    $(document).ready(function(){
+                        var val = "<?php echo $this->input->getControl()->getValidacion()?>";
+                        $("#<?php echo $this->input->getNombre()?> option").each(function(){
+                            s = $(this).text().toLowerCase();
+                            console.log(s + " vs " + val);
+                            if(s == val){
+                                $(this).attr("selected",true);
+                                $(this).change();
+                            }
+                        })
+                    })
+                    </script>
+                    <select id="<?php echo $this->input->getNombre()?>" class="validacion">
+                        <option value="text">Sin Validacion</option>
+                        <option value="email">Email</option>
+                        <option value="numerico">Numerico</option>
+                    </select>
+                    <label>Respuestas requeridas</label>
+                    <input type="text" class="input-mini" id="numero-respuestas"  value="<?php echo ($this->input->getTipo()=="texto")?$this->input->getControl()->getRespuestasRequeridas():"1"; ?>"/>
+                    <div class="space-6"></div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <div id="profile" class="tab-pane row">
+                <div class="row">
+                    <label class="control-label" style="float: left;">Multi</label>
+                    <div class="span3">
+                        <label>
+                            <?php
+                            $chktipo = "";
+                            if($this->input->getTipo() == "dropdown"){
+                                $control = $this->input->getControl();
+                                $chktipo = $control->getTipo();
+                            }
+                            ?>
+                            <input type="checkbox" <?php echo ($chktipo == "multi")?"checked='checked'":""?> class="ace-switch ace-switch-2" id="esmulti" name="esmulti">
+                            <span class="lbl"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row" style="height: 50px;">
+                    <label>Respuestas requeridas</label>
+                    <input type="text" class="input-mini" id="numero-respuestas-select" disabled/>
+                    <div class="space-6"></div>
+                </div>
+                <div id="values-select" class="row" style="max-height: 100px; overflow-y: scroll;">
+                    <?php if($this->input->getTipo()=="dropdown"):?>
+                    <?php
+                    $select = $this->input->getControl();
+                    $values = $select->getValues();
+                    ?>
+                    <input type="hidden" id="idselecthidden" value="<?php echo $select->getId() ?>">
+                    <?php foreach($values as $value):?>
+                    <div class="control-group item-input select-value-input">
+                        <div class="alert alert-info">
+                            <i class="icon-move bigger-130"></i>
+                            <button data-dismiss="alert" class="close" type="button">
+                                <i class="ace-icon fa fa-times"></i>
+                            </button>
+                            <input id_input="<?php echo $value->id_input ?>" id_select="<?php echo $value->getId() ?>" name="input-select-value-<?php echo $value->getId() ?>" id="input-select-value-<?php echo $value->getId() ?>" class="value-option" type="text" value="<?php echo $value->getValue() ?>" disabled="disabled">
+                            <div class="action-paginas hidden-phone visible-desktop action-buttons">
+                                <a id="" class="red remove del-input-select-value-on-edit" style=""> 
+                                    <i class="icon-trash bigger-130"></i>
+                                </a>
+                                <a class="edit-input-select-value green" id="">
+                                    <i class="icon-pencil bigger-130"></i>
+                                </a>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <?php endforeach;?>
+                    <?php endif; ?>
+                </div>
+                <div class="row">
+                    <div class="action-paginas hidden-phone visible-desktop action-buttons" style="float: left; width: 100%;">
+                        <input type="text" style="margin-bottom: 2px; width: 84%;" placeholder="Dropdown valor" name="select_value">
+                        <a class="red remove" href="/tesisenlinea/public/usuarios/pagina/add/id_pagina" id="add-select-value">
+                            <i class="icon-plus-sign bigger-130"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="fecha" class="tab-pane row">
+                <div class="widget-main">
+                    <label>
+                        <?php $tipoFecha = "" ?>
+                        <?php if($this->input->getTipo()=="fecha"): ?>
+                        <?php
+                        $fecha = $this->input->getControl();
+                        $tipoFecha = $fecha->getTipoFecha();
+                        ?>
+                        <?php endif; ?>
+                        <input <?php echo ($tipoFecha == "simple")?"checked='checked'":"" ?> name="radio-fecha" type="radio" value="simple"/>
+                            <span class="lbl"> Simple</span>
+                    </label>
+                    <label>
+                            <input <?php echo ($tipoFecha == "rango")?"checked='checked'":"" ?> name="radio-fecha" type="radio" value="rango"/>
+                            <span class="lbl"> Rango de fechas</span>
+                    </label>
+                </div>
+            </div>
+            <div id="imagen" class="tab-pane row">
+                <div class="imagen-panel-left">
+                <label>Tamaño Maximo (Mb)</label>
+                    <input name="image_max_size" placeholder="Max size (Mb)" type="text" value="2" />
+                </div>
+                <div class="imagen-panel-right">
+                <label>Archivos permitidos</label>
+                <select multiple="multiple" class="chzn-select" id="allow-files" data-placeholder="Allowed files">
+                    <option value="jpg" selected="selected">JPG</option>
+                    <option value="png" selected="selected">PNG</option>
+                    <option value="bmp" selected="selected">PNG</option>
+                </select>
+                </div>
+            </div>
+
+            <div id="dropdown2" class="tab-pane">
+                <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin.</p>
+            </div>
+        </div>
+    </div>
+    <button id="close-modal-edit-input" class="btn  btn-primary">Save</button>
+</div>
+<style>
+    .row {
+        margin-left: 0;
+    }
+</style>
+<script>
+    var clickeada = false;
+    $(document).ready(function(){
+        $(document).on("click", "#myTab li", function(){
+            console.log("click"); 
+           if($(this).find("a").attr("tipo") == "imagen"){
+               if(!clickeada){
+                    $(".chzn-select").chosen(); 
+                    clickeada = true;
+               }
+           }
+        });
+        
+    });
+</script>

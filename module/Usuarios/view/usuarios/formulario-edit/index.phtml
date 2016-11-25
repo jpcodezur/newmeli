@@ -1,0 +1,1072 @@
+<div class="page-content">
+    <div class="page-header position-relative">
+        <h1>
+            Asistente para la confeccion de la Tesis
+        </h1>
+    </div><!--/.page-header-->
+
+    <div class="row-fluid">
+        <div class="span12">
+            <!--PAGE CONTENT BEGINS-->
+
+
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-header widget-header-blue widget-header-flat">
+                            <h4 class="lighter h4-action-paginas">Pasos
+                                <div class="action-paginas hidden-phone visible-desktop action-buttons">
+                                    <a id="edit-pagina" href="<?php echo $this->url("usuarios", array("controller" => "pagina", "action" => "update")) ?>/id_pagina" class="green">
+                                        <i class="icon-pencil bigger-130"></i>
+                                    </a>
+                                    <a id="del-pagina" href="<?php echo $this->url("usuarios", array("controller" => "pagina", "action" => "delete")) ?>/id_pagina" class="red remove">
+                                        <i class="icon-trash bigger-130"></i>
+                                    </a>
+                                    <a id="add-pagina" href="<?php echo $this->url("usuarios", array("controller" => "pagina", "action" => "add")) ?>/id_pagina" class="red remove">
+                                        <i class="icon-plus-sign bigger-130"></i>
+                                    </a>
+                                </div>
+                            </h4>
+
+                        </div>
+
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="row-fluid">
+                                    <div id="fuelux-wizard" class="row-fluid hide" data-target="#step-container">
+                                        <ul class="wizard-steps">
+                                            <?php $count = 1; ?>
+                                            <?php foreach ($this->formulario->getPaginas() as $pagina): ?>
+                                                <li id_page="<?php echo $pagina->getId() ?>" data-target="#step<?php echo $count ?>" class="<?php echo ($count === 1 ) ? "active" : "" ?>">
+                                                    <span class="step"><?php echo $count; ?></span>
+                                                    <span class="title"><?php echo $pagina->getTitulo() ?></span>
+                                                </li>
+                                                <?php $count++; ?>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                        <div class="row-fluid wizard-actions wizard-actions-top">
+                                            <a class="btn-prev">
+                                                <i class="icon-arrow-left"></i>
+                                                Prev
+                                            </a>
+
+                                            <a class="btn-next" data-last="Finish ">
+                                                Next
+                                                <i class="icon-arrow-right icon-on-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="step-content row-fluid position-relative" id="step-container">
+
+                                        <div class="widget-header widget-header-blue widget-header-flat">
+                                            <h4 class="lighter h4-action-paginas">Controles 
+                                                <div class="action-paginas hidden-phone visible-desktop action-buttons">
+                                                    <a id="add-input" class="red remove">
+                                                        <i class="icon-plus-sign bigger-130"></i>
+                                                    </a>
+                                                </div>
+                                            </h4>
+                                        </div>
+
+                                        <?php $count = 1; ?>
+                                        <?php foreach ($this->formulario->getPaginas() as $pagina): ?>
+
+                                            <div class="step-pane <?php echo ($count === 1 ) ? "active" : "" ?>" id="step<?php echo $count ?>">
+
+                                                <form class="form-horizontal" id="inputs-collections" >
+                                                    <?php foreach ($pagina->getInputs() as $input): ?>
+                                                        <div class="control-group item-input">
+                                                            <div class="alert alert-info" id_input="<?php echo $input->getId() ?>">
+                                                                <i class="icon-move bigger-130"></i>
+                                                                <button data-dismiss="alert" class="close" type="button">
+                                                                    <i class="ace-icon fa fa-times"></i>
+                                                                </button>
+                                                                <strong>[<?php echo $input->getNombre() ?>]</strong>
+                                                                <?php echo $input->getLabel() ?>
+                                                                <div class="action-paginas hidden-phone visible-desktop action-buttons">
+                                                                    <a href="#" class="green edit-input">
+                                                                        <i class="icon-pencil bigger-130"></i>
+                                                                    </a>
+                                                                    <a href="#" class="red remove del-item">
+                                                                        <i class="icon-trash bigger-130"></i>
+                                                                    </a>
+                                                                </div>
+                                                                <br>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </form>
+                                            </div>
+                                            <?php $count++; ?>
+                                        <?php endforeach; ?>
+                                    </div>
+
+                                    <hr />
+                                    <div class="row-fluid wizard-actions">
+                                        <button class="btn btn-prev">
+                                            <i class="icon-arrow-left"></i>
+                                            Prev
+                                        </button>
+
+                                        <button class="btn btn-success btn-next" data-last="Finish ">
+                                            Next
+                                            <i class="icon-arrow-right icon-on-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div><!--/widget-main-->
+                        </div><!--/widget-body-->
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal-wizard" class="modal hide">
+                <div class="modal-header" data-target="#modal-step-contents">
+                    <ul class="wizard-steps clearfix">
+                        <li data-target="#modal-step1" class="active">
+                            <span class="step">1</span>
+                            <span class="title">Validation states</span>
+                        </li>
+
+                        <li data-target="#modal-step2">
+                            <span class="step">2</span>
+                            <span class="title">Alerts</span>
+                        </li>
+
+                        <li data-target="#modal-step3">
+                            <span class="step">3</span>
+                            <span class="title">Payment Info</span>
+                        </li>
+
+                        <li data-target="#modal-step4">
+                            <span class="step">4</span>
+                            <span class="title">Other Info</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="modal-body step-content" id="modal-step-contents">
+                    <div class="step-pane active" id="modal-step1">
+                        <div class="center">
+                            <h4 class="blue">Step 1</h4>
+                        </div>
+                    </div>
+
+                    <div class="step-pane" id="modal-step2">
+                        <div class="center">
+                            <h4 class="blue">Step 2</h4>
+                        </div>
+                    </div>
+
+                    <div class="step-pane" id="modal-step3">
+                        <div class="center">
+                            <h4 class="blue">Step 3</h4>
+                        </div>
+                    </div>
+
+                    <div class="step-pane" id="modal-step4">
+                        <div class="center">
+                            <h4 class="blue">Step 4</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer wizard-actions">
+                    <button class="btn btn-small btn-prev">
+                        <i class="icon-arrow-left"></i>
+                        Prev
+                    </button>
+
+                    <button class="btn btn-success btn-small btn-next" data-last="Finish ">
+                        Next
+                        <i class="icon-arrow-right icon-on-right"></i>
+                    </button>
+
+                    <button class="btn btn-danger btn-small pull-left" data-dismiss="modal">
+                        <i class="icon-remove"></i>
+                        Cancel
+                    </button>
+                </div>
+            </div><!--PAGE CONTENT ENDS-->
+        </div><!--/.span-->
+    </div><!--/.row-fluid-->
+</div><!--/.page-content-->
+<form method="post" id="form_reload_page">
+    <input type="hidden" name="last_page" value="<?php echo (isset($_POST["last_page"])) ? $_POST["last_page"] : "0" ?>">
+</form>
+<style>
+    .imagen-panel-left{
+        float:left;                
+        margin-right: 10px;
+    }
+    .imagen-panel-left label{
+        margin-bottom: 0;
+    }
+    .imagen-panel-right{
+        float:left;
+    }
+    .imagen-panel-right label{
+        margin-bottom: 9px;
+    }
+    .wizard-actions-top {
+        margin-bottom: 10px;
+        margin-top: 20px;
+    }
+    .table-popup{
+        margin-bottom: 10px;
+    }
+    .save-formulario{
+        margin-right: -8px;
+    }   
+    #save{
+        float: right;
+    }
+    .tab-content {
+        border: 1px solid #c5d0dc;
+        padding: 19px 12px;
+        position: relative;
+        z-index: 11;
+    }
+    .modal-body input{
+        /*width: 384px;*/
+    }
+    .span6 {
+        width: auto;
+    }
+    #add-input{
+        cursor:pointer
+    }
+    textarea.mention {
+        width: 100% !important;
+        font-size: 13px;
+        font-weight: normal;
+        position:relative;
+        height: 48px !important;
+        margin-bottom: 10px !important;
+        overflow: hidden;
+        padding: 2px !important;
+    }
+
+    .mentions-input-box .mentions > div{
+        font-size: 13px !important; 
+        font-weight: normal;
+    }
+    .mentions-input-box .mentions > div > strong {
+        font-size: 13px !important; 
+        font-weight: normal;
+    }
+    .mentions-input-box .mentions > div > strong {
+        font-size: 13px !important;
+        font-weight: normal;
+        letter-spacing: -0.4px;
+        margin-left: -11px;
+        position: relative;
+        z-index: 2147483647;
+    }
+    .mentions-input-box .mentions > div > strong {
+        background: none repeat scroll 0 0 steelblue !important;
+    }
+
+    .modal-body h3{
+        margin:0 5px 0 5px;
+    }
+    .alert{
+        margin-bottom:0;
+    }
+    .modal-body{
+        max-height: none !important;
+    }
+    .icon-move,.wizard-steps li .step{
+        cursor:move;
+    }
+    .alert {
+        padding: 8px 7px 8px 14px;
+    }
+    select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+        margin-bottom: 10px;
+    }
+    .item-input .icon-move {
+        margin-right: 5px;
+    }
+
+    .item-input strong{
+        margin-right: 6px;
+    }
+
+    .select-value-input input[type=text]{
+        background-color: #d9edf7;
+        border:none;
+        margin:0;
+    }
+    .select-value-input input[type=text]{:disabled {
+                                             background-color: #d9edf7 !important;
+                                         }
+                                         #values-select{
+                                             margin-top: 10px;
+                                         }
+                                         select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+                                             margin-bottom: 10px !important;
+                                         }
+    }
+
+</style>
+<script>
+    $(document).ready(function () {
+
+        $(document).on("click", ".wizard-actions-top a.btn-prev", function () {
+            console.log("t1");
+            $("button.btn-prev").trigger("click");
+        })
+
+        $(document).on("click", ".wizard-actions-top a.btn-next", function () {
+            console.log("t2");
+            $("button.btn-next").trigger("click");
+        })
+
+        $(".wizard-steps").hide();
+
+        actualizoPaginas();
+
+        $(".wizard-steps").show();
+
+        $(document).on("focus", ".modal-body input[type=text]", function () {
+            $(".modal-body .alert-danger").remove();
+        })
+
+        if ($("input[name=last_page]").val()) {
+            $(".wizard-steps li").each(function () {
+                if ($(this).attr("id_page") == $("input[name=last_page]").val()) {
+                    $(this).addClass("complete");
+                    $(this).click();
+                }
+            })
+        }
+
+        $(document).on("click", ".del-input-select-value-on-edit", function (e) {
+            e.preventDefault();
+            inp = $(this);
+            bootbox.confirm("Desea eliminar este opción?", function (result) {
+                if (result == false) {
+                    $('.bootbox').each(function () {
+                        var pos = $(this).find(".modal-body").text()
+                        pos = pos.indexOf("Desea eliminar este opci");
+                        if (pos !== -1) {
+                            $(this).modal('toggle');
+                        }
+                    })
+                } else {
+                    inp.parent().parent().parent().remove();
+
+
+                }
+            })
+        });
+
+        $(document).on("click", ".del-input-select-value", function (e) {
+            e.preventDefault();
+            bootbox.confirm("Desea eliminar este opción?", function (result) {
+                if (result == false) {
+                    $('.bootbox').each(function () {
+                        var pos = $(this).find(".modal-body").text()
+                        pos = pos.indexOf("Desea eliminar este opci");
+                        if (pos !== -1) {
+                            $(this).modal('toggle');
+                        }
+                    })
+                } else {
+                    $(this).parent().parent().remove();
+                }
+            })
+        });
+
+        $(document).on("click", ".edit-input-select-value", function (e) {
+            e.preventDefault();
+            var input = $(this).parent().parent().find("input[class=value-option]");
+            input.attr("disabled", false);
+            input.focus();
+
+        });
+
+        $(document).on("click", "#add-select-value", function (e) {
+            e.preventDefault();
+
+            var valueselect = $("input[name=select_value]").val(),
+                    idunput = $("#values-select .select-value-input").length + 1,
+                    idselect = $("#idselecthidden").val(),
+                    valor = $("input[name=select_value]").val(),
+                    tipo = ($("#esmulti").is(":checked")) ? "multi" : "simple",
+                    orden = $("#values-select .select-value-input").length + 1,
+                    nrespuestas = ($("#esmulti").is(":checked")) ? $("#numero-respuestas-select").val() : "";
+
+            if ($("input[name=select_value]").val()) {
+
+                s = '<div class="control-group item-input select-value-input">' +
+                        '<div class="alert alert-info">' +
+                        '<i class="icon-move bigger-130"></i>' +
+                        '<button data-dismiss="alert" class="close" type="button">' +
+                        '<i class="ace-icon fa fa-times"></i>' +
+                        '</button>' +
+                        '<input id_select="' + idselect + '" id_input="' + idunput + '" name="input-select-value-' + idunput + '" id="input-select-value-' + idunput + '" class="value-option" type="text" value="' + valor + '" disabled="disabled">' +
+                        '<div class="action-paginas hidden-phone visible-desktop action-buttons">' +
+                        '<a id="" class="red remove del-input-select-value" style="">' +
+                        '<i class="icon-trash bigger-130"></i>' +
+                        '</a>' +
+                        '<a class="edit-input-select-value green" id="">' +
+                        '<i class="icon-pencil bigger-130"></i>' +
+                        '</a>' +
+                        '</div>' +
+                        '<br>' +
+                        '</div>' +
+                        '</div>';
+
+
+                $("input[name=select_value]").val("");
+                $("#values-select").append(s);
+
+                $(function () {
+                    $("#values-select").sortable({
+                        connectWith: "#values-select",
+                        stop: function ( ) {
+                            saveOrdenValue();
+                        }
+                    });
+                    $('#values-select input').bind('click.sortable mousedown.sortable', function (ev) {
+                        ev.target.focus();
+                    });
+                });
+            }
+        });
+
+        $("#add-input").on(ace.click_event, function (e) {
+            e.preventDefault();
+            bootbox.dialog({});
+
+            $.ajax({
+                url: "formulario_edit/popup",
+                data: "",
+                success: function (data) {
+
+                    $(".bootbox .modal-body").html(data);
+
+                    $('#numero-respuestas')
+                            .ace_spinner({value: 1, min: 0, max: 200, step: 1, btn_up_class: 'btn-info', btn_down_class: 'btn-info'})
+                            .on('change', function () {
+                            });
+                    $('#numero-respuestas-select')
+                            .ace_spinner({value: 1, min: 0, max: 200, step: 1, btn_up_class: 'btn-info', btn_down_class: 'btn-info'})
+                            .on('change', function () {
+                            });
+
+                    //$(".chzn-select").chosen(); 
+
+                    t = "Largo";
+                    v = 3;
+
+                    $("#input-size-slider").css('width', '200px').slider({
+                        value: v,
+                        range: "min",
+                        min: 1,
+                        max: 3,
+                        step: 1,
+                        slide: function (event, ui) {
+                            var sizing = ['', 'Pequeño', 'Mediano', 'Largo'];
+                            var val = parseInt(ui.value);
+                            $("#tamanio-label").text(sizing[val]);
+                        }
+                    });
+
+                    $(document).on("change", "#esmulti", function () {
+
+                        if ($(this).is(":checked")) {
+                            $("#numero-respuestas-select").attr("disabled", false);
+                        } else {
+                            $("#numero-respuestas-select").attr("disabled", true);
+                        }
+                    });
+
+                    $(function () {
+                        $('textarea.mention').mentionsInput({
+                            onDataRequest: function (mode, query, callback) {
+                                var strquery = 'query=' + query;
+                                $.getJSON("<?php echo $this->url("usuarios", array("controller" => "input", "action" => "getInputsJson")) ?>", strquery, function (responseData) {
+                                    responseData = _.filter(responseData, function (item) {
+                                        return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1
+                                    });
+                                    callback.call(this, responseData);
+                                });
+                            }
+                        });
+
+                    });
+                }
+            })
+        });
+
+        $(document).on("click", ".edit-input", function (e) {
+            e.preventDefault();
+            var idinput = $(this).parent().parent().attr("id_input");
+            bootbox.dialog({});
+            $.ajax({
+                url: "formulario_edit/popupeditinput",
+                data: {idinput: idinput},
+                success: function (data) {
+
+                    var tipoinput = $(data).find("#tipoinput").val();
+
+                    $(".bootbox .modal-body").html(data);
+                    //$(".chzn-select").chosen(); 
+                    $(".bootbox .modal-body").find("#myTab li").each(function () {
+                        anchor = $(this).find("a");
+                        if (anchor.attr("tipo") == tipoinput) {
+                            anchor.trigger("click");
+                        }
+                    })
+                    value = $(data).find("#numero-respuestas").val();
+                    $('#numero-respuestas')
+                            .ace_spinner({value: value, min: 0, max: 200, step: 1, btn_up_class: 'btn-info', btn_down_class: 'btn-info'})
+                            .on('change', function () {
+                            });
+
+                    $('#numero-respuestas-select')
+                            .ace_spinner({value: 1, min: 0, max: 200, step: 1, btn_up_class: 'btn-info', btn_down_class: 'btn-info'})
+                            .on('change', function () {
+                            });
+
+                    t = $("#tamanio-hidden").val();
+
+                    v = 1;
+
+                    if (t == "Largo") {
+                        v = 3;
+                    }
+                    if (t == "Mediano") {
+                        v = 2;
+                    }
+                    if (t == "Pequeño") {
+                        v = 1;
+                    }
+
+                    $("#tamanio-label").text(t);
+
+                    $("#input-size-slider").css('width', '200px').slider({
+                        value: v,
+                        range: "min",
+                        min: 1,
+                        max: 3,
+                        step: 1,
+                        slide: function (event, ui) {
+                            var sizing = ['', 'Pequeño', 'Mediano', 'Largo'];
+                            var val = parseInt(ui.value);
+                            $("#tamanio-label").text(sizing[val]);
+                        }
+                    });
+
+                    $(document).on("change", "#esmulti", function () {
+
+                        if ($(this).is(":checked")) {
+                            $("#numero-respuestas-select").attr("disabled", false);
+                        } else {
+                            $("#numero-respuestas-select").attr("disabled", true);
+                        }
+                    });
+
+                    $(function () {
+                        $('textarea.mention').mentionsInput({
+                            onDataRequest: function (mode, query, callback) {
+                                var strquery = 'query=' + query;
+                                $.getJSON("<?php echo $this->url("usuarios", array("controller" => "input", "action" => "getInputsJson")) ?>", strquery, function (responseData) {
+                                    responseData = _.filter(responseData, function (item) {
+                                        return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1
+                                    });
+                                    callback.call(this, responseData);
+                                });
+                            }
+                        });
+
+                    });
+
+                    $(function () {
+                        $("#values-select").sortable({
+                            connectWith: "#values-select",
+                            stop: function ( ) {
+                                saveOrdenValue();
+                            }
+                        });
+                        $('#values-select input').bind('click.sortable mousedown.sortable', function (ev) {
+                            ev.target.focus();
+                        });
+                    });
+
+                    var textareaval = $(".textarea-mention").val();
+                    $('textarea.mention').val(textareaval);
+                }
+            })
+        });
+
+        $(document).on("click", ".del-item", function (e) {
+            e.preventDefault();
+            var id = $(this).parent().parent().attr("id_input");
+            item = $(this).parent().parent().parent();
+            bootbox.confirm("Desea eliminar este item?", function (result) {
+                if (result == false) {
+                    $('.bootbox').modal('toggle');
+                } else {
+                    $.ajax({
+                        url: "<?php echo $this->url("usuarios", array("controller" => "input", "action" => "delete")) ?>",
+                        type: "get",
+                        data: {
+                            id: id,
+                        },
+                        success: function (data) {
+                            var respuesta = data[0];
+                            item.remove();
+                            $('.bootbox').modal('toggle');
+                        }
+                    });
+                }
+            });
+        });
+
+
+        $("#edit-pagina").click(function (e) {
+            e.preventDefault();
+            var idpagina = $(".wizard-steps").find("li.active").attr("id_page");
+            bootbox.dialog({});
+            $.ajax({
+                url: "formulario_edit/popup-edit",
+                data: {idpagina: idpagina},
+                success: function (data) {
+                    $(".bootbox .modal-body").html(data);
+                }
+            });
+        });
+
+        $("#del-pagina").click(function (e) {
+            e.preventDefault();
+            var idpagina = $(".wizard-steps").find("li.active").attr("id_page");
+            bootbox.confirm("Desea eliminar este item?", function (result) {
+                if (result == false) {
+                    $('.bootbox').modal('toggle');
+                } else {
+                    $.ajax({
+                        url: "<?php echo $this->url("usuarios", array("controller" => "pagina", "action" => "delete")) ?>",
+                        type: "get",
+                        data: {
+                            idpagina: idpagina,
+                        },
+                        success: function (data) {
+                            var respuesta = data[0];
+                            var div = "danger";
+                            if (respuesta.error == false) {
+                                div = "success";
+                            }
+
+                            $(".bootbox .modal-body").prepend(
+                                    '<div class="alert alert-' + div + '">' +
+                                    '<button data-dismiss="alert" class="close" type="button">' +
+                                    '<i class="icon-remove"></i>' +
+                                    '</button>' +
+                                    respuesta.mensaje +
+                                    '<br>' +
+                                    '</div>');
+
+                            if (div == "success") {
+                                setTimeout(function () {
+                                    $('.bootbox').modal('toggle');
+                                    //window.location.reload();
+                                    $("input[name=last_page]").val($("ul.wizard-steps li.active").attr("id_page"));
+                                    $("#form_reload_page").submit();
+                                }, 2000);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        $("#add-pagina").click(function (e) {
+            e.preventDefault();
+            bootbox.dialog({});
+            $.ajax({
+                url: "formulario_edit/popup-pagina",
+                data: "",
+                success: function (data) {
+                    $(".bootbox .modal-body").html(data);
+                }
+            });
+        });
+
+        $(document).on("click", "#close-modal-pagina", function () {
+            var nombre = $("input[name=nombre]").val(),
+                    orden = $(".wizard-steps li").length + 1;
+
+            $.ajax({
+                url: "<?php echo $this->url("usuarios", array("controller" => "pagina", "action" => "add")) ?>",
+                type: "post",
+                data: {
+                    nombre: nombre,
+                    orden: orden
+                },
+                success: function (data) {
+                    var respuesta = data[0];
+                    var div = "danger";
+                    if (respuesta.error == false) {
+                        div = "success";
+                    }
+
+                    $(".bootbox .modal-body").prepend(
+                            '<div class="alert alert-' + div + '">' +
+                            '<button data-dismiss="alert" class="close" type="button">' +
+                            '<i class="icon-remove"></i>' +
+                            '</button>' +
+                            respuesta.mensaje +
+                            '<br>' +
+                            '</div>');
+
+                    if (div == "success") {
+                        setTimeout(function () {
+                            $('.bootbox').modal('toggle');
+                            //window.location.reload();
+                            $("input[name=last_page]").val($("ul.wizard-steps li.active").attr("id_page"));
+                            $("#form_reload_page").submit();
+                        }, 2000);
+                    }
+                }
+            });
+        });
+
+        $(document).on("click", "#close-modal-edit-input", function () {
+
+            var nombre = $("input[name=nombre]").val(),
+                    idinput = $("#idinput").val(),
+                    ayuda = $("input[name=ayuda]").val(),
+                    tamanio = $("#tamanio-label").text(),
+                    label = $("textarea.mention").val(),
+                    link_ayuda = $("input[name=link_ayuda]").val(),
+                    tipo = $("ul#myTab li.active a").attr("tipo"),
+                    obligatorio = ($("input[name=obligatorio]").prop('checked') == true) ? "1" : "0";
+
+            input_data = {};
+
+            if (tipo == "texto") {
+                input_data.respuestas_requeridas = $("#numero-respuestas").val();
+                input_data.ejemplo = $("input[name=ejemplo]").val();
+                input_data.validacion = $("select.validacion option:selected").val();
+            }
+
+            if (tipo == "fecha") {
+                input_data.tipo_fecha = $("input[name=radio-fecha]:checked").val();
+            }
+
+            if (tipo == "dropdown") {
+                input_data.select = {};
+                input_data.select.respuestas_requeridas = $("#numero-respuestas-select").val();
+                input_data.select.tipo = ($("#esmulti").is(":checked")) ? "multi" : "simple";
+
+                values = [];
+
+                $("#values-select .select-value-input").each(function (i) {
+                    value = {};
+                    value.id_input = $(this).find(".value-option").attr("id_input");
+                    value.id_select = $(this).find(".value-option").attr("id_select");
+                    value.value = $(this).find(".value-option").val();
+                    value.orden = i + 1;
+                    values.push(value);
+                })
+
+                input_data.select.values = values;
+            }
+
+            $.ajax({
+                url: "<?php echo $this->url("usuarios", array("controller" => "input", "action" => "edit")) ?>",
+                type: "post",
+                data: {
+                    idinput: idinput,
+                    nombre: nombre,
+                    label: label,
+                    tamanio: tamanio,
+                    tipo: tipo,
+                    ayuda: ayuda,
+                    ayuda: ayuda,
+                            link_ayuda: link_ayuda,
+                    input_data: input_data,
+                    obligatorio: obligatorio
+                },
+                success: function (data) {
+                    var respuesta = data[0];
+                    var div = "danger";
+                    if (respuesta.error == false) {
+                        div = "success";
+                    }
+
+                    $(".bootbox .modal-body").prepend(
+                            '<div class="alert alert-' + div + '">' +
+                            '<button data-dismiss="alert" class="close" type="button">' +
+                            '<i class="icon-remove"></i>' +
+                            '</button>' +
+                            respuesta.mensaje +
+                            '<br>' +
+                            '</div>');
+
+                    if (div == "success") {
+                        setTimeout(function () {
+                            $('.bootbox').modal('toggle');
+                            //window.location.reload();
+                            $("input[name=last_page]").val($("ul.wizard-steps li.active").attr("id_page"));
+                            $("#form_reload_page").submit();
+                        }, 2000);
+                    }
+                }
+            });
+        });
+
+        $(document).on("click", "#close-modal-edit-pagina", function () {
+            $(".wizard-steps li").each(function (i) {
+                var at = $(this).attr("class");
+                if (at.indexOf("active") !== -1) {
+                    orden = i;
+                    return false;
+                }
+            })
+
+            var nombre = $("input[name=nombre]").val(),
+                    idpagina = $("#idpagina").val();
+
+            $.ajax({
+                url: "<?php echo $this->url("usuarios", array("controller" => "pagina", "action" => "edit")) ?>",
+                type: "post",
+                data: {
+                    idpagina: idpagina,
+                    nombre: nombre,
+                    orden: orden
+                },
+                success: function (data) {
+                    var respuesta = data[0];
+                    var div = "danger";
+                    if (respuesta.error == false) {
+                        div = "success";
+                    }
+
+                    $(".bootbox .modal-body").prepend(
+                            '<div class="alert alert-' + div + '">' +
+                            '<button data-dismiss="alert" class="close" type="button">' +
+                            '<i class="icon-remove"></i>' +
+                            '</button>' +
+                            respuesta.mensaje +
+                            '<br>' +
+                            '</div>');
+
+                    if (div == "success") {
+                        setTimeout(function () {
+                            $('.bootbox').modal('toggle');
+                            //window.location.reload();
+                            val = $("ul.wizard-steps li.active").attr("id_page");
+                            $("input[name=last_page]").val(val);
+                            $("#form_reload_page").submit();
+                        }, 2000);
+                    }
+                }
+            });
+
+        });
+
+        function addControlHtml(id, nombre, label) {
+            var s =
+                    '<div class="control-group item-input">' +
+                    '<div class="alert alert-info" id_input="' + id + '">' +
+                    '<i class="icon-move bigger-130"></i>' +
+                    '<button data-dismiss="alert" class="close" type="button">' +
+                    '<i class="ace-icon fa fa-times"></i>' +
+                    '</button>' +
+                    '<strong>[' + nombre + ']</strong>' + label +
+                    '<div class="action-paginas hidden-phone visible-desktop action-buttons">' +
+                    '<a href="#" class="green edit-input">' +
+                    '<i class="icon-pencil bigger-130"></i>' +
+                    '</a>' +
+                    '<a href="#" class="red remove del-item">' +
+                    '<i class="icon-trash bigger-130"></i>' +
+                    '</a>' +
+                    '</div>' +
+                    '<br>' +
+                    '</div>' +
+                    '</div>';
+
+            $("#step-container .active #inputs-collections").append(s);
+        }
+
+        $(document).on("click", "#close-modal", function () {
+            var
+                    id_pagina = $(".wizard-steps li.active").attr("id_page"),
+                    nombre = $("input[name=nombre]").val(),
+                    label = $(".mention").val(),
+                    obligatorio = ($("input[name=obligatorio]").prop('checked') == true) ? "1" : "0",
+                    tipo = $("#myTab li.active a").attr("tipo"),
+                    ayuda = $("input[name=ayuda]").val(),
+                    tamanio = $("#tamanio-label").text(),
+                    link_ayuda = $("input[name=link_ayuda]").val(),
+                    orden = $("#inputs-collections").find(".item-input").length + 1;
+
+            input_data = {};
+
+            if (tipo == "texto") {
+                input_data.respuestas_requeridas = $("#numero-respuestas").val();
+                input_data.ejemplo = $("input[name=ejemplo]").val();
+                input_data.validacion = $("select.validacion option:selected").val();
+            }
+
+            if (tipo == "fecha") {
+                input_data.tipo_fecha = $("input[name=radio-fecha]:checked").val();
+            }
+
+            if (tipo == "dropdown") {
+                input_data.select = {};
+                input_data.select.respuestas_requeridas = $("#numero-respuestas-select").val();
+                input_data.select.tipo = ($("#esmulti").is(":checked")) ? "multi" : "simple";
+
+                values = [];
+
+                $("#values-select .select-value-input").each(function (i) {
+                    value = {};
+                    value.id = $(this).find(".value-option").attr("id_input");
+                    value.value = $(this).find(".value-option").val();
+                    value.orden = i + 1;
+                    values.push(value);
+                })
+
+                input_data.select.values = values;
+            }
+
+            $.ajax({
+                url: "<?php echo $this->url("usuarios", array("controller" => "input", "action" => "add")) ?>",
+                type: "post",
+                data: {
+                    id_pagina: id_pagina,
+                    nombre: nombre,
+                    label: label,
+                    tamanio: tamanio,
+                    link_ayuda: link_ayuda,
+                    obligatorio: obligatorio,
+                    tipo: tipo,
+                    ayuda: ayuda,
+                    input_data: input_data,
+                    orden: orden
+                },
+                success: function (data) {
+                    var respuesta = data.response;
+
+
+
+                    var div = "danger";
+                    if (respuesta.error == false) {
+                        div = "success";
+                        addControlHtml(respuesta.id, nombre, label);
+                    }
+
+                    $(".bootbox .modal-body").prepend(
+                            '<div class="alert alert-' + div + '">' +
+                            '<button data-dismiss="alert" class="close" type="button">' +
+                            '<i class="icon-remove"></i>' +
+                            '</button>' +
+                            respuesta.mensaje +
+                            '<br>' +
+                            '</div>');
+
+                    if (div == "success") {
+                        setTimeout(function () {
+                            $('.bootbox').modal('toggle');
+                        }, 2000);
+                    }
+                }
+            })
+        })
+
+        $(function () {
+            $(".wizard-steps").sortable({
+                connectWith: ".wizard-steps",
+                stop: function ( ) {
+                    $(".wizard-steps li").each(function (i) {
+                        $(this).find(".step").text(i + 1);
+                    })
+
+                    saveOrden();
+                }
+            }).disableSelection();
+        });
+
+        $(function () {
+            $(".form-horizontal").sortable({
+                connectWith: ".form-horizontal",
+                stop: function ( ) {
+                    saveOrdenItem();
+                }
+            }).disableSelection();
+        });
+
+    });
+    function saveOrdenValue() {
+        var items = [];
+
+        $("#values-select .select-value-input").each(function (i) {
+            var unInput = {};
+            unInput.id = $(this).find(".alert-info:first").attr("id_input");
+            unInput.orden = i + 1;
+            items.push(unInput);
+        })
+
+        $.ajax({
+            url: "<?php echo $this->url("usuarios", array("controller" => "input", "action" => "saveordenvalue")) ?>",
+            type: "post",
+            data: {
+                items: items
+            },
+            success: function (data) {
+
+            }
+        });
+    }
+
+    function saveOrdenItem() {
+        var items = [];
+
+        $("#step-container .item-input").each(function (i) {
+            var unInput = {};
+            unInput.id = $(this).find(".alert-info:first").attr("id_input");
+            unInput.orden = i + 1;
+            items.push(unInput);
+        })
+
+        $.ajax({
+            url: "<?php echo $this->url("usuarios", array("controller" => "formulario_edit", "action" => "saveordenitems")) ?>",
+            type: "post",
+            data: {
+                items: items
+            },
+            success: function (data) {
+
+            }
+        });
+    }
+
+    function saveOrden() {
+        var paginas = [];
+
+        $(".wizard-steps li").each(function (i) {
+            var unaPagina = {};
+            unaPagina.id = $(this).attr("id_page");
+            unaPagina.orden = i + 1;
+            paginas.push(unaPagina);
+        })
+
+        $.ajax({
+            url: "<?php echo $this->url("usuarios", array("controller" => "formulario_edit", "action" => "saveordenpaginas")) ?>",
+            type: "post",
+            data: {
+                paginas: paginas
+            },
+            success: function (data) {
+
+            }
+        });
+    }
+</script>

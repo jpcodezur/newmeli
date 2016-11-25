@@ -1,0 +1,267 @@
+<script>
+	var categoriasBase = JSON.parse('<?php echo $this->categoriasBase ?>');
+	var categorias = JSON.parse('<?php echo json_encode($this->categorias) ?>');
+	categorias = categorias;
+
+	function searchCateogry(str){
+		for(var i in categoriasBase){
+			console.log(categoriasBase[i].id);
+		}
+	}
+
+</script>
+
+<div class="row-fluid">
+	<div>
+		<h2>Mapeo Categorias</h2>
+	</div>
+	<hr>
+</div>
+<div>
+	<?php
+	if ($this->flashMessenger()->hasMessages()) {
+
+		echo '<div class="alert alert-success">';
+
+		$messages = $this->flashMessenger()->getMessages();
+		foreach($messages as $message) {
+			echo $message;
+		}
+
+		echo '</div>';
+	}
+	?>
+</div>
+<script>
+
+</script>
+<div class="row-fluid">
+	<form action="<?php echo $this->basePath("usuarios/articulo/editCategoriasArticulos") ?>" method="post">
+
+		<div class="row-fluid">
+
+			<select
+				style="width:30%"
+
+				type="text"
+				id="select_geopos_categoria"
+				name="geopos_categoria_"
+
+			>
+				<option value="">Seleccionar</option>
+				<?php foreach($this->categorias as $categoria):?>
+
+					<?php $idCategoria = str_replace(".","xxx",str_replace("/","-",str_replace(" ","_",$categoria->getCategorias())));?>
+					<?php
+					$class_mapeada = "";
+					if($categoria->mlCategorias[0]->id){
+						$class_mapeada = "cat_mapeada";
+					}
+					?>
+					<option
+						value="<?php echo $categoria->getCategorias();?>"
+						id_categoria="<?php echo $idCategoria ?>"
+						class="form-control form-categorias <?php echo $class_mapeada ?>"
+					>
+						<?php echo $categoria->getCategorias();?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+			<select
+				name="ml_categoria_set[]"
+				class="js-example-basic-multiple"
+				multiple="multiple"
+				id="selected_set"
+				geopos_categoria_
+				style="width: 55%;">
+
+
+				<?php //foreach($categoria->getMlCategorias() as $mlCats): ?>
+
+				<!--<option value="<?php //echo $mlCats->id ?>" selected><?php //echo $mlCats->text ?></option>-->
+				<?php //endforeach; ?>
+			</select>
+			<input type="hidden" id="<?php echo $idCategoria ?>" class="form-control form-categorias" />
+			<select style="width: 13%;">
+				<option value="DEFAULT">Default Template</option>
+			</select>
+		</div>
+
+		<div class="row-fluid">
+			<button name="btn-mapeo-categoria" type="submit" class="btn btn-success btn-small btn-next" value="">
+				<i class="icon-save"></i>
+				Guardar
+			</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		$("#select_geopos_categoria").change(function(){
+			selected = $(this).val();
+			if(selected){
+				for (var i in categorias){
+					if(categorias[i].categorias == selected){
+						var id_categoria = $('#select_geopos_categoria option:selected').attr('id_categoria');
+						$(this).attr("name","geopos_categoria_"+id_categoria);
+						$(this).next().attr("name","ml_categoria_"+id_categoria+"[]");
+						$(this).next().attr("id","selected_"+id_categoria+"[]");
+						$("input[type=hidden]").attr("id",id_categoria);
+						var html = "";
+						for (var x in categorias[i].mlCategorias){
+							if(categorias[i].mlCategorias[x].id){
+								html += '<option value="'+categorias[i].mlCategorias[x].id+'" selected>'+categorias[i].mlCategorias[x].text+'</option>';
+							}
+						}
+						$(this).next().html(html);
+					}
+				}
+			}
+		});
+
+		//$(".js-example-basic-multiple").select2('data', {id: 100, a_key: 'Lorem Ipsum'});
+
+		$(".js-example-basic-multiple").select2({
+			placeholder: 'Select a registration',
+			allowClear: false,
+			ajax: {
+				url: "<?php echo $this->url("usuarios", array("controller" => "articulo", "action" => "getCategoriasFromMl")) ?>",
+				dataType: 'json',
+				data: function(term, page) {
+					return {
+						category: $(this).val(),
+						//id_input: $(this).attr("name"),
+					};
+				},
+				processResults: function (data, params) {
+					// parse the results into the format expected by Select2
+					// since we are using custom formatting functions we do not need to
+					// alter the remote JSON data, except to indicate that infinite
+					// scrolling can be used
+					params.page = params.page || 1;
+
+					return {
+						results: data,
+						/*pagination: {
+						 more: (params.page * 30) < data.total_count
+						 }*/
+					};
+				},
+				cache: true,
+			},
+			formatResult: FormatResult,
+			formatSelection: FormatSelection,
+		});
+
+		$(document).on("mousedown",".btn-success",function(e){
+			e.preventDefault();
+			validarCategoria();
+		})
+
+		function FormatResult(item) {
+			var markup = "";
+			if (item.name !== undefined) {
+				markup += "<option value='" + item.id + "'>" + item.name + "</option>";
+			}
+			return markup;
+		}
+
+		function FormatSelection(item) {
+			return item.name;
+		}
+		/*$(".js-example-basic-multiple").change(function(){
+		 var ids = [];
+		 var mlIds = $(this).val();
+
+		 if(mlIds){
+		 if(mlIds.length){
+		 popuplateSelect($(this),mlIds[mlIds.length-1]);
+		 }
+		 }
+
+		 return false;
+		 })*/
+
+	});
+
+	function generateSelect($element,data){
+
+		html = "";
+
+		for (var i in data) {
+			// Create the DOM option that is pre-selected by default
+			html += "<option value='"+data[i].id+"'>"+data[i].text+"</option>";
+		}
+
+		$element.html(html);
+
+	}
+
+
+
+	function popuplateSelect(select,catId){
+
+		$.getJSON( "<?php echo $this->url("usuarios", array("controller" => "articulo", "action" => "getCategoriasFromMl")) ?>", {category:catId}, function(response) {
+			res = [];
+			for (var d = 0; d < response.length; d++) {
+				res.push({text:response[d].name,id:response[d].id});
+			}
+			generateSelect(select,res);
+			select.select2("val", ["an_option_value","another_option_value"]);
+			select;
+			//select.select2.html(html);
+
+		});
+	}
+
+	function validarCategoria(){
+		var cats = $(".js-example-basic-multiple").val();
+
+		var cat = cats[cats.length-1];
+
+		ret = false;
+
+		jQuery.ajax({
+			url:"<?php echo $this->url("usuarios", array("controller" => "articulo", "action" => "validarCategoria")) ?>",
+			type:"post",
+			async:false,
+			data:{category:cat},
+			success:function(data){
+				data = JSON.parse(data.result);
+				if(data.error){
+					ret = false;
+					alert(data.message);
+					return false;
+				}
+
+				ret = true;
+
+			},
+			error:function(data){
+				ret = false;
+				return false;
+			}
+		})
+
+		if(ret){
+			$("form").submit();
+		}
+	}
+
+</script>
+<style>
+	.select2-container--default .select2-selection--multiple {
+		border: 1px solid #ccc;
+		border-radius: 0;
+	}
+	.select2-selection--multiple{
+		height: 11px !important;
+		margin-bottom: 9px;
+		min-height: 30px;
+		overflow: hidden;
+	}
+	.cat_mapeada{
+		background-color: darkseagreen;
+	}
+</style>

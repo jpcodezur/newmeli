@@ -1,0 +1,41 @@
+<div class="row-fluid">
+    <div>
+        <label>Filtros</label>
+        <div class="row-fluid">
+            <select name="level-user" required>
+                <option value="">Categoria</option>
+                <option value="4">Automoviles</option>
+                <option value="3">Inmuebles</option>
+            </select>
+            <select name="level-user" required>
+                <option value="">Estado</option>
+                <option value="4">Finalizado</option>
+                <option value="3">Sin publicar</option>
+            </select>
+        </div>
+    </div>
+    <label>25 items publicados de <?php echo $articulos["total"] ?></label>
+    <div class="progress">
+        <div
+            class="progress-bar"
+            role="progressbar"
+            aria-valuenow="2"
+            aria-valuemin="0"
+            aria-valuemax="<?php echo $articulos["total"] ?>"
+            style="min-width: 2em;
+            width: 25%;">
+            25%
+        </div>
+    </div>
+    <button name="play-publish-publicacion" type="button" class="btn btn-success btn-small btn-next" value="">
+        <i class="icon-play"></i>
+        Publicar
+    </button>
+    <button name="pause-publish-publicacion" type="button" class="btn btn-success btn-small btn-next" value="">
+        <i class="icon-stop"></i>
+        Detener
+    </button>
+</div>
+<script>
+
+</script>

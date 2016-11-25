@@ -1,0 +1,33 @@
+<?php if($this->enviado): ?>
+<div class="alert alert-block alert-success">
+    <button data-dismiss="alert" class="close" type="button">
+            <i class="icon-remove"></i>
+    </button>
+
+    <p>
+            <strong>
+                    <i class="icon-ok"></i>
+                    Well done!
+            </strong>
+            Mensaje enviado
+    </p>
+
+    <p>
+            <a id='back' href='<?php echo $this->url("usuarios",array("controller"=>"mensaje","action"=>"msgs")) ?>' class="btn btn-small btn-success">Back</a>
+    </p>
+</div>
+<?php else: ?>
+<div class="alert alert-error">
+        <button data-dismiss="alert" class="close" type="button">
+                <i class="icon-remove"></i>
+        </button>
+
+        <strong>
+                <i class="icon-remove"></i>
+                Oh snap!
+        </strong>
+
+        Msgs Error
+        <br>
+</div>
+<?php endif; ?>

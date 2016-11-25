@@ -1,0 +1,175 @@
+<h3 class="header smaller lighter blue">List <?php echo $this->params["plural"] ?></h3>
+<div role="grid" class="dataTables_wrapper" id="sample-table-2_wrapper">
+    <?php if ($this->response->getError() !== null): ?>
+        <div class="alert alert-block alert-<?php echo ($this->response->getError()) ? "error" : "success" ?>">
+            <button type="button" class="close" data-dismiss="alert">
+                <i class="icon-remove"></i>
+            </button>
+            <i class="icon-<?php echo ($this->response->getError()) ? "remove red" : "ok green" ?> "></i>
+            <?php echo $this->response->getMensaje() ?>
+        </div>
+    <?php endif; ?>
+    <div class="row-fluid">
+        <div class="span6">
+            <div id="sample-table-2_length" class="dataTables_length">
+                <label>
+                    Display 
+                    <select name="sample-table-2_length" size="1" aria-controls="sample-table-2">
+                        <option value="10" selected="selected">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    records
+                </label>
+            </div>
+        </div>
+        <div class="span6">
+            <div class="dataTables_filter" id="sample-table-2_filter"><label>Search: <input type="text" aria-controls="sample-table-2"></label></div>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered table-hover dataTable" id="sample-table-2" aria-describedby="sample-table-2_info">
+        <thead>
+            <tr role="row">
+                <th class="center sorting_disabled" role="columnheader" rowspan="1" colspan="1" style="width: 51px;" aria-label="
+                    ">
+                    <label>
+                        <input type="checkbox">
+                        <span class="lbl"></span>
+                    </label>
+                </th>
+                <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 154px;" aria-label="Domain: activate to sort column ascending">Grupo</th>
+                <?php foreach ($this->params["list_attrs"] as $param): ?>
+                    <?php
+                    if(is_array($param)){
+                        $param = array_keys($param);
+                        $param = $param[0];
+                    }
+                    ?>
+                    <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 154px;" aria-label="Domain: activate to sort column ascending"><?php echo ucwords($param) ?></th>
+                <?php endforeach; ?>
+                <th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" style="width: 146px;" aria-label=""></th>
+            </tr>
+        </thead>
+        <tbody role="alert" aria-live="polite" aria-relevant="all">
+            <?php $currentPageRange = $this->paginator->getCurrentPageNumber(); ?>
+            <?php $pageRange = $this->paginator->getPageRange(); ?>
+            <?php $end = $pageRange * $currentPageRange; ?>
+            <?php $start = ($end - $pageRange) + 1; ?>
+            <?php $count = 1; ?>
+            <?php foreach ($this->entities as $entity): ?>
+                <?php if ($count >= $start && $count <= $end): ?>
+                    <tr class="<?php echo ($count % 2 == 0) ? "odd" : "even"; ?>">
+                        <td class="center  sorting_1">
+                            <label>
+                                <input type="checkbox">
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
+                        <td class=" "><a href="#"><?php echo $entity->Grupo; ?></a></td>
+                        <?php foreach ($this->params["list_attrs"] as $param): ?>
+                        <?php
+                        
+                        if(is_array($param)):
+                            $arr = array_keys($param);
+                            $true = str_replace("%value%","enabled",$param[$arr[0]]["true"]);
+                            $false = str_replace("%value%","disable",$param[$arr[0]]["false"]);
+                            $get = "get" . ucwords($arr[0]);
+                            ?>
+                        <td class=" ">
+                            <?php if($entity->$get()):?>
+                                <a href="#"><?php echo $true; ?></a>
+                            <?php else: ?>
+                                <a href="#"><?php echo $false; ?></a>
+                            <?php endif; ?>
+                        </td>
+                        <?php else: ?>
+                            <td class=" ">
+                                <?php $get = "get" . ucwords($param); ?>
+                                <a href="#"><?php echo $entity->$get(); ?></a>
+                            </td>
+                        <?php endif; ?>
+                        <?php endforeach; ?>
+
+                        <td class="td-actions ">
+                            <div class="hidden-phone visible-desktop action-buttons">
+                                <a href="<?php echo $this->basePath("usuarios/" . $this->params["controller"] . "/edit") ?>?id=<?php echo $entity->getId() ?>" class="green">
+                                    <i class="icon-pencil bigger-130"></i>
+                                </a>
+                                <a href="<?php echo $this->url("usuarios", array("controller" => $this->params["controller"], "action" => "delete")) ?>/<?php echo $entity->getId(); ?>" class="red remove" value="<?php echo $entity->getId(); ?>">
+                                    <i class="icon-trash bigger-130"></i>
+                                </a>
+                            </div>
+                            <div class="hidden-desktop visible-phone">
+                                <div class="inline position-relative">
+                                    <button data-toggle="dropdown" class="btn btn-minier btn-yellow dropdown-toggle">
+                                        <i class="icon-caret-down icon-only bigger-120"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-icon-only dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                        <li>
+                                            <a title="" data-rel="tooltip" class="tooltip-info" href="#" data-original-title="View">
+                                                <span class="blue">
+                                                    <i class="icon-zoom-in bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a title="" data-rel="tooltip" class="tooltip-success" href="#" data-original-title="Edit">
+                                                <span class="green">
+                                                    <i class="icon-edit bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a title="" data-rel="tooltip" class="tooltip-error" href="#" data-original-title="Delete">
+                                                <span class="red">
+                                                    <i class="icon-trash bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <?php $count++; ?>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="dataTables_info" id="sample-table-2_info">Showing <?php echo (count($this->entities)<=10)?count($this->entities):10; ?> to 10 of <?php echo count($this->entities) ?> entries</div>
+        </div>
+        <div class="span6">
+            <?php
+            // add at the end of the file after the table
+            echo $this->paginationControl(
+                    // the paginator object
+                    $this->paginator,
+                    // the scrolling style; see http://zf2.readthedocs.org/en/release-2.1.4/modules/zend.paginator.usage.html#rendering-pages-with-view-scripts
+                    'sliding',
+                    // the partial to use to render the control
+                    array('partial/paginator.phtml', 'Album'),
+                    // the route to link to when a user clicks a control link
+                    array(
+                'ruta' => 'list'
+                    )
+            );
+            ?>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".remove").click(function (e) {
+            e.preventDefault();
+            var href = $(this).attr('href');
+            jConfirm('Are you sure you want to remove this user?', 'Delete?', function (ans) {
+                if (ans) {
+                    window.location = href;
+                }
+            });
+        });
+    })
+</script>

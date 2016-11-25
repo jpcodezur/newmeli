@@ -1,0 +1,209 @@
+<div class="row-fluid">
+    <div>
+        <label>Filtros</label>
+        <div class="row-fluid">
+            <select name="opt-categorias" required>
+                <option value="">Categoria</option>
+				<option value="todas">Todas</option>
+                <?php foreach($this->categorias as $categoria):?>
+                <option value="<?php echo $categoria->getCategorias() ?>"><?php echo $categoria->getCategorias() ?></option>
+                <?php endforeach;?>
+            </select>
+            <select name="opt-estado" required>
+                <option value="">Estado</option>
+                <?php foreach($this->estados as $estado):?>
+                    <?php if(isset($estado["estado"])): ?>
+                        <option value="<?php echo $estado["id"] ?>"><?php echo $estado["estado"] ?></option>
+                    <?php endif; ?>
+                <?php endforeach;?>
+            </select>
+			<select name="opt-accion" required>
+                <option value="">Accion</option>
+            </select>
+			<button name="play-pause-publish-publicacion" status="play" type="button" class="btn btn-success btn-small btn-next" value="">
+				<i class="icon-play"></i>
+				<span>Iniciar</span>
+			</button>
+        </div>
+
+    </div>
+	<div id="msgBarraProgreso" style="display:none">
+		<label><span id="item-publicados">0</span> items procesados de <span id="total-item-publicados">0</span></label>
+	</div>
+    <div class="progress">
+        <div
+            class="progress-bar"
+            role="progressbar"
+            aria-valuenow="2"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            style="min-width: 2em;
+            width: 0%;">
+            0%
+        </div>
+    </div>
+</div>
+<script>
+    jQuery(document).ready(function(){
+
+        var filters = {},
+			play = false,
+			procesados = false;
+
+        /* START FILTRAR */
+        jQuery("select[name=opt-estado],select[name=opt-categorias]").change(function(){
+			jQuery("#msgBarraProgreso").show();
+            filters.estado = jQuery("select[name=opt-estado]").val();
+            filters.categorias = jQuery("select[name=opt-categorias]").val();
+            jQuery.ajax({
+                url:"<?php echo $this->url("usuarios", array("controller" => "articulo", "action" => "getTotalArticulosFilter")) ?>",
+                type:"post",
+                data:{filters:filters},
+                success:function(data){
+                    var total = data.total;
+                    var itemsPublicados = jQuery("#item-publicados").text();
+                    var porcentaje = ((itemsPublicados/total) * 100).toFixed(3);
+
+                    //jQuery(".progress div").attr("aria-valuemax",porcentaje);
+                    //jQuery(".progress div").text(total);
+                    //jQuery(".progress div").css("width",porcentaje+"%")
+                    jQuery("#total-item-publicados").text(total);
+					
+					jQuery("#item-publicados").text("0");
+					jQuery(".progress div").attr("aria-valuemax","0");
+					jQuery(".progress div").text("0%");
+					jQuery(".progress div").css("width","0");
+                }
+            })
+        });
+        /* END FILTRAR */
+
+		/* Click en boton de iniciar */
+        jQuery("button[name=play-pause-publish-publicacion]").click(function(){
+			//Si esta en play lo pongo en stop y vice versa
+			jQuery("#msgBarraProgreso").show();
+            if(jQuery(this).attr("status")=="play"){
+				procesados = 0;
+				play = true;
+				//Valido se haya seleccionado los select
+				estado = jQuery("select[name=opt-estado]").val();
+				categorias = jQuery("select[name=opt-categorias]").val();
+				if(!estado){
+					alert("Seleccione un estado");
+					return false;
+				}
+
+				if(!categorias){
+					alert("Seleccione la(s) categorias");
+					return false;
+				}
+
+				jQuery(this).attr("status","stop");
+                jQuery(this).find("i").attr("class","icon-stop");
+				jQuery(this).find("span").text("Detener");
+				publicar();
+				
+            }else{
+				play = false;
+				jQuery(this).attr("status","play");
+                jQuery(this).find("i").attr("class","icon-play");
+				jQuery(this).find("span").text("Iniciar");
+            }
+        });
+
+		jQuery("select[name=opt-estado").change(function(){
+			
+			var estado = jQuery("select[name=opt-estado").val();
+			if(estado){
+				var html = '<option value="">Accion</option>';
+				switch(estado){
+					case '1':
+						html += '<option value="PUBLICAR">PUBLICAR</option>';
+						break;
+					case '2':
+						html += '<option value="FINALIZAR">FINALIZAR</option>';
+						html += '<option value="PAUSAR">PAUSAR</option>';
+						break;
+					case '3':
+						html += '<option value="REPUBLICAR">REPUBLICAR</option>';
+						break;
+					case '4':
+						html += '<option value="DESPAUSAR">DESPAUSAR</option>';
+						break;
+				}
+				jQuery("select[name=opt-accion]").html(html);
+			}
+		});
+
+		function publicar(){
+			filters.estado = jQuery("select[name=opt-estado]").val();
+            filters.categorias = jQuery("select[name=opt-categorias]").val();
+			filters.accion = jQuery("select[name=opt-accion]").val();
+			
+			jQuery.ajax({
+				url:"<?php echo $this->url("usuarios", array("controller" => "articulo", "action" => "publicarArticulo")) ?>",
+				data:{filters:filters},
+				type:"post",
+				success:function(data){
+					
+					if(typeof data.httpCode !== "undefined"){
+						if(data.httpCode == "101"){
+							procesados = total;
+						}
+					}
+					
+					if(data.error == true){
+						play = false;
+						jQuery("button[name=play-pause-publish-publicacion]").attr("status","play");
+						jQuery("button[name=play-pause-publish-publicacion]").find("i").attr("class","icon-play");
+						jQuery("button[name=play-pause-publish-publicacion]").find("span").text("Iniciar");
+						alert(data.body);
+					}
+					
+					if(data.error.length){
+						play = false;
+						jQuery("button[name=play-pause-publish-publicacion]").attr("status","play");
+						jQuery("button[name=play-pause-publish-publicacion]").find("i").attr("class","icon-play");
+						jQuery("button[name=play-pause-publish-publicacion]").find("span").text("Iniciar");
+						alert(data.message);
+					}
+					
+					if(play){
+						
+						var total = jQuery("#total-item-publicados").text();
+						total = total * 1;
+						if(total>procesados){
+							procesados++;
+							var porcentaje = ((procesados/total) * 100).toFixed(3);
+							jQuery(".progress div").attr("aria-valuemax",porcentaje);
+							jQuery(".progress div").text(parseInt(porcentaje)+"%");
+							jQuery(".progress div").css("width",parseInt(porcentaje)+"%")
+							jQuery("#total-item-publicados").text(total);
+							jQuery("#item-publicados").text(procesados);
+							publicar();
+						}else{
+							play = false;
+							jQuery("button[name=play-pause-publish-publicacion]").attr("status","play");
+							jQuery("button[name=play-pause-publish-publicacion]").find("i").attr("class","icon-play");
+							jQuery("button[name=play-pause-publish-publicacion]").find("span").text("Iniciar");
+							alert("Proceso finalizado");
+						}
+					}
+					console.log(data);
+				},
+				error:function(){
+					play = false;
+					alert("Ocurrio un error. Por favor, vuelva a intentarlo mas tarde.");
+				}
+			});
+		}
+
+    });
+</script>
+<style>
+.progress{
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+}
+</style>

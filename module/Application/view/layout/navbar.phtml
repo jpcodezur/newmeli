@@ -1,0 +1,187 @@
+<?php 
+$usuario = new \Usuarios\Model\Entity\Usuario();
+if(isset($_SESSION["miSession"]["usuario"])){
+    $usuario = $_SESSION["miSession"]["usuario"]; 
+}
+
+$alertas = $this->alertas->getAlertasUsuario($usuario->getId());
+$mensajes = $this->mensajes->getMensajesUsuario($usuario->getId());
+$totalAlertas = count($alertas);
+$totalMensajes = count($mensajes);
+?>
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="#">
+                <small>
+                    <i class="icon-ok"></i>
+                    GeoMl
+                </small>
+            </a><!--/.brand-->
+
+            <ul class="nav ace-nav pull-right">
+
+                <li class="purple">
+                    <a href="#" class="dropdown-toggle dropdown-toggle-alertas" data-toggle="dropdown">
+                        <i class="icon-bell-alt icon-animated-bell"></i>
+                        <span class="badge badge-important"><?php echo $totalAlertas ?></span>
+                    </a>
+
+                    <ul class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-closer">
+                        <li class="nav-header">
+                            <i class="icon-warning-sign"></i>
+                            <?php echo $totalAlertas ?> Notifications
+                        </li>
+                        <?php $countAlertas = 0; ?>
+                        <?php foreach($alertas as $a):?>
+                            <?php if($countAlertas < 5): ?>
+                                <li>
+                                    <a href="<?php echo $this->url("usuarios",array("controller"=>"alerta","action"=>"view","id"=>$a->getId())) ?>">
+                                        <div class="clearfix">
+                                            <span class="pull-left">
+                                                <i class="btn btn-mini no-hover btn-pink icon-comment"></i>
+                                                <?php echo $a->getAsunto() ?>
+                                            </span>
+                                            <span class="pull-right badge badge-info"></span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <?php $countAlertas++; ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php if($totalAlertas): ?>
+                            <li>
+                                <a href="<?php echo $this->url("usuarios",array("controller"=>"alerta","action"=>"index")) ?>">
+                                    See all notifications
+                                    <i class="icon-arrow-right"></i>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+
+                <li class="green">
+                    <a href="#" class="dropdown-toggle dropdown-toggle-mensajes" data-toggle="dropdown">
+                        <i class="icon-envelope icon-animated-vertical"></i>
+                        <span class="badge badge-success"><?php echo $totalMensajes ?></span>
+                    </a>
+
+                    <ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer">
+                        <li class="nav-header">
+                            <i class="icon-envelope-alt"></i>
+                            <?php echo $totalMensajes ?> Messages
+                        </li>
+                        <?php $countMensajes = 0; ?>
+                        <?php foreach($mensajes as $m):?>
+                            <?php if($countMensajes < 5): ?>
+                                <li>
+                                    <a href="<?php echo $this->url("usuarios",array("controller"=>"mensaje","action"=>"view","id"=>$m->getId())) ?>">
+                                        <?php if($m->getAvatarEvaluador()): ?>
+                                        <img width="38" src="data:image/jpeg;base64,<?php echo base64_encode($m->getAvatarEvaluador()); ?>">
+                                    <?php else: ?>
+                                        <img alt="Avatar" src="<?php echo $this->basePath('assets/avatars/default-avatar.png') ?>" class="nav-user-photo">
+                                    <?php endif; ?>
+                                        <span class="msg-body">
+                                            <span class="msg-title">
+                                                <span class="blue"><?php echo $m->getEvaluador() ?></span>
+                                                <?php echo (strlen(strip_tags($m->getMensaje()))<20)? strip_tags($m->getMensaje()) : substr(strip_tags($m->getMensaje()), 0, 20)."..." ?>
+                                            </span>
+
+                                            <span class="msg-time">
+                                                <i class="icon-time"></i>
+                                                <span><?php echo $m->getFechaCreado() ?></span>
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <?php $countMensajes++ ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <li>
+                            <a href="<?php echo $this->url("usuarios",array("controller"=>"mensaje","action"=>"msgs")) ?>">
+                                See all messages
+                                <i class="icon-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="light-blue">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                        <?php if(($usuario)): ?>
+                            <?php //var_dump($usuario) ?>
+                            <?php if($usuario->getAvatar()): ?>
+                                <img width="38" src="data:image/jpeg;base64,<?php echo base64_encode($usuario->getAvatar()); ?>">
+                            <?php else: ?>
+                                <img alt="Avatar" src="<?php echo $this->basePath('assets/avatars/default-avatar.png') ?>" class="nav-user-photo">
+                            <?php endif; ?>
+                        
+                        <!--<img alt="Jason's Photo" src="<?php echo $this->basePath('assets/avatars/user.jpg') ?>" class="nav-user-photo">-->
+                        <span class="user-info">
+                            <small>Welcome,</small>
+                            <?php if(isset($usuario)) echo $usuario->getNombre(); ?>
+                        </span>
+                        <?php endif; ?>
+                        <i class="icon-caret-down"></i>
+                    </a>
+
+                    <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
+                        <!--<li>
+                            <a href="<?php //echo $this->basePath('usuarios/usuario/settings'); ?>">
+                            <!--<a href='http://localhost/tutesisenlinea/public/usuarios/settings'>-->
+                                <!--<i class="icon-cog"></i>
+                                Settings
+                            </a>
+                        </li>-->
+
+                        <li>
+                            <a href="<?php echo $this->basePath('usuarios/usuario/profile'); ?>">
+                                <i class="icon-user"></i>
+                                Profile
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="<?php echo $this->url("usuarios",array("controller"=>"login","action"=>"logout")) ?>">
+                                <i class="icon-off"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul><!--/.ace-nav-->
+        </div><!--/.container-fluid-->
+    </div><!--/.navbar-inner-->
+</div>
+<script>
+    $(document).ready(function(){
+        /*$(".dropdown-toggle-mensajes").click(function(){
+            var id = "<?php //echo $usuario->getId() ?>";
+            $.ajax({
+                url: "<?php //echo $this->url("usuarios", array("controller" => "mensaje", "action" => "setvistos")) ?>",
+                data:{id:id},
+                success:function(data){
+                    if(data == "0"){
+                        $(".badge-success").text("0");
+                    }
+                }
+            });
+        });*/
+        
+        $(".dropdown-toggle-alertas").click(function(){
+            var id = "<?php echo $usuario->getId() ?>";
+            $.ajax({
+                url: "<?php echo $this->url("usuarios", array("controller" => "alerta", "action" => "setvistos")) ?>",
+                data:{id:id},
+                success:function(data){
+                    if(data == "0"){
+                        $(".badge-important").text("0");
+                    }
+                }
+            });
+        });
+        
+    })
+</script>    

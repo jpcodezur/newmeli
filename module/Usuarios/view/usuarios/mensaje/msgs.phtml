@@ -1,0 +1,110 @@
+<div class="row-fluid">
+    <div class="span12">
+        <div class="btn-group">
+            <button id="redactar" class="btn btn-purple">Redactar</button>
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Recibidos
+                <i class="icon-angle-down icon-on-right"></i>
+            </button>
+
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="<?php echo $this->url("usuarios",array("controller"=>"mensaje","action"=>"msgs")) ?>">Recibidos</a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url("usuarios",array("controller"=>"mensaje","action"=>"msgsenviados")) ?>">Enviados</a>
+                </li>
+            </ul>
+        </div>
+        <hr>
+        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <tbody>
+                <?php if ($this->mensajes) : ?>
+                    <?php foreach ($this->mensajes as $mensaje) : ?>
+                        <tr>
+                            <td class="center">
+                                <label>
+                                    <input type="checkbox" />
+                                    <span class="lbl"></span>
+                                </label>
+                            </td>
+                            <?php
+                            $b = "";
+                            $bf = "";
+                            if ($mensaje->getEstado() == "1") {
+                                $b = "<b>";
+                                $bf = "</b>";
+                            }
+                            ?>
+                            <td><a href="<?php echo $this->url("usuarios", array("controller" => "mensaje", "action" => "view", "id" => $mensaje->getId())) ?>"><?php echo $b . $mensaje->getEvaluador() . $bf ?></a></td>
+                            <td><a href="<?php echo $this->url("usuarios", array("controller" => "mensaje", "action" => "view", "id" => $mensaje->getId())) ?>"><?php echo $b . $mensaje->getAsunto() . $bf ?></a></td>
+                            <td><a href="<?php echo $this->url("usuarios", array("controller" => "mensaje", "action" => "view", "id" => $mensaje->getId())) ?>"><?php echo $b ?><?php echo (strlen($mensaje->getMensaje()) < 50) ? $mensaje->getMensaje() : substr($mensaje->getMensaje(), 0, 50) . "..."; ?><?php echo $bf ?></a></td>
+                            <td><a href="<?php echo $this->url("usuarios", array("controller" => "mensaje", "action" => "view", "id" => $mensaje->getId())) ?>"><?php echo $b . $mensaje->getFechaCreado() . $bf ?></a></td>
+                            <td class="td-actions ">
+                                <div class="hidden-phone visible-desktop action-buttons">
+                                    <a href="<?php echo $this->url("usuarios",array("controller"=>"mensaje","action"=>"delete")) ?>/<?php echo $mensaje->getId(); ?>" class="red remove" value="<?php echo $mensaje->getId(); ?>">
+                                        <i class="icon-trash bigger-130"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+
+                </tbody>
+            </table>
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="dataTables_info" id="sample-table-2_info">Showing 1 to 10 of 23 entries</div>
+                </div>
+                <div class="span6">
+                    <?php
+                    // add at the end of the file after the table
+                    echo $this->paginationControl(
+                            // the paginator object
+                            $this->paginator,
+                            // the scrolling style; see http://zf2.readthedocs.org/en/release-2.1.4/modules/zend.paginator.usage.html#rendering-pages-with-view-scripts
+                            'sliding',
+                            // the partial to use to render the control
+                            array('partial/paginator.phtml', 'evaluacion'),
+                            // the route to link to when a user clicks a control link
+                            array(
+                        'ruta' => 'list'
+                            )
+                    );
+                    ?>
+                <?php else: ?>
+                    <div class="alert alert-error">
+                        <button data-dismiss="alert" class="close" type="button">
+                            <i class="icon-remove"></i>
+                        </button>
+
+                        <strong>
+                            <i class="icon-remove"></i>
+                            Oh snap!
+                        </strong>
+
+                        Msgs Error
+                        <br>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div><!--/span-->
+</div><!--/row-->
+<script>
+    $(document).ready(function(){
+       $("#redactar").click(function(){
+           window.location = "<?php echo $this->url("usuarios",array("controller"=>"mensaje","action"=>"new"))?>";
+       }) 
+       
+        $(".remove").click(function(e){
+            e.preventDefault();
+            var href = $(this).attr('href');
+            jConfirm('Are you sure you want to remove this message?', 'Delete?', function (ans) {
+                if (ans){
+                    window.location = href;
+                }
+            });
+        });
+    });
+</script>

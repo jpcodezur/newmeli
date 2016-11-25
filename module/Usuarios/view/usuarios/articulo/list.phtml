@@ -1,0 +1,294 @@
+<?php
+$get_estado = "";
+$get_categoria = "";
+$get_input_busqueda = "";
+if(isset($_GET["estado"]) && $_GET["estado"]){
+    $get_estado = $_GET["estado"];
+}
+if(isset($_GET["categoria"]) && $_GET["categoria"]){
+    $get_categoria = $_GET["categoria"];
+}
+if(isset($_GET["inputBusqueda"]) && $_GET["inputBusqueda"]){
+    $get_input_busqueda = $_GET["inputBusqueda"];
+}
+?>
+<h3 class="header smaller lighter blue">Articulos</h3>
+<div role="grid" class="dataTables_wrapper" id="sample-table-2_wrapper">
+    <div class="row-fluid">
+        <div class="">
+            <div id="sample-table-2_length" class="dataTables_length">
+                <label>
+                    <select  name="filtro_estado" size="1" aria-controls="sample-table-2">
+                        <option value="" selected="selected">Estado</option>
+                        <?php foreach ($this->estados as $estado): ?>
+                        <?php
+                            $selected = "";
+
+                            if($get_estado == $estado["estado"]){
+                                $selected = "selected='selected'";
+                            }
+                        ?>
+                        <option <?php echo " $selected " ?>value="<?php echo $estado["estado"] ?>"><?php echo $estado["estado"] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <select  name="filtro_categoria" size="1" aria-controls="sample-table-2">
+                        <option value="" selected="selected">Categoria</option>
+                        <?php foreach($this->categorias as $categoria):?>
+
+                            <?php $idCategoria = str_replace(".","xxx",str_replace("/","-",str_replace(" ","_",$categoria->getCategorias())));?>
+                            <?php
+                            $class_mapeada = "";
+                            if($categoria->mlCategorias[0]->id){
+                                $class_mapeada = "cat_mapeada";
+                            }
+
+                            $selected = "";
+
+                            if($get_categoria == $categoria->getCategorias()){
+                                $selected = "selected='selected'";
+                            }
+                            ?>
+                            <option
+                                value="<?php echo $categoria->getCategorias();?>"
+                                id_categoria="<?php echo $idCategoria ?>"
+                                <?php echo " $selected "; ?>
+                                class="form-control form-categorias <?php echo $class_mapeada ?>"
+                            >
+                                <?php echo $categoria->getCategorias();?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <input name="filtro_busqueda" type="text" aria-controls="sample-table-2" placeholder="Buscar" value="<?php echo $get_input_busqueda ?>">
+                    <a id="filtrar_btn" type="button" href ="/usuarios/articulo/list/" class="btn">Filtrar</a>
+                </label>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered table-hover dataTable" id="sample-table-2" aria-describedby="sample-table-2_info">
+        <thead>
+            <tr role="row">
+                <th class="center sorting_disabled" role="columnheader" rowspan="1" colspan="1" style="width: 51px;" aria-label="
+                    ">
+                    <label>
+                        <input type="checkbox">
+                        <span class="lbl"></span>
+                    </label>
+                </th>
+                <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 154px;" aria-label="Domain: activate to sort column ascending">Id</th>
+                <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 111px;" aria-label="Price: activate to sort column ascending">Nombre</th>
+                <th class="hidden-480 sorting" role="columnheader" tabindex="0" aria-controls="sample-table-2" rowspan="1" colspan="1" style="width: 121px;" aria-label="Clicks: activate to sort column ascending">Estado</th>
+
+                <th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" style="width: 146px;" aria-label="">
+                    <select name="action">
+                        <option value="">ACCION</option>
+                        <option value="PUBLICAR">PUBLICAR</option>
+                        <option value="REPUBLICAR">REPUBLICAR</option>
+                        <option value="FINALIZAR">FINALIZAR</option>
+                        <option value="PAUSAR">PAUSAR</option>
+                    </select>
+                    <button>Ir</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody role="alert" aria-live="polite" aria-relevant="all">
+            <?php $currentPageRange = $this->paginator->getCurrentPageNumber(); ?>
+            <?php $pageRange = $this->paginator->getPageRange(); ?>
+            <?php $end = $pageRange * $currentPageRange; ?>
+            <?php $start = ($end - $pageRange) + 1; ?>
+            <?php $count = 1; ?>
+            <?php foreach ($this->articulos as $articulo): ?>
+                <?php if ($count >= $start && $count <= $end): ?>
+                    <tr class="<?php echo ($count % 2 == 0) ? "odd" : "even"; ?>">
+                        <td class="center  sorting_1">
+                            <label>
+                                <input type="checkbox">
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
+                        <td class=" ">
+                            <a href="#"><?php echo $articulo->getId(); ?></a>
+                        </td>
+                        <td class=" "><?php echo $articulo->getNombre(); ?></td>
+                        <td class="hidden-480 "><?php echo $articulo->getEstado(); ?></td>
+                        <td class="td-actions ">
+                            <div class="hidden-phone visible-desktop action-buttons">
+                                <a href="<?php echo $this->basePath("usuarios/usuario/edit") ?>?id=<?php echo $articulo->getId() ?>" class="green">
+                                    <i class="icon-pencil bigger-130"></i>
+                                </a>
+                                <a href="<?php echo $this->url("usuarios",array("controller"=>"usuario","action"=>"delete")) ?>/<?php echo $articulo->getId(); ?>" class="red remove" value="<?php echo $articulo->getId(); ?>">
+                                    <i class="icon-trash bigger-130"></i>
+                                </a>
+                            </div>
+                            <div class="hidden-desktop visible-phone">
+                                <div class="inline position-relative">
+                                    <button data-toggle="dropdown" class="btn btn-minier btn-yellow dropdown-toggle">
+                                        <i class="icon-caret-down icon-only bigger-120"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-icon-only dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                        <li>
+                                            <a title="" data-rel="tooltip" class="tooltip-info" href="#" data-original-title="View">
+                                                <span class="blue">
+                                                    <i class="icon-zoom-in bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a title="" data-rel="tooltip" class="tooltip-success" href="#" data-original-title="Edit">
+                                                <span class="green">
+                                                    <i class="icon-edit bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a title="" data-rel="tooltip" class="tooltip-error" href="#" data-original-title="Delete">
+                                                <span class="red">
+                                                    <i class="icon-trash bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <?php $count++; ?>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="dataTables_info" id="sample-table-2_info">Showing 1 to 10 of 23 entries</div>
+        </div>
+        <div class="span6">
+            <?php
+            // add at the end of the file after the table
+            echo $this->paginationControl(
+                    // the paginator object
+                    $this->paginator,
+                    // the scrolling style; see http://zf2.readthedocs.org/en/release-2.1.4/modules/zend.paginator.usage.html#rendering-pages-with-view-scripts
+                    'sliding',
+                    // the partial to use to render the control
+                    array('partial/paginator.phtml', 'Album'),
+                    // the route to link to when a user clicks a control link
+                    array(
+                'ruta' => 'list'
+                    )
+            );
+            ?>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        jQuery("th input[type=checkbox]").click(function(){
+        if(jQuery("th input[type=checkbox]").is(":checked")){
+            jQuery("td input[type=checkbox]").each(function(){
+                if(!jQuery(this).is(":checked")) {
+                    jQuery(this).click();
+                }
+            });
+        }else{
+            jQuery("td input[type=checkbox]").each(function(){
+                if (jQuery(this).is(":checked")) {
+                    jQuery(this).click();
+                }
+            });
+        }
+    });
+
+        updateFiltrarUrl = function(){
+            var
+            url = "/usuarios/articulo/list/";
+            busqueda = "";
+            estado = $("select[name=filtro_estado]").val(),
+                categoria =$("select[name=filtro_categoria]").val(),
+                inputBusqueda = $("input[name=filtro_busqueda]").val();
+
+            if(estado){
+                busqueda += "estado="+estado+"&";
+            }
+
+            if(categoria){
+                busqueda += "categoria="+categoria+"&";
+            }
+
+            if(inputBusqueda){
+                busqueda += "inputBusqueda="+inputBusqueda+"&";
+            }
+
+            if(busqueda){
+                busqueda = busqueda.substring(0,busqueda.length-1);
+                //busqueda = url+"?"+busqueda;
+
+            }
+            if(busqueda){
+                $("#filtrar_btn").attr("href",url+"?"+busqueda);
+                /*$(".pagination li a").each(function(){
+                    page = $(this).attr("href");
+                    posFiltros = page.indexOf("/?");
+                    if(posFiltros !== -1){
+                        page = page.substring(0,posFiltros);
+
+                    }
+                    $(this).attr("href", page+"/?"+busqueda);
+                })*/
+            }
+
+        }
+
+        $("select[name=filtro_estado], select[name=filtro_categoria]").change(function(){
+            updateFiltrarUrl();
+        })
+
+        $("input[name=filtro_busqueda]").keyup(function(){
+            updateFiltrarUrl();
+        })
+
+        function initPaginationFilters(){
+            var input_busqueda = "<?php echo $get_input_busqueda ?>";
+            var select_estado = "<?php echo $get_estado ?>";
+            var select_categoria = "<?php echo $get_categoria ?>";
+            var busqueda = "";
+
+            if(input_busqueda){
+                busqueda += "inputBusqueda"+input_busqueda+"&";
+            }
+
+            if(select_estado){
+                busqueda += "estado="+select_estado+"&";
+            }
+
+            if(select_categoria){
+                busqueda += "categoria="+select_categoria+"&";
+            }
+
+            if(busqueda){
+                busqueda = busqueda.substring(0,busqueda.length-1);
+                $(".pagination li a").each(function(){
+                    $(this).attr("href", $(this).attr("href")+"/?"+busqueda);
+                })
+            }
+        };
+
+        initPaginationFilters();
+
+        $(".remove").click(function(e){
+            e.preventDefault();
+            var href = $(this).attr('href');
+            jConfirm('Are you sure you want to remove this item?', 'Delete?', function (ans) {
+                if (ans){
+                    window.location = href;
+                }
+            });
+        });
+    })
+</script>
+<style>
+    .dataTables_length select{
+        width: auto !important;
+    }
+    .action-buttons{
+        float: right;
+    }
+</style>

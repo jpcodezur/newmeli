@@ -1,0 +1,1249 @@
+<?php $inputs_ayuda = array();?>
+<?php 
+$inputs_validar_numerico = array();
+$inputs_validar_email = array();
+?>
+
+<div class="page-content">
+    <div class="page-header position-relative">
+        <h1>
+            Asistente para la confeccion de la Tesis
+
+        </h1>
+    </div><!--/.page-header-->
+
+    <div class="row-fluid">
+        <div class="span12">
+            <!--PAGE CONTENT BEGINS-->
+
+
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-header widget-header-blue widget-header-flat">
+                            <h4 class="lighter">New Item Wizard</h4>
+
+                        </div>
+
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="row-fluid">
+                                    <div id="fuelux-wizard" class="row-fluid hide" data-target="#step-container">
+                                        <ul class="wizard-steps">
+                                            <?php $count = 1; ?>
+                                            <?php foreach ($this->paginas as $pagina): ?>
+                                                <li data-target="#step<?php echo $count ?>" class="<?php echo ($this->active == $count)? "active" : "" ?>">
+                                                    <span class="step"><?php echo $count; ?></span>
+                                                    <span class="title"><?php echo $pagina->getTitulo() ?></span>
+                                                </li>
+                                                <?php $count++; ?>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                            <div class="row-fluid wizard-actions wizard-actions-top">
+                                                <a class="btn-prev">
+                                                    <i class="icon-arrow-left"></i>
+                                                    Volver (cancelar)
+                                                </a>
+
+                                                <a class="btn-next" data-last="Finish ">
+                                                    Siguiente (Guardar)
+                                                    <i class="icon-arrow-right icon-on-right"></i>
+                                                </a>
+                                            </div>
+                                    </div>
+
+                                    <div class="step-content row-fluid position-relative" id="step-container">
+                                        <?php $count = 1; ?>
+                                        <?php foreach ($this->paginas as $pagina): ?>
+                                            <div class="step-pane <?php echo ($this->active == $count)? "active" : "" ?>" id="step<?php echo $count ?>">
+                                                <h4 class="header green"><?php echo $pagina->getTitulo() ?></h4>
+                                                <form enctype="multipart/form-data" class="form-horizontal" id="sample-form" >
+                                                    <?php foreach ($pagina->getInputs() as $input): ?>
+                                                        <div class="control-group inputs-respuestas">
+                                                            <label nom="<?php echo $input->getNombre() ?>" id="label-<?php echo $input->getNombre() ?>" class="control-label" for=""><?php echo $input->getLabel() ?></label>
+                                                            <div class="controls">
+                                                                <?php 
+                                                                    $tamanio = $input->getTamanio();
+                                                                    
+                                                                    switch ($tamanio) {
+                                                                        case "Largo":
+                                                                            $tamanio = "50";
+                                                                            break;
+                                                                        case "Mediano":
+                                                                            $tamanio = "25";
+
+                                                                            break;
+                                                                        case "Pequeño":
+                                                                            $tamanio = "12.5";
+                                                                            break;
+                                                                        default:
+                                                                            $tamanio = "50";
+                                                                            break;
+                                                                    }
+                                                                    
+                                                                    if($input->getTipo()=="imagen"){
+                                                                        $tamanio = "22";
+                                                                        if($input->getControl()->getArchivo()){
+                                                                            $tamanio = "27";
+                                                                        }
+                                                                    }
+                                                                    
+                                                                    ?>
+                                                                <span class="span6 input-icon input-icon-right" style="width: <?php echo $tamanio ?>% !important">
+                                                                    <?php if($input->getTipo()=="texto"):?>
+                                                                        <?php if($input->getControl()->getRespuestasRequeridas() > 0 ):?>
+                                                                        <?php for($i = 0; $i < $input->getControl()->getRespuestasRequeridas(); $i++):?>
+                                                                        <?php $validacion = strtolower($input->getControl()->getValidacion()) ?>
+                                                                        <?php
+                                                                        if($validacion == "numerico"){
+                                                                            $inputs_validar_numerico[] = $input;
+                                                                        }
+                                                                        if($validacion == "email"){
+                                                                            $inputs_validar_email[] = $input;
+                                                                        }
+                                                                        ?>
+                                                                        <input  
+                                                                               numero_respuesta ="<?php echo $i+1 ?>"
+                                                                               placeholder="<?php echo $input->getControl()->getEjemplo() ?>" 
+                                                                               value="<?php echo $input->getRespuesta($i+1) ?>" 
+                                                                               id_input="<?php echo $input->getId() ?>" 
+                                                                               tipo="<?php echo $input->getTipo() ?>" 
+                                                                               id_pagina="<?php echo $input->getIdPagina() ?>"  
+                                                                               name="<?php echo $input->getNombre() ?>" 
+                                                                               class="control span12 <?php echo ($input->getIsMagic())?"isMagic":"" ?>" 
+                                                                               type="text" 
+                                                                               id="<?php echo $input->getNombre() ?>" <?php echo ($input->getRequired()) ? "required='required'" : "" ?>/>
+                                                                        <input type="hidden" name="hidden-<?php echo $input->getNombre() ?>" class="span12 hidden-response" type="text" id="" value="<?php echo $input->getRespuesta($i+1) ?>"/>
+                                                                        <?php endfor; ?>
+                                                                    <?php endif; ?>
+                                                                    <?php elseif($input->getTipo()=="dropdown"):?>
+                                                                    <?php
+                                                                    $sc = "";
+                                                                    $stipo = $input->getControl()->getTipo();
+                                                                    if($input->getIsMagic()){
+                                                                        $sc = "isMagic";
+                                                                    }
+                                                                    $valuesSelected = array();
+                                                                    ?>
+                                                                    <select style="width: <?php echo $tamanio*2 ?>% !important" class="control <?php echo $sc ?><?php echo ($stipo == "multi")? "chzn-select":"" ?>" <?php echo ($stipo == "multi")?"multiple='multiple'":"" ?> id_input="<?php echo $input->getId() ?>" tipo="<?php echo $input->getTipo() ?>" id_pagina="<?php echo $input->getIdPagina() ?>"  name="<?php echo $input->getNombre() ?>" <?php echo ($input->getRequired()) ? "required" : ""?>>
+                                                                        <option value="">SELECCIONAR</option>
+                                                                        <?php $control = $input->getControl();?>
+                                                                        <?php foreach($control->getValues() as $value):?>
+                                                                        <option 
+                                                                            <?php 
+                                                                            if($value->getSelected()){
+                                                                                echo "selected='selected'";
+                                                                                $valuesSelected[] = $value->getId();
+                                                                            } 
+                                                                            ?> 
+                                                                            value="<?php echo $value->getId() ?>"><?php echo $value->getValue() ?></option>
+                                                                        <?php endforeach;?>
+                                                                    </select>
+                                                                    <input type="hidden" name="hidden-<?php echo $input->getNombre() ?>" class="span12 hidden-response" type="text" id="" value="<?php echo implode(",", $valuesSelected) ?>"/>
+                                                                    <?php elseif($input->getTipo()=="fecha"):?>
+                                                                                <?php 
+                                                                                $fechaTipo = $input->getControl()->getTipoFecha(); ?>
+                                                                                <?php if($fechaTipo == "simple"): ?>
+                                                                                
+                                                                                <div class="control-group">
+                                                                                        <div class="row-fluid input-append">
+                                                                                                <input 
+                                                                                                    style="width: calc(<?php echo $tamanio*2 ?>% - 36px) ! important;"
+                                                                                                    id_input="<?php echo $input->getId() ?>" id_pagina="<?php echo $input->getIdPagina() ?>"  name="<?php echo $input->getNombre() ?>"
+                                                                                                    tipo="fecha" tipofecha="simple" class="control span10 date-picker fechadatepicker" id="id-date-picker-1" type="text" data-date-format="dd-mm-yyyy" 
+                                                                                                    value="<?php echo $input->getRespuesta() ?>"
+                                                                                                    />
+                                                                                                <input type="hidden" name="hidden-<?php echo $input->getNombre() ?>" class="span12 hidden-response" id="" value="<?php echo $input->getRespuesta() ?>"/>
+                                                                                                <span class="add-on">
+                                                                                                        <i class="icon-calendar"></i>
+                                                                                                </span>
+                                                                                        </div>
+                                                                                </div>
+                                                                                
+                                                                                <?php else: ?>
+
+                                                                                <div class="control-group">
+                                                                                        <div class="row-fluid input-prepend">
+                                                                                                <span class="add-on">
+                                                                                                        <i class="icon-calendar"></i>
+                                                                                                </span>
+
+                                                                                                <input 
+                                                                                                    style="width: calc(<?php echo $tamanio*2 ?>% - 27px) ! important;"
+                                                                                                    id_input="<?php echo $input->getId() ?>" id_pagina="<?php echo $input->getIdPagina() ?>"  name="<?php echo $input->getNombre() ?>"
+                                                                                                    tipo="fecha" tipofecha="rango" class="control span10 fechadatepicker fechadatepicker-rango" type="text" name="date-range-picker" id="id-date-range-picker-1" 
+                                                                                                    value="<?php echo $input->getRespuesta() ?>"
+                                                                                                    />
+                                                                                                <input type="hidden" name="hidden-<?php echo $input->getNombre() ?>" class="span12 hidden-response" id="" value="<?php echo $input->getRespuesta() ?>"/>
+                                                                                        </div>
+                                                                                </div>
+                                                                                
+                                                                                <?php endif; ?>
+                                                                        
+                                                                    <?php elseif($input->getTipo()=="imagen"):?>
+                                                                    <div class="widget-main">
+                                                                        
+                                                                            <input 
+                                                                                estado=""
+                                                                                type="file" 
+                                                                                id_input="<?php echo $input->getId() ?>" 
+                                                                                tipo="<?php echo $input->getTipo() ?>" 
+                                                                                id_pagina="<?php echo $input->getIdPagina() ?>"  
+                                                                                name="<?php echo $input->getNombre() ?>" 
+                                                                                class="control id-input-file" <?php //echo ($input->getRequired()) ? "required='required'" : "" ?> 
+                                                                                onchange="setImagenAjax(event)"
+                                                                                />
+                                                                                <?php if($archivo = $input->getControl()->getArchivo()): ?>
+                                                                                    <img class="imagen-control" width="38" src="data:image/jpeg;base64,<?php echo base64_encode($archivo); ?>">
+                                                                                    <a href="#" class="remove remove-imagen"><i class="icon-remove"></i></a>
+                                                                                <?php endif; ?>
+                                                                        
+                                                                    </div>
+                                                                    <?php endif;?>
+                                                                    <?php if($input->getAyuda()):?>    
+                                                                    <i class="tooltip-success icon-question-sign" data-rel="tooltip" data-placement="right" title="<?php echo $input->getAyuda(); ?>"></i>
+                                                                    <?php endif;?>
+                                                                </span>
+                                                                <?php if($input->getLinkAyuda()):?>  
+                                                                <?php $inputs_ayuda[] = $input; ?>
+                                                                <a class="link_ayuda" id="link_ayuda_<?php echo $input->getNombre() ?>" target="_blank" href="#">Tutorial</a>
+                                                                <?php endif;?>
+                                                                <!--<span class="help-inline">Something may have gone wrong</span>-->
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </form>
+                                            </div>
+                                            <?php $count++; ?>
+                                        <?php endforeach; ?>
+                                    </div>
+
+                                    <hr />
+                                    <div class="row-fluid wizard-actions">
+                                        <button class="btn-volver btn btn-danger " data-last="Finish">
+                                            Volver
+                                            <i class="icon-backward icon-on-right"></i>
+                                        </button>
+                                        
+                                        <button class="btn btn-prev">
+                                            <i class="icon-arrow-left"></i>
+                                            <!--Volver (cancelar)-->
+                                            Cancelar
+                                        </button>
+
+                                        <button class="btn btn-success btn-next btn-next-wizard" data-last="Finish ">
+                                            Guardar
+                                            <!--Siguiente (Guardar)-->
+                                            <i class="icon-arrow-right icon-on-right"></i>
+                                        </button>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div><!--/widget-main-->
+                        </div><!--/widget-body-->
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal-wizard" class="modal hide">
+                <div class="modal-header" data-target="#modal-step-contents">
+                    <ul class="wizard-steps clearfix">
+                        <li data-target="#modal-step1" class="active">
+                            <span class="step">1</span>
+                            <span class="title">Validation states</span>
+                        </li>
+
+                        <li data-target="#modal-step2">
+                            <span class="step">2</span>
+                            <span class="title">Alerts</span>
+                        </li>
+
+                        <li data-target="#modal-step3">
+                            <span class="step">3</span>
+                            <span class="title">Payment Info</span>
+                        </li>
+
+                        <li data-target="#modal-step4">
+                            <span class="step">4</span>
+                            <span class="title">Other Info</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="modal-body step-content" id="modal-step-contents">
+                    <div class="step-pane active" id="modal-step1">
+                        <div class="center">
+                            <h4 class="blue">Step 1</h4>
+                        </div>
+                    </div>
+
+                    <div class="step-pane" id="modal-step2">
+                        <div class="center">
+                            <h4 class="blue">Step 2</h4>
+                        </div>
+                    </div>
+
+                    <div class="step-pane" id="modal-step3">
+                        <div class="center">
+                            <h4 class="blue">Step 3</h4>
+                        </div>
+                    </div>
+
+                    <div class="step-pane" id="modal-step4">
+                        <div class="center">
+                            <h4 class="blue">Step 4</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer wizard-actions">
+                    <button class="btn btn-small btn-prev">
+                        <i class="icon-arrow-left"></i>
+                        Prev
+                    </button>
+
+                    <button class="btn btn-success btn-small btn-next" data-last="Finish ">
+                        Next
+                        <i class="icon-arrow-right icon-on-right"></i>
+                    </button>
+
+                    <button class="btn btn-danger btn-small pull-left" data-dismiss="modal">
+                        <i class="icon-remove"></i>
+                        Cancel
+                    </button>
+                </div>
+            </div><!--PAGE CONTENT ENDS-->
+        </div><!--/.span-->
+    </div><!--/.row-fluid-->
+</div><!--/.page-content-->
+<style>
+    .contenedor-video iframe{
+        width: 550px !important;
+    }
+    .wizard-actions-top {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+    .ace-file-input{
+        float: left;
+    }
+    .imagen-control {
+        border: 3px solid #438eb9;
+        float: left;
+        height: 36px;
+        margin-right: 5px;
+        margin-top: -6px;
+    }
+    .tooltip-inner {
+        max-width: 250px !important;
+        width: 250px;
+    }
+
+    .form-horizontal .control-label {
+        float: left;
+        margin-right: 10px;
+        padding-top: 5px;
+        text-align: right;
+        width: 260px;
+    }
+    .fechadatepicker{
+        width: 479px !important;
+    }
+    .fechadatepicker-rango{
+        width: 516px !important;
+    }
+    .input-append .add-on{
+        width: 25px;
+    }
+    .input-icon.input-icon-right > input {
+        margin-bottom: 2px;
+    }
+    #fuelux-wizard li span{
+        cursor:pointer;
+    }
+</style>
+<script>
+    var resparent = "[]";
+    var inputs = [];
+    var paso_html = "";
+    
+    jQuery.extend({
+    compare: function (arrayA, arrayB) {
+        if (arrayA.length != arrayB.length) { return false; }
+        // sort modifies original array
+        // (which are passed by reference to our method!)
+        // so clone the arrays before sorting
+        var a = jQuery.extend(true, [], arrayA);
+        var b = jQuery.extend(true, [], arrayB);
+        a.sort(); 
+        b.sort();
+        for (var i = 0, l = a.length; i < l; i++) {
+            if (a[i] !== b[i]) { 
+                return false;
+            }
+        }
+        return true;
+    }
+});
+    
+    function saveRes(nameInput) {
+        var input = {},
+                id_input = $("input[name=" + nameInput + "]").attr("id_input"),
+                tipo = $("input[name=" + nameInput + "]").attr("tipo");
+
+        switch (tipo) {
+            case "texto":
+                input.texto = $("#" + id_input + "").val()
+                break;
+        }
+
+        $.ajax({
+            url: "respuesta-save",
+            data: {
+                input: input,
+                id_input: id_input,
+                tipo: tipo
+            },
+            success: function (data) {
+
+            }
+        });
+
+    }
+    
+    var respuestasT = [];
+
+    function buscarInArray(string,array){
+        for(var i in array){
+            if(array[i].word == string){
+                return i;
+            }
+        }
+        
+        return false;
+    }
+
+    function getRespuesta(word) {
+        
+        pos = buscarInArray(word,respuestasT);
+        
+        $("#ajax_loader").append("<span id='cargando-datos-alumno'>Cargando datos alumno</span>");
+        $(".main-container").css("opacity",0.3);
+        $("#ajax_loader").show();
+        
+        if(pos === false){
+            $.ajax({
+                async: false,
+                url: "<?php echo $this->url("usuarios", array("controller" => "formulario", "action" => "resparent")) ?>",
+                data: {word: word},
+                type: "post",
+                success: function (data) {
+                    if(data){
+                        resparent = data.join();
+                    }else{
+                        resparent = data;
+                    }
+                    
+                    obj = {};
+                    obj.word = word;
+                    obj.resparent = resparent;
+                    respuestasT.push(obj);
+                }
+            })
+            
+        }else{
+            resparent = respuestasT[pos].resparent;
+        }
+        
+        $(".main-container").css("opacity",1);
+        $("#ajax_loader").hide();
+        $("#cargando-datos-alumno").remove();
+    }
+
+    function seteoInputs(){
+        inputs = [];
+        $("#sample-form input[type=text]").each(function(){
+            input = {};
+            input.name = $(this).attr("name");
+            input.val = $(this).val();
+            inputs.push(input);
+        })
+        $("#sample-form input[type=email]").each(function(){
+            input = {};
+            input.name = $(this).attr("name");
+            input.val = $(this).val();
+            inputs.push(input);
+        })
+    }
+
+    function modificoDatos(obj){
+        for(var i=0;i<inputs.length;i++){
+            if(obj.attr("name") == inputs[i].name){
+                val = obj.val();
+                if(val == inputs[i].val){
+                    return false;
+                }
+            }
+        }
+        seteoInputs();
+        return true;
+    }
+    
+    function setImagenAjax(event){
+
+            /*var reader = new FileReader();
+            
+            $("input[name='"+selectedFile.name+"']").remove();
+            
+            var html = "<a  href=\"#\" class=\"remove remove-imagen\"><i class=\"icon-remove\"></i></a>";            
+                html += "<img src='"+pResult.+"' >";
+            
+            acefileinput.parent().append(html); 
+            reader.readAsDataURL(selectedFile);*/
+ 
+            var selectedFile = event.target.files[0];
+            var inputName = event.target.name;
+            
+            $("input[name="+inputName+"]").parent().parent().find("img").remove();
+            $("input[name="+inputName+"]").parent().parent().find("a.remove-imagen").remove();
+            $("input[name="+inputName+"]").parent().parent().append('<img width="38" src="" class="imagen-control">');
+            $("input[name="+inputName+"]").parent().parent().append('<a class="remove remove-imagen" href="#"><i class="icon-remove"></i></a>');
+            
+            var reader = new FileReader();
+
+            var imgtag = document.getElementsByClassName("imagen-control");
+            
+            if(selectedFile.name.indexOf(".jpg")===-1){
+                alert("La imagen debe ser jpg");
+            }
+            
+            imgtag.title = selectedFile.name;
+
+            reader.onload = function(event) {
+              //imgtag.src = event.target.result;
+              
+              $("input[name="+inputName+"]").parent().parent().find("img").attr("src",event.target.result);
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+   
+    $(document).ready(function () {
+        
+        var $wizard = $('#fuelux-wizard').wizard();
+        var wizard = $wizard.data('wizard');
+        $wizard.off('click', 'li.complete');
+        $wizard.on('click', 'li', $.proxy(wizard.stepclicked, wizard));
+        
+        $(document).on("click", ".wizard-actions-top a.btn-prev", function () {
+            $("button.btn-prev").trigger("click");
+        })
+
+        $(document).on("click", ".wizard-actions-top a.btn-next", function () {
+            $("button.btn-next").trigger("click");
+        })
+        
+        $(".wizard-steps").hide();
+        
+        actualizoPaginas();
+        
+        $(".wizard-steps").show();
+        
+        $(".chzn-select").chosen(); 
+        
+        arrobaToSpan();
+        
+        seteoInputs();
+        
+        
+        $(document).on("change", "#sample-form select.isMagic", function(){
+            saveRespuesta($(this));
+            console.log("val: "+$(this).val());
+            var input_hidden = $(this).parent().find("input[type=hidden]").val();
+            console.log("hidden_val: "+input_hidden);
+            $(this).parent().find("input[type=hidden]").val($(this).val());
+        });
+        
+        $(document).on("focusout", "#sample-form input.isMagic", function(){
+            if(modificoDatos($(this))){
+                saveRespuesta($(this));
+            }
+        })
+        
+        //Ultima actualizacion
+        
+        function actualizoLabels(inputsModificados){
+            
+            for(var i in inputsModificados){
+                var nom = inputsModificados[i].nom;
+                $('.resp-span[nom="'+nom+'"]').each(function () {
+                    $(".main-container").css("opacity",0.3);
+                    $("#ajax_loader").show();
+                    span = $(this);
+                    nom = $(this).attr("nom");
+                    tipo = $(this).attr("tipo");
+
+                    $.ajax({
+                        url:"<?php echo $this->url("usuarios", array("controller" => "respuesta", "action" => "actualizospan")) ?>",
+                        type:"post",
+                        async:false,
+                        data:{
+                            nom:nom,
+                            tipo:tipo
+                        },
+                        success:function(data){
+                            str = data[0];
+
+                            if(str == false){
+                                str = "(Completar campo padre)";
+                            }
+
+                            span.text(str);
+                            $(".main-container").css("opacity",1);
+                            $("#ajax_loader").hide();
+                        }
+                    })
+                });
+            }
+        }
+
+        function arrobaToSpan() {
+            
+            $(".inputs-respuestas").each(function () {
+                var txt = $(this).find("label").text();
+                txt = txt.trim();
+                
+                words = txt.split(" ");
+
+                words_res = "";
+
+                    for (var i = 0; i < words.length; i++) {
+                    if (words[i].indexOf("@") === 0) {
+                        getRespuesta(words[i]);
+                        words_res += resparent;
+                    } else {
+                        words_res += words[i] + " ";
+                    }
+                }
+
+                $(this).find("label").html(words_res);
+
+            });
+        }
+        
+        function saveRespuesta(obj){
+            respuesta = {};
+            
+            respuesta.nombre = obj.attr("name");
+            respuesta.id_pagina = obj.attr("id_pagina");
+            respuesta.tipo = obj.attr("tipo");
+            respuesta.id_input = obj.attr("id_input");
+            respuesta.texto = obj.val();
+            
+            $(".main-container").css("opacity",0.3);
+            $("#ajax_loader").show();
+            
+            $.ajax({
+                url:"<?php echo $this->url("usuarios", array("controller" => "respuesta", "action" => "add")) ?>",
+                type:"post",
+                data:{respuesta:respuesta},
+                success:function(data){
+                    actualizoLabels([{nom:respuesta.nombre}]);
+                }
+            })
+            
+            return respuesta;
+        }
+        
+        function intersection(a,b){
+            
+            typea = typeof a;
+            typeb = typeof b;
+
+            if(typea == "string"){
+                a = a.split(",");
+            }
+
+            if(typeb == "string"){
+                b = b.split(",");
+            }
+            
+            return jQuery.compare(a, b);
+        }
+        
+        function saveRespuestas(){
+            var formData = new FormData();
+            var huboCambios = huboCambiosEnInputs(); 
+            //cambios = {retorno:true,campo:$(this).attr("name")};
+            if(huboCambios.retorno){
+                respuestas = [];
+                $("#step-container .active .inputs-respuestas").each(function(){
+                    respuesta = {};
+
+                    respuesta.id = $(this).find("input[type=text]").attr("id");
+                    respuesta.tipo = $(this).find("input[type=text]").attr("tipo");
+                    
+                    if(!respuesta.tipo || respuesta.tipo == "undefined"){
+                        respuesta.tipo = $(this).find("input[type=email]").attr("tipo");
+                    }
+                    
+                    if(!respuesta.tipo || respuesta.tipo == "undefined"){
+                        respuesta.tipo = $(this).find("input[type=file]").attr("tipo");
+                    }
+
+                    if(respuesta.tipo == "texto"){
+                        $(this).find("input[type=text]").each(function(){
+                            respuesta_temp = {};
+                            respuesta_temp.id = respuesta.id;
+                            respuesta_temp.tipo = respuesta.tipo;
+                            respuesta_temp.id_input = $(this).attr("id_input");
+                            respuesta_temp.numeroRespuesta = $(this).attr("numero_respuesta");
+                            respuesta_temp.texto = $(this).val();
+                            respuesta_temp.nombre = $(this).attr("name");
+                            respuesta_temp.id_pagina = $(this).attr("id_pagina");
+                            respuestas.push(respuesta_temp);
+                        })
+                    }else{
+                        if(respuesta.tipo == "fecha"){
+                            tipo = $(this).find(".fechadatepicker").attr("tipofecha");
+                            respuesta.id_input = $(this).find(".fechadatepicker").attr("id_input");
+                            respuesta.texto = $(this).find(".fechadatepicker").val();
+                            respuesta.nombre = $(this).find(".fechadatepicker").attr("name");
+                            respuesta.id_pagina = $(this).find(".fechadatepicker").attr("id_pagina");
+                            if(tipo == "simple"){
+                                val = $(this).find(".fechadatepicker").val();
+                                respuesta.desde = val;
+                                respuesta.hasta = "";
+                            }else{
+                                val = $(this).find(".fechadatepicker").val();
+                                val = val.split("-");
+                                respuesta.desde = "";
+                                respuesta.hasta = "";
+                                
+                                for(var i in val){
+                                    if(i<3){
+                                        respuesta.desde += val[i]+"-";
+                                    }else{
+                                        respuesta.hasta += val[i]+"-";
+                                    }
+                                }
+                                respuesta.desde = respuesta.desde.substring(0,respuesta.desde.length-1);
+                                respuesta.hasta = respuesta.hasta.substring(0,respuesta.hasta.length-1);
+                                respuesta.hasta = respuesta.hasta;
+                            }
+                            
+                        }else{
+                            if(respuesta.tipo == "imagen"){
+                                var nombre = $(this).find("input[type=file]").attr("name");
+                                formData.append(nombre,$(this).find("input[type=file]")[0].files[0]);
+                                respuesta.id_input = $(this).find("input[type=file]").attr("id_input");
+                                respuesta.archivo = $(this).find("input[type=file]").val();
+                                respuesta.nombre = $(this).find("input[type=file]").attr("name");
+                                respuesta.estado = $(this).find("input[type=file]").attr("estado");
+                                respuesta.id_pagina = $(this).find("input[type=file]").attr("id_pagina");
+                                
+                                $("div.active .inputs-respuestas").find("input[type=file]").attr("estado","");
+                                //respuesta.archivo = imagen;
+                                //var img = setImagenAjax($(this).parent(),$(this).find("input[type=file]")[0].files[0],$(this).find("input[type=file]")[0]);
+                                
+                            }else{
+                                respuesta.tipo = $(this).find("select").attr("tipo");
+                                respuesta.nombre = $(this).find("select").attr("name");
+                                respuesta.id_pagina = $(this).find("select").attr("id_pagina");
+                                respuesta.id_input = $(this).find("select").attr("id_input");
+
+
+                                if(!$(this).find(".chzn-select").length){
+                                    respuesta.texto = $(this).find("select option:selected").val();
+                                }else{
+                                    respuesta.texto = $(this).find(".chzn-select").val()
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+                    if(respuesta.tipo != "texto"){
+                        respuestas.push(respuesta);
+                    }
+                });
+                
+                
+                formData.append("respuestas",JSON.stringify(respuestas));
+
+                $(".main-container").css("opacity",0.3);
+                $("#ajax_loader").show();
+                
+                $.ajax({
+                    url:"<?php echo $this->url("usuarios", array("controller" => "respuesta", "action" => "adds")) ?>",
+                    type:"post",
+                    data : formData,
+                    contentType : false,
+                    processData : false,
+                    /*data:{respuestas:respuestas,imagen:imagen},*/
+                    success:function(data){
+                        actualizoLabels(huboCambios.campos);
+                        $(".main-container").css("opacity",1);
+                        $("#ajax_loader").hide();
+                    },
+                    error:function(){
+                        $(".main-container").css("opacity",1);
+                        $("#ajax_loader").hide();
+                        alert("Error guardando\n");
+                    }
+                })
+
+                return respuesta;
+                }
+        }
+        
+        /*function getHtmlPaso(){
+            //seteoHiddens();
+            
+        };*/
+        
+        function cancelarPaso(){
+            
+            $("div.active .inputs-respuestas").each(function(){
+                /*texto*/
+                $(this).find("input[type=text]").each(function(){
+                    
+                });
+            });
+            
+        }
+        
+        function huboCambiosEnInputs(){
+            var cambios = {retorno:false,campos:[]};
+            $("div.active .inputs-respuestas").find("input[type=file]").each(function(){
+                if($(this).attr("estado") != ""){
+                    cambios.retorno=true;
+                    cambios.campos.push({nom:obj.attr("name")});
+                }
+            });
+            $("div.active .inputs-respuestas").each(function(){
+                obj = $(this).find("input[tipo=texto]");
+                if(obj.length){
+                    if(obj.length == 1){
+                        a = obj.val() + "";
+                        b = $(this).find("input[type=hidden]").val() + "";
+                        if(a != b){
+                            cambios.retorno=true;
+                            cambios.campos.push({nom:obj.attr("name")});
+                            $(this).find("input[type=hidden]").val(a)
+                        }
+                    }else{
+                        $(this).find("input[tipo=texto]").each(function(){
+                            a = $(this).val() + "";
+                            b = $(this).next().val() + "";
+                            if(a !== b){
+                                cambios.retorno=true;
+                                cambios.campos.push({nom:obj.attr("name")});
+                                $(this).next().val(a)
+                            }
+                        });
+                    }
+                }else{
+                    obj = $(this).find("input[tipo=fecha]");
+
+                    if(obj.length){
+                        a = obj.val() + "";
+                        b = $(this).find("input[type=hidden]").val() + "";
+                        if(a !== b){
+                            cambios.retorno=true;
+                            cambios.campos.push({nom:obj.attr("name")});
+                            $(this).find("input[type=hidden]").val(a)
+                        }
+                    }else{
+                    
+                        stmp = "";
+                    
+                        var s = $(this).find("select");
+
+                        if(!$(this).find(".chzn-select").length){
+                            selectVal = $(this).find("select option:selected").val();
+                            stmp = selectVal;
+                        }else{
+                            
+                            
+                            selectVal = $(this).find(".chzn-select").val();
+                            
+                            for(var i = 0;i<selectVal.length;i++){
+                                stmp +=selectVal[i]+",";
+                            }
+                            
+                            if(stmp){
+                                stmp = stmp.substring(0,stmp.length-1);
+                            }
+                        }
+                    
+                    
+                        if(selectVal){
+                            
+                            type = typeof selectVal;
+
+                            selVal2 = $(this).find("input[type=hidden]").val();
+
+                            type2 = typeof selVal2;
+
+                            if(type == "string" && type2 == "string"){
+                                if(selectVal != selVal2){
+                                    cambios.retorno=true;
+                                    cambios.campos.push({nom:obj.attr("name")});
+                                    $(this).find("input[type=hidden]").val(selectVal);
+                                }
+                            }else{
+                                v = intersection(selectVal, selVal2);
+
+                                if(!v){
+                                    cambios.retorno=true;
+                                    cambios.campos.push({nom:obj.attr("name")});
+                                }
+                            }
+                            
+                            $(this).find("input[type=hidden]").val(stmp);
+                            
+                        }
+                    }
+                }
+            });
+            
+            return cambios;
+        }
+        
+        $(".btn-next").mousedown(function(){
+            $("#sample-form").submit();
+            var r = $('#sample-form').valid();
+            if($('#sample-form').valid()){
+                saveRespuestas();
+                
+                $("div.active .inputs-respuestas").find("input[type=text]").each(function(){
+                    $(this).attr("value", $(this).val());
+                });
+                
+                //resetImagenes();
+                paso_html = $("div.active .inputs-respuestas").parent().html();
+                setControlesPlugin();
+            }
+        })
+        
+        function resetImagenes(){
+            $("div.active .inputs-respuestas").find("input[type=file]").each(function(){
+                var file_html = $(this);
+                
+                var nom = " ";
+                
+                nom = $(this).parent().find("label span").attr("data-title");
+                
+                console.log(nom);
+                
+                if(!nom){
+                    nom = "Ningun archivo ...";
+                }
+                
+                var main_padre = $(this).parent().parent();
+                $(this).parent().remove();
+                main_padre.prepend(file_html);
+            });
+        }
+        
+        $('#fuelux-wizard').on('changed', function(e, data) {
+            $("div.active .inputs-respuestas").find("input[type=text]").each(function(){
+                $(this).attr("value", $(this).val());
+            });
+            
+            //resetImagenes();
+            
+            paso_html = $("div.active .inputs-respuestas").parent().html();
+        });
+        
+        $(".btn-prev").mousedown(function(){
+            /*if(paso_html){
+                $("div.active .inputs-respuestas").parent().html(paso_html);
+                paso_html = "";
+                setControlesPlugin();
+            }*/
+        });
+        /*
+        function seteoHiddens(){
+            
+            
+            /*Test
+             * $("div.active .inputs-respuestas").each(function(){
+                $(this).find(".control").each(function(){
+                    a = "";
+                    if($(this).hasClass("chzn-select")){
+                        a = $(this).next().next().val();
+                    }
+                    console.log(
+                        a
+                    );
+                });
+            });*/
+            /*
+            $("div.active .inputs-respuestas").each(function(){
+                $(this).find(".control").each(function(){
+                    if($(this).hasClass("chzn-select")){
+                        var val = $(this).val();
+                        var tmp = "";
+                        for(var i=0;i<val.length;i++){
+                            tmp += val[i]+",";
+                        }
+                        
+                        if(tmp){
+                            tmp = tmp.substring(0,tmp.length-1);
+                        }
+                        
+                        var hidden = $(this).next().next();
+                        hidden.val(tmp);
+                    }else{
+                        if($(this).attr("estado")!= "undefined"){
+                            $(this).attr("estado","");
+                        }else{
+                            var val = $(this).val();
+                            var hidden = $(this).next();
+                            hidden.val(val);
+                            $(this).attr("value",val);
+                        }
+                    }
+                });
+            /*   inC = false;
+                ///texto multiple
+               $(this).find("input[type=text]").each(function(){
+                   if($(this).attr("id")=="multiselect"){
+                       inC = true;
+                        $(this).next().val() == $(this).val();
+                   }
+               });
+               
+               // si no es un campo de texto de multiples valores...
+               if(!inC){
+                    //*texto
+                    $(this).find("input[type=hidden]").val($(this).find("input[type=text]").val());
+               }
+               
+               
+               
+                ///*Select
+                if($(this).find("select").length){
+                    $(this).find("input[type=hidden]").val(
+                        $(this).find("select option:selected").val()
+                    );
+                }
+                
+                if($(this).find(".chzn-select").length){
+                    //MultiSelect
+                    stmp = "";
+                    var arr = $(this).find(".chzn-select").val();
+                    for(var i = 0;i<arr.length;i++){
+                        stmp +=arr[i]+",";
+                    }
+
+                    if(stmp){
+                        stmp = stmp.substring(0,stmp.length-1);
+                    }
+                    $(this).find("input[type=hidden]").val(
+                        stmp
+                    );
+                }
+                
+                if($(this).find(".fechadatepicker").length){
+                    //fecha
+                    $(this).find("input[type=hidden]").val(
+                        $(this).find(".fechadatepicker").val()
+                    );
+                }*/
+               
+           /* });*/
+       /* }*/
+        
+        
+        
+        $('#sample-form').validate({
+            errorElement: 'span',
+            errorClass: 'help-inline',
+            focusInvalid: false,
+            rules: {
+                <?php foreach ($this->paginas as $pagina): ?>
+                    <?php foreach ($pagina->getInputs() as $input): ?>
+                        <?php if($input->getTipo()!= "imagen"):?>
+                            <?php echo ($input->getRequired())?$input->getNombre().": 'required',":"" ?><?php echo "\n"?>
+                        <?php endif;?>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+                <?php foreach($inputs_validar_numerico as $input):?>
+                     <?php echo $input->getNombre() ?>: {
+                            number: true
+                        },   
+                <?php endforeach; ?>
+                <?php foreach($inputs_validar_email as $input):?>
+                     <?php echo $input->getNombre() ?>: {
+                            email: true
+                        },   
+                <?php endforeach; ?>
+            },
+
+            messages: {
+                    email: {
+                            required: "Por favor ingrese un email valido.",
+                            email: "Por favor ingrese un email valido."
+                    },
+                    number:  "Por favor ingrese solo números.",
+                    password: {
+                            required: "Ingrese una contraseña",
+                            minlength: "Ingrese una contraseña"
+                    },
+                    subscription: "Seleccione al menos una opción",
+                    gender: "Por favor eliga el genero",
+                    agree: "Por favor acepte los terminos y condiciones"
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit   
+                    $('.alert-error', $('.login-form')).show();
+            },
+
+            highlight: function (e) {
+                    $(e).closest('.control-group').removeClass('info').addClass('error');
+            },
+
+            success: function (e) {
+                    $(e).closest('.control-group').removeClass('error').addClass('info');
+                    $(e).remove();
+            },
+
+            errorPlacement: function (error, element) {
+                    if(element.is(':checkbox') || element.is(':radio')) {
+                            var controls = element.closest('.controls');
+                            if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                            else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                    }
+                    else if(element.is('.select2')) {
+                            error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+                    else if(element.is('.chzn-select')) {
+                            error.insertAfter(element.siblings('[class*="chzn-container"]:eq(0)'));
+                    }
+                    else error.insertAfter(element);
+            },
+
+            submitHandler: function (form) {
+            },
+            invalidHandler: function (form) {
+            }
+    });
+    
+        $(document).on("change", '.id-input-file', function(){
+            $(this).attr("estado","change");
+        })
+    
+        setControlesPlugin();
+    
+        function setControlesPlugin(){
+        
+        $(document).find('.date-picker').datepicker().next().on(ace.click_event, function(){
+                $(this).prev().focus();
+        });
+        
+        $(document).find('.fechadatepicker-rango').daterangepicker({
+            yearRange: '2010:2020',
+            format: 'YYYY-MM-DD',
+            separator:'-',
+        }).prev().on(ace.click_event, function(){
+                $(this).next().focus();
+        });
+        
+        $(document).find('.id-input-file').ace_file_input({
+                no_file:'Ningun archivo ...',
+                btn_choose:'Choose',
+                btn_change:'Change',
+                droppable:false,
+                onchange:null,
+                thumbnail:false, //| true | large
+                whitelist:'gif|png|jpg|jpeg',
+                blacklist:'exe|php'
+                //onchange:''
+                //
+        });
+        
+        $(function(){
+           $(".id-input-file").each(function(){
+               var img = $(this).parent().find("imagen-control")
+               if(!img.length){
+                   //$(this).val("imagen");   
+               }
+           }) 
+        });
+        
+        }
+        
+        $(document).on("click", ".remove-imagen", function(e){
+            e.preventDefault();
+            $(this).prev().remove();
+            $(this).parent().find("input[type=file]").attr("estado","baja");
+            $(this).remove();
+        })
+        
+        <?php foreach($inputs_ayuda as $input):?>
+        $(document).on("click", "#link_ayuda_<?php echo $input->getNombre() ?>", function (e) {
+            e.preventDefault();
+            bootbox.dialog({});
+            $.ajax({
+                url: "formulario/popup",
+                data: "",
+                success: function (data) {
+                    $(document).find(".modal-body").html(data);
+                    var html = <?php echo (json_encode($input->getLinkAyuda())); ?>;
+                    $(document).find(".contenedor-video").html(html); 
+                    
+                }
+            });
+        });
+        <?php endforeach; ?>
+
+        $("select.isMagic").each(function(){
+           var name = $(this).attr("name");
+           $('.resp-span[nom="'+name+'"]').each(function(){
+                var row = $(this).parent().parent();
+                value = row.find("input[type=text]").val();
+                 if(value==""){
+                     row.hide();
+                 }
+           });
+        });
+        
+        $(document).on("change", "#step-container select.isMagic", function(){
+            name = $(this).attr("name");
+            $('.resp-span[nom="'+name+'"]').each(function(){
+                $(this).parent().parent().show();
+            })
+        });
+        
+        $(".btn-volver").mousedown(function(){
+            $("#sample-form").submit();
+            var r = $('#sample-form').valid();
+            if($('#sample-form').valid()){
+                saveRespuestas();
+                
+                $("div.active .inputs-respuestas").find("input[type=text]").each(function(){
+                    $(this).attr("value", $(this).val());
+                });
+                
+                //resetImagenes();
+                paso_html = $("div.active .inputs-respuestas").parent().html();
+                setControlesPlugin();
+                $("button.btn-prev").trigger("click");
+            }
+        })
+        
+        /*$(document).find(".imagen-control").each(function(){
+            $(this).parent().find(".ace-file-input").hide();
+        });
+
+        $(document).on("mousedown","a.remove-imagen",function(){
+            $(this).parent().find(".ace-file-input").show();
+        });*/
+        
+        
+    });
+</script>

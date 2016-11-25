@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:image" content="http://developers.mercadolibre.com/wp-content/uploads/2016/04/DevSite_share.png">
+<!-- twitter -->
+<meta name="twitter:site" content="@MeliDevelopers" />
+<meta name="twitter:creator" content="@MeliDevelopers" />
+<meta name="twitter:image" content="developerslabs.mercadolibre.com/wp-content/uploads/2016/06/DevSite_share-1.png" />
+<!-- twitter -->
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="http://developers.mercadolibre.com/xmlrpc.php">
+<link rel="shortcut icon" href="http://static.mlstatic.com/org-img/ui/ml/favicon/favicon-1.0.0.ico" />
+
+<!-- Home screen icons -->
+<link rel="apple-touch-icon" href="https://ui.mlstatic.com/navigation/1.1.3/mercadolibre/60x60-precomposed.png" />
+<link rel="apple-touch-icon" sizes="76x76" href="https://ui.mlstatic.com/navigation/1.1.3/mercadolibre/76x76-precomposed.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="https://ui.mlstatic.com/navigation/1.1.3/mercadolibre/120x120-precomposed.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="https://ui.mlstatic.com/navigation/1.1.3/mercadolibre/152x152-precomposed.png" />
+
+<!-- if webfonts are supported print: -->
+<link rel="stylesheet" href="http://ui.mlstatic.com/navigation/1.1.3/mercadolibre/navigation.css"/>
+<!-- if browser lacks webfont support print: -->
+<!-- <link rel="stylesheet" href="http://ui.mlstatic.com/navigation/1.1.3/mercadolibre/navigation-fallback.css" /> -->
+<!-- The HTML5 Shiv (https://github.com/aFarkas/html5shiv) -->
+    <!--[if lt IE 9]>
+        <script src="http://static.mlstatic.com/org-img/ch/vendor/html5shiv/html5shiv-3.7.0.js"></script>
+        <link rel="stylesheet" href="http://ui.mlstatic.com/navigation/1.1.3/mercadolibre/navigation__large.css" />
+<![endif]-->
+
+<title>MercadoLibre Developers &#8211; Join MercadoLibre Developers community We offer you everything to start developing the best applications.</title>
+
+<link rel="stylesheet" href="http://developers.mercadolibre.com/wp-content/plugins/sitepress-multilingual-cms/res/css/language-selector.css?v=3.4.1" type="text/css" media="all" />
+<link rel="alternate" type="application/rss+xml" title="MercadoLibre Developers &raquo; Feed" href="http://developers.mercadolibre.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="MercadoLibre Developers &raquo; Comments Feed" href="http://developers.mercadolibre.com/comments/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/developers.mercadolibre.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.5.3"}};
+			!function(a,b,c){function d(a){var c,d,e,f=b.createElement("canvas"),g=f.getContext&&f.getContext("2d"),h=String.fromCharCode;if(!g||!g.fillText)return!1;switch(g.textBaseline="top",g.font="600 32px Arial",a){case"flag":return g.fillText(h(55356,56806,55356,56826),0,0),f.toDataURL().length>3e3;case"diversity":return g.fillText(h(55356,57221),0,0),c=g.getImageData(16,16,1,1).data,d=c[0]+","+c[1]+","+c[2]+","+c[3],g.fillText(h(55356,57221,55356,57343),0,0),c=g.getImageData(16,16,1,1).data,e=c[0]+","+c[1]+","+c[2]+","+c[3],d!==e;case"simple":return g.fillText(h(55357,56835),0,0),0!==g.getImageData(16,16,1,1).data[0];case"unicode8":return g.fillText(h(55356,57135),0,0),0!==g.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='mappress-css'  href='http://developers.mercadolibre.com/wp-content/plugins/mappress-google-maps-for-wordpress/css/mappress.css?ver=2.43.10' type='text/css' media='all' />
+<link rel='stylesheet' id='mr-frontend-style-css'  href='http://developers.mercadolibre.com/wp-content/plugins/multi-rating/assets/css/frontend-min.css?ver=20162306' type='text/css' media='all' />
+<link rel='stylesheet' id='font-awesome-css'  href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css?ver=20162306' type='text/css' media='all' />
+<link rel='stylesheet' id='plugin-style-css'  href='http://developers.mercadolibre.com/wp-content/plugins/rrf-scroll-to-top/css/custom.css?ver=20162306' type='text/css' media='all' />
+<link rel='stylesheet' id='ssbaFont-css'  href='//fonts.googleapis.com/css?family=Indie+Flower&#038;ver=20162306' type='text/css' media='all' />
+<link rel='stylesheet' id='wpml-cms-nav-css-css'  href='http://developers.mercadolibre.com/wp-content/plugins/wpml-cms-nav/res/css/navigation.css?ver=1.4.19' type='text/css' media='all' />
+<link rel='stylesheet' id='cms-navigation-style-base-css'  href='http://developers.mercadolibre.com/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation-base.css?ver=1.4.19' type='text/css' media='screen' />
+<link rel='stylesheet' id='cms-navigation-style-css'  href='http://developers.mercadolibre.com/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation.css?ver=1.4.19' type='text/css' media='screen' />
+<link rel='stylesheet' id='dashicons-css'  href='http://developers.mercadolibre.com/wp-includes/css/dashicons.min.css?ver=20162306' type='text/css' media='all' />
+<link rel='stylesheet' id='newDevelopersTheme_base-css'  href='http://developers.mercadolibre.com/wp-content/themes/newDevelopersTheme/css/base.css?ver=20162306' type='text/css' media='screen, all' />
+<link rel='stylesheet' id='newDevelopersTheme_framework-css'  href='http://developers.mercadolibre.com/wp-content/themes/newDevelopersTheme/css/framework.css?ver=20162306' type='text/css' media='screen, all' />
+<link rel='stylesheet' id='newDevelopersTheme_css-css'  href='http://developers.mercadolibre.com/wp-content/themes/newDevelopersTheme/style.css?ver=20162306' type='text/css' media='all' />
+<link rel='stylesheet' id='newDevelopersTheme-font-family-css'  href='https://fonts.googleapis.com/css?family=Lato:300,400,700' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by MonsterInsights plugin v5.5.2 - Universal enabled - https://www.monsterinsights.com/ -->
+<script type="text/javascript">
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+	__gaTracker('create', 'UA-74595852-1', 'auto');
+	__gaTracker('set', 'forceSSL', true);
+	__gaTracker('require', 'displayfeatures');
+	__gaTracker('require', 'linkid', 'linkid.js');
+	__gaTracker('send','pageview');
+
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-content/plugins/jquery-vertical-accordion-menu/js/jquery.hoverIntent.minified.js?ver=4.5.3'></script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-content/plugins/jquery-vertical-accordion-menu/js/jquery.cookie.js?ver=4.5.3'></script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-content/plugins/jquery-vertical-accordion-menu/js/jquery.dcjqaccordion.2.9.js?ver=4.5.3'></script>
+<link rel='https://api.w.org/' href='http://developers.mercadolibre.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://developers.mercadolibre.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://developers.mercadolibre.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.5.3" />
+<link rel="canonical" href="http://developers.mercadolibre.com/" />
+<link rel='shortlink' href='http://developers.mercadolibre.com/' />
+<link rel="alternate" type="application/json+oembed" href="http://developers.mercadolibre.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fdevelopers.mercadolibre.com%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://developers.mercadolibre.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fdevelopers.mercadolibre.com%2F&#038;format=xml" />
+<script type='text/javascript'>mapp = {data : []};</script>
+			<style type="text/css">
+				.rating-results-list .rank { font-weight: bold; }				.mr-custom-full-star {
+					background: url() no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					image-rendering: -moz-crisp-edges;
+					display: inline-block;
+				}
+				.mr-custom-half-star {
+					background: url() no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					image-rendering: -moz-crisp-edges;
+					display: inline-block;
+				}
+				.mr-custom-empty-star {
+					background: url() no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					image-rendering: -moz-crisp-edges;
+					display: inline-block;
+				}
+				.mr-custom-hover-star {
+					background: url() no-repeat;
+					width: 32px;
+					height: 32px;
+					background-size: 32px 32px;
+					image-rendering: -moz-crisp-edges;		
+					display: inline-block;		
+				}
+				.mr-star-hover {
+					color: #ffba00 !important;
+				}
+				.mr-star-full, .mr-star-half, .mr-star-empty {
+					color: #ffd700;
+				}
+				.mr-error {
+					color: #EC6464;
+				}
+			</style>
+			<script>(function(d, s, id){
+                 var js, fjs = d.getElementsByTagName(s)[0];
+                 if (d.getElementById(id)) {return;}
+                 js = d.createElement(s); js.id = id;
+                 js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+                 fjs.parentNode.insertBefore(js, fjs);
+               }(document, 'script', 'facebook-jssdk'));</script><style type="text/css">	.ssba {
+									
+									
+									
+									
+								}
+								.ssba img
+								{
+									width: 35px !important;
+									padding: 6px;
+									border:  0;
+									box-shadow: none !important;
+									display: inline !important;
+									vertical-align: middle;
+								}
+								.ssba, .ssba a
+								{
+									text-decoration:none;
+									border:0;
+									background: none;
+									font-family: Indie Flower;
+									font-size: 	20px;
+									
+									
+								}
+								.fb_iframe_widget span { width: 146px !important; }</style><meta name="generator" content="WPML ver:3.4.1 stt:1,2,44;" />
+
+<style type="text/css">#lang_sel a, #lang_sel a.lang_sel_sel{color:#444444;}#lang_sel a:hover, #lang_sel a.lang_sel_sel:hover{color:#000000;}#lang_sel a.lang_sel_sel, #lang_sel a.lang_sel_sel:visited{background-color:#ffffff;}#lang_sel a.lang_sel_sel:hover{background-color:#eeeeee;}#lang_sel li ul a, #lang_sel li ul a:visited{color:#444444;}#lang_sel li ul a:hover{color:#000000;}#lang_sel li ul a, #lang_sel li ul a:link, #lang_sel li ul a:visited{background-color:#ffffff;}#lang_sel li ul a:hover{background-color:#eeeeee;}#lang_sel a, #lang_sel a:visited{border-color:#cdcdcd;} #lang_sel ul ul{border-top:1px solid #cdcdcd;}</style>
+
+<style type="text/css">#lang_sel_footer a, #lang_sel_footer a.lang_sel_sel, #lang_sel_footer a.lang_sel_sel:visited{color:#444444;}#lang_sel_footer a:hover, #lang_sel_footer a.lang_sel_sel:hover{color:#000000;}#lang_sel_footer a.lang_sel_sel, #lang_sel_footer a.lang_sel_sel:visited{background-color:#ffffff;}#lang_sel_footer a.lang_sel_sel:hover{background-color:#eeeeee;}#lang_sel_footer ul a, #lang_sel_footer ul a:visited{color:#444444;}#lang_sel_footer ul a:hover{color:#000000;}#lang_sel_footer ul a, #lang_sel_footer ul a:visited{background-color:#ffffff;}#lang_sel_footer ul a:hover{background-color:#eeeeee;}#lang_sel_footer{border-color:#cdcdcd;}#lang_sel_footer{background-color:#eeeeee;}</style>
+</head>
+
+<body class="home page page-id-93 page-template page-template-page-home page-template-page-home-php page-home group-blog">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	<header id="masthead" class="nav-header nav-header-lite" role="banner">
+        <div class="nav-bounds">
+            <a class="nav-logo" href="http://developers.mercadolibre.com/" tabindex="1">
+				MercadoLibre - Developers
+			</a>
+            <!-- Menu - Switch checkbox (Small devices) -->
+            <input type="checkbox" id="nav-header-menu-switch"/>
+            <div class="nav-header-menu-wrapper">
+                <!-- Menu - Hamburger (Small devices) -->
+                <label for="nav-header-menu-switch" aria-controls="nav-header-menu" data-fastclick="" tabindex="3">
+	                <span class="hamburger-top-bread"></span>
+	                <span class="hamburger-patty"></span>
+	                <span class="hamburger-bottom-bread"></span>
+            	</label>
+                <nav id="nav-header-menu">
+                	<div class="menu-nav-menu-container"><ul id="primary-menu" class="menu"><li id="menu-item-49" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-49"><a href="http://developers.mercadolibre.com/getting-started/">Getting started</a></li>
+<li id="menu-item-48" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-48"><a href="http://developers.mercadolibre.com/api-docs/">API Docs</a></li>
+<li id="menu-item-46" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-46"><a href="http://developers.mercadolibre.com/tools/">Tools</a></li>
+<li id="menu-item-47" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-47"><a href="http://developers.mercadolibre.com/community/">Community</a></li>
+<li id="menu-item-5116" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5116"><a href="http://developers.mercadolibre.com/support/">Support</a></li>
+</ul></div>                </nav>
+            </div>
+            <form id="searchform" role="search" method="get" class="nav-search" action="/">
+            	<input type="hidden" name="lang" value="en"/>
+                <input id="s" type="text" class="nav-search-input" name="s" max-length="120" data-fastClick tabindex="2"/>
+                <button id="searchsubmit" type="submit" class="nav-search-btn" data-fastClick tabindex="3">
+                    <i class="nav-icon-search"></i>
+                </button>
+            </form>
+        </div>
+		<div class="menu-container">
+	    	<div class="row">
+				<nav id="site-navigation" class="main-navigation" role="navigation">
+		<!-- 			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">Primary Menu</button> -->
+					<div class="menu-nav-menu-container"><ul id="primary-menu" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-49"><a href="http://developers.mercadolibre.com/getting-started/">Getting started</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-48"><a href="http://developers.mercadolibre.com/api-docs/">API Docs</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-46"><a href="http://developers.mercadolibre.com/tools/">Tools</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-47"><a href="http://developers.mercadolibre.com/community/">Community</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5116"><a href="http://developers.mercadolibre.com/support/">Support</a></li>
+</ul></div>					<div class="header-search">
+						<form id="searchform" role="search" method="get" class="search-form" action="/">
+								<label>
+									<span class="screen-reader-text">Search</span>
+									<input id="s" type="search" class="search-field" placeholder="Search" value="" name="s" title="Search">
+									<button id="searchsubmit" type="submit" class="search-button" data-fastclick="" tabindex="3">
+					                    <i class="nav-icon-search"></i>
+					                </button>
+								</label>
+								<input type="hidden" name="lang" value="en"/>
+						</form>
+					</div>
+				</nav><!-- #site-navigation -->
+				<div class="language-selector-container">
+					<div class="language-selector">
+						<div id="lang_sel"   ><ul><li><a href="#" class="lang_sel_sel icl-en"><img  class="iclflag" src="http://developers.mercadolibre.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/en.png" alt="en"  title="English" />
+								&nbsp;English</a> <ul><li class="icl-es"><a href="http://developers.mercadolibre.com/es/" ><img  class="iclflag" src="http://developers.mercadolibre.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/es.png" alt="es" title="Español" />&nbsp;Español</a></li><li class="icl-pt-br"><a href="http://developers.mercadolibre.com/pt-br/" ><img  class="iclflag" src="http://developers.mercadolibre.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/pt-br.png" alt="pt-br" title="Português" />&nbsp;Português</a></li></ul></li></ul></div>					</div>
+				</div>
+				
+			</div>
+		</div>
+	</header><!-- #masthead -->
+
+	<main class="main" role="main">
+		
+		<div id="content" class="site-content">
+		
+	<div id="primary" class="content-area row">
+		<main id="main" class="site-main">
+ 			
+			<section class="home-news-section">
+				<h1 class="home-news-title">Latest news</h1>
+									<div class="row home-news">
+													<div class="three columns">
+								<article id="post-6982" class="news-tile">
+	
+	<header class="entry-header">
+		<p class="news-tile-date">5 September 2016</p>
+		<h2 class="news-tile-title">Calificación no necesaria para sellers &#8211; MLU</h2>	</header>
+	
+	<div class="news-tile-excerpt">
+		
+				
+			<p>Desde el día 6 de septiembre ya no será necesario que los vendedores califiquen sus ventas&#8230;</p>
+		
+		<a class="news-tile-read-more-mobile" href="http://developers.mercadolibre.com/news/calificacion-no-necesaria-para-sellers-mlu/"></a><a class="news-tile-read-more" href="http://developers.mercadolibre.com/news/calificacion-no-necesaria-para-sellers-mlu/">+</a>	</div>
+
+</article>							</div>
+													<div class="three columns">
+								<article id="post-3390" class="news-tile">
+	
+	<header class="entry-header">
+		<p class="news-tile-date">23 August 2016</p>
+		<h2 class="news-tile-title">Nuevas opciones en la mensajería entre Vendedores y Compradores para Chile</h2>	</header>
+	
+	<div class="news-tile-excerpt">
+		
+				
+			<p>A partir del martes 23 de agosto existen cambios en el servicio de mensajería en Chile, un espacio para que vendedores y compradores puedan comunicarse una vez que concretan una operación, sin salir de Mercado Libre&#8230;</p>
+		
+		<a class="news-tile-read-more-mobile" href="http://developers.mercadolibre.com/news/mensajeria-mercado-libre-chile/"></a><a class="news-tile-read-more" href="http://developers.mercadolibre.com/news/mensajeria-mercado-libre-chile/">+</a>	</div>
+
+</article>							</div>
+													<div class="three columns">
+								<article id="post-6296" class="news-tile">
+	
+	<header class="entry-header">
+		<p class="news-tile-date">1 August 2016</p>
+		<h2 class="news-tile-title">Motors &#8211; Nova Lógica de Pacote de Atualizações (Promotions Pack)</h2>	</header>
+	
+	<div class="news-tile-excerpt">
+		
+				
+			<p>A partir do dia <strong>04/08/2016</strong> haverá uma nova lógica de pacote de atualizações (promotions pack) dentro do Mercado Livre para o setor de automóveis&#8230;</p>
+		
+		<a class="news-tile-read-more-mobile" href="http://developers.mercadolibre.com/news/motors-nova-logica-de-pacote-de-atualizacoes-promotions-pack/"></a><a class="news-tile-read-more" href="http://developers.mercadolibre.com/news/motors-nova-logica-de-pacote-de-atualizacoes-promotions-pack/">+</a>	</div>
+
+</article>							</div>
+													<div class="three columns">
+								<article id="post-6179" class="news-tile">
+	
+	<header class="entry-header">
+		<p class="news-tile-date">28 July 2016</p>
+		<h2 class="news-tile-title">Nueva opción de free shipping para MLM</h2>	</header>
+	
+	<div class="news-tile-excerpt">
+		
+				
+			<p>Con el objetivo de seguir mejorando la experiencia de compra de los usuarios de nuestra plataforma cambiaremos la forma de entrega en productos de más de $549 para que siempre ofrezcan envíos gratis&#8230;</p>
+		
+		<a class="news-tile-read-more-mobile" href="http://developers.mercadolibre.com/news/nueva-opcion-de-free-shipping-para-mlm/"></a><a class="news-tile-read-more" href="http://developers.mercadolibre.com/news/nueva-opcion-de-free-shipping-para-mlm/">+</a>	</div>
+
+</article>							</div>
+																	</div> 
+					<a class="home-news-view-all" href="http://developers.mercadolibre.com/community/news/">View more</a>
+			</section>
+			
+<article id="post-93" class="post-93 page type-page status-publish hentry">
+
+	<div class="entry-content">
+		<div class="banner-image">
+    
+<div class="banner-bg desktop" style="background: url('/wp-content/uploads/2016/06/DevSite_HomeMain_DesktopNEW.png');background-size: cover;background-repeat: no-repeat;background-position: center;"></div>
+
+</div>
+<div class="home-banner page-header">
+<h1 class="page-header-title">
+        Our team has been working hard
+<p>to improve your experience.</p>
+</h1>
+<h4 class="page-header-desc">Welcome to our awesome new site!<br />
+    </h4>
+<div class="home-button-container">
+        <a class="button-link-outline" href="http://developers.mercadolibre.com/getting-started/">Get started</a>
+    </div>
+</div>
+<div class="su-youtube su-responsive-media-yes home-video"><iframe width="800" height="600" src="http://www.youtube.com/embed/8mgINfCbndY?autohide=2&autoplay=0&controls=0&fs=1&loop=0&modestbranding=0&playlist=&rel=0&showinfo=0&theme=dark&wmode=" frameborder="0" allowfullscreen="true"></iframe></div>
+	</div><!-- .entry-content -->
+
+</article><!-- #post-## -->
+ 
+			<section class="home-events-section nine columns">
+				<h1 class="home-events-title">Next events</h1>
+									<div class="events-tiles-container">
+														<div class="future-event">
+									<a class="event-tile" href="http://developers.mercadolibre.com/events/introduccion-a-android/">	 <div class="event-heading">
+	 	<div class="event-day">
+	 		22		</div>
+	 	<div class="event-month-place">
+		 	<p>
+		 		September 2016		 	</p>
+		 	<p>
+		 		Bogotá, Colombia		 	</p>
+	 	</div>
+	 </div>
+	<article id="post-7528">
+			
+			<div class="wrapper">
+				
+								
+					<div>
+						Introducción a Android					</div>
+				
+							</div>
+	</article>
+</a>								</div>
+												</div>
+				<div class="event-tile event-view-all">
+					<p>Check for updates in our past events</p>
+					<a href="http://developers.mercadolibre.com/community/events/">View all events</a>
+				</div>
+				<a class="event-view-all-mobile" href="http://developers.mercadolibre.com/community/events/">View more</a>
+			</section>
+			<section class="twitter-feed three columns">
+								<aside id="secondary" class="widget-area" role="complementary">
+					<section id="text-2" class="widget widget_text">			<div class="textwidget"><div class="twitter-feed-heading">
+<h2>@melidevelopers</h2>
+<a href="https://twitter.com/melidevelopers" onclick="__gaTracker('send', 'event', 'outbound-widget', 'https://twitter.com/melidevelopers', 'Follow @melidevelopers');" class="twitter-follow-button" data-show-count="false" data-size="medium" data-show-screen-name="false">Follow @melidevelopers</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</div>
+<a href="https://twitter.com/melidevelopers" onclick="__gaTracker('send', 'event', 'outbound-widget', 'https://twitter.com/melidevelopers', 'Tweets by @melidevelopers');" class="twitter-timeline"  data-widget-id="699313859685957634" data-tweet-limit="3" data-chrome="nofooter noborders noheader">Tweets by @melidevelopers</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script></div>
+		</section>				</aside><!-- #secondary -->
+			</section>
+			<section class="newsletter-section">
+				<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof newsletter_check !== "function") {
+window.newsletter_check = function (f) {
+    var re = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-]{1,})+\.)+([a-zA-Z0-9]{2,})+$/;
+    console.log(f.elements["np1"].value);
+
+    if (!re.test(f.elements["ne"].value)) {
+    	jQuery('.newsletter-email-field input').css('border-color','red');
+        jQuery('.newsletter-error-message').css('display','inline-block');
+        return false;
+    }
+    return true;
+}
+}
+//]]>
+</script>
+
+	<link rel="stylesheet" type="text/css" href="/wp-content/themes/newDevelopersTheme/css/wp-subscribe-form.css">
+</head>
+<body>
+<br>
+<div class="newsletter newsletter-subscription">
+<img class="newsletter-letter-icon" src="/wp-content/themes/newDevelopersTheme/images/newsletter.png" />
+<form method="post" action="http://developers.mercadolibre.com/wp-content/plugins/newsletter/do/subscribe.php" onsubmit="return newsletter_check(this)">
+<div class="newsletter-form">
+	<h2>Keep updated</h2>
+	<p>Subscribe to our newsletter and recieve the latest news about our API and also invitations to future events</p>	
+		<div class="newsletter-country-field">
+			<select class="" name="np1" required>
+				<option value="">Select a country</option>
+				<option>Argentina</option>
+				<option>Brasil</option>
+				<option>Chile</option>
+				<option>Colombia</option>
+				<option>Costa Rica</option>
+				<option>Ecuador</option>
+				<option>México</option>
+				<option>Paraguay</option>
+				<option>Perú</option>
+				<option>Portugal</option>
+				<option>República Dominicana</option>
+				<option>United States</option>
+				<option>Uruguay</option>
+				<option>Venezuela</option>
+			</select>
+		</div>
+		<div class="newsletter-email-field">
+			<input name="ne" size="30" placeholder="Enter an email" required>
+			<div id="alert" style="color:#FF5050"></div>
+			<button class="newsletter-submit-button" type="submit">
+				<img src="/wp-content/themes/newDevelopersTheme/images/newsletter-icon-send.png">
+			</button>
+		</div>
+		<span class="newsletter-error-message"><em>*</em>Enter a valid e-mail</span>
+</div>
+</form>
+</div>
+<br>
+</body>
+</html>			</section>
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+
+
+		</div><!-- #content -->
+	</main>
+	<footer role="contentinfo" class="nav-footer footer">
+	    <div class="nav-bounds">
+			<div class="nav-footer-primaryinfo">
+	            <nav class="nav-footer-navigation">
+	                <a class="footer-link" href="/?page_id=1389">Terms &amp; conditions</a>
+	                <a class="footer-link-return" href="http://oldsite.developers.mercadolibre.com/">Return to legacy site</a>
+	            </nav>
+	            <small class="nav-footer-copyright">© 2016 MercadoLibre S.R.L </small>
+	        </div>
+	    </div>
+	</footer>
+
+			<script type="text/javascript">
+				jQuery(document).ready(function($) {
+					jQuery('#dc_jqaccordion_widget-2-item .menu').dcAccordion({
+						eventType: 'click',
+						hoverDelay: 0,
+						menuClose: false,
+						autoClose: false,
+						saveState: false,
+						autoExpand: true,
+						classExpand: 'current-menu-item',
+						classDisable: '',
+						showCount: false,
+						disableLink: true,
+						cookie: 'dc_jqaccordion_widget-2',
+						speed: 'normal'
+					});
+				});
+			</script>
+		
+						<script type="text/javascript">
+				jQuery(document).ready(function($) {
+					jQuery('#dc_jqaccordion_widget-3-item .menu').dcAccordion({
+						eventType: 'click',
+						hoverDelay: 0,
+						menuClose: false,
+						autoClose: true,
+						saveState: false,
+						autoExpand: true,
+						classExpand: 'current-menu-item',
+						classDisable: '',
+						showCount: false,
+						disableLink: true,
+						cookie: 'dc_jqaccordion_widget-3',
+						speed: 'normal'
+					});
+				});
+			</script>
+		
+						<script type="text/javascript">
+				jQuery(document).ready(function($) {
+					jQuery('#dc_jqaccordion_widget-4-item .menu').dcAccordion({
+						eventType: '',
+						hoverDelay: 0,
+						menuClose: false,
+						autoClose: true,
+						saveState: false,
+						autoExpand: true,
+						classExpand: 'current-menu-item',
+						classDisable: '',
+						showCount: false,
+						disableLink: true,
+						cookie: 'dc_jqaccordion_widget-4',
+						speed: 'normal'
+					});
+				});
+			</script>
+		
+						<script type="text/javascript">
+				jQuery(document).ready(function($) {
+					jQuery('#dc_jqaccordion_widget-5-item .menu').dcAccordion({
+						eventType: '',
+						hoverDelay: 0,
+						menuClose: false,
+						autoClose: true,
+						saveState: false,
+						autoExpand: true,
+						classExpand: 'current-menu-item',
+						classDisable: '',
+						showCount: false,
+						disableLink: true,
+						cookie: 'dc_jqaccordion_widget-5',
+						speed: 'normal'
+					});
+				});
+			</script>
+		
+			
+							<div id="lang_sel_footer">
+									<ul>
+									    <li><a href="http://developers.mercadolibre.com/" class="lang_sel_sel"><img src="http://developers.mercadolibre.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/en.png" alt="English" class="iclflag" title="English"  />&nbsp;English</a></li>
+									    <li><a href="http://developers.mercadolibre.com/es/"><img src="http://developers.mercadolibre.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/es.png" alt="Español" class="iclflag" title="Español"  />&nbsp;Español</a></li>
+									    <li><a href="http://developers.mercadolibre.com/pt-br/"><img src="http://developers.mercadolibre.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/pt-br.png" alt="Português" class="iclflag" title="Português"  />&nbsp;Português</a></li>
+									</ul>
+							</div><link rel='stylesheet' id='su-media-shortcodes-css'  href='http://developers.mercadolibre.com/wp-content/plugins/shortcodes-ultimate/assets/css/media-shortcodes.css?ver=4.9.9' type='text/css' media='all' />
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-content/plugins/rrf-scroll-to-top/js/jquery.scrollUp.min.js?ver=1.0'></script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-content/plugins/rrf-scroll-to-top/js/active.js?ver=1.0'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var mr_frontend_data = {"ajax_url":"http:\/\/developers.mercadolibre.com\/wp-admin\/admin-ajax.php","ajax_nonce":"ae2de43db0","icon_classes":"{\"star_full\":\"fa fa-star mr-star-full\",\"star_hover\":\"fa fa-star mr-star-hover\",\"star_half\":\"fa fa-star-half-o mr-star-half\",\"star_empty\":\"fa fa-star-o mr-star-empty\",\"minus\":\"fa fa-minus-circle mr-minus\",\"spinner\":\"fa fa-spinner fa-spin mr-spinner\"}","use_custom_star_images":"false"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-content/plugins/multi-rating/assets/js/frontend-min.js?ver=4.2.3'></script>
+<script type='text/javascript' src='http://w.sharethis.com/button/st_insights.js'></script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-content/plugins/simple-share-buttons-adder/js/ssba.min.js?ver=4.5.3'></script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-content/themes/newDevelopersTheme/js/navigation.js?ver=20120206'></script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-content/themes/newDevelopersTheme/js/skip-link-focus-fix.js?ver=20130115'></script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-content/themes/newDevelopersTheme/js/prevent-empty-search.js'></script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-includes/js/wp-embed.min.js?ver=4.5.3'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var icl_vars = {"current_language":"en","icl_home":"http:\/\/developers.mercadolibre.com\/","ajax_url":"http:\/\/developers.mercadolibre.com\/wp-admin\/admin-ajax.php","url_type":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://developers.mercadolibre.com/wp-content/plugins/sitepress-multilingual-cms/res/js/sitepress.js?ver=4.5.3'></script>
+
+
+<!-- Highlight parent page link in main-nav when on child page -->
+		<script type="text/javascript">
+    	jQuery('.mobile-secondary-menu').click(function() { 
+    		jQuery(".mobile-secondary-menu").toggleClass('arrow-up');
+    	});
+	</script>
+	
+	<script type="text/javascript">
+		var url = window.parent.location.href,
+			array = url.split('/'),
+			lastsegment = array[array.length-2],
+			lastsegmentSplit = lastsegment.split('-');
+			
+			if (lastsegmentSplit.length >= 2 && lastsegmentSplit[0] == 'support' || lastsegmentSplit[0] == 'soporte') {
+				jQuery('#lang_sel_footer').css('display','none');
+				jQuery('.support-form-js').css('display','block');
+			}
+	</script>
+	<script type="text/javascript">
+		if( window.location.href === "http://developers.mercadolibre.com/meliexperience/" || window.location.href === "http://developers.mercadolibre.com/meliexperience" || window.location.href === "http://developers.mercadolibre.com/es/meliexperience/" || window.location.href === "http://developers.mercadolibre.com/es/meliexperience") {  
+			window.location = "http://developers.mercadolibre.com/MELIexperience/";
+		}
+	</script>
+
+</body>
+</html>
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Database Caching 45/52 queries in 0.007 seconds using disk
+Object Caching 1445/1464 objects using disk
+Content Delivery Network via N/A
+
+ Served from: developers.mercadolibre.com @ 2016-09-19 21:30:24 by W3 Total Cache -->

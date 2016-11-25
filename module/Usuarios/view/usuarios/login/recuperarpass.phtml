@@ -1,0 +1,19 @@
+<?php  
+    $this->layout()->setTemplate('usuarios/login/login.phtml');
+?>
+
+<form id="reg_form" method="post" action="<?php echo $this->basePath("usuarios/login/recuperarpass") ?>">
+
+    <input type="email" placeholder="Ingrese email" name="email-user" required>
+    
+    <p><?php echo ($this->mensaje) ? $this->mensaje : ""; ?></p>
+    
+    <input type="submit" value="Enviar" class="width-35 pull-right btn btn-small btn-primary">
+    
+    <div class="space-4"></div>
+    <div class="space-4"></div>
+    <div class="space-4"></div>
+    <div class="space-4"></div>
+    <div class="space-4"></div>
+    <a href="<?php echo $this->basePath() ?>/usuarios/login">Volver</a>
+</form>

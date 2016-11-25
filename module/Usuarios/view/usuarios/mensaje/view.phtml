@@ -1,0 +1,76 @@
+<script src="<?php echo $this->basePath() ?>/assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="<?php echo $this->basePath() ?>/assets/js/markdown/markdown.min.js"></script>
+<script src="<?php echo $this->basePath() ?>/assets/js/markdown/bootstrap-markdown.min.js"></script>
+<script src="<?php echo $this->basePath() ?>/assets/js/jquery.hotkeys.min.js"></script>
+<script src="<?php echo $this->basePath() ?>/assets/js/bootstrap-wysiwyg.min.js"></script>
+
+<?php if($this->mensaje):?>
+    <!--Mensaje-->
+    <input readonly="readonly" type="text" value="<?php echo $this->mensaje->getAsunto(); ?>">
+    <div class="wysiwyg-editor" id="editor"></div>
+    <hr>
+    <!--Respuesta-->
+    <form name="form-send-email" id="form-send-email" method="post" action="<?php echo $this->url("usuarios",array("controller"=>"mensaje", "action"=>"send")) ?>">
+        <input type="hidden" name="emisor-id" value="<?php echo $this->mensaje->getIdEmisor(); ?>">
+        <input type="hidden" name="textarea" value="">
+        <input name="asunto" id="asunto" type="text" value="">
+        <div name="edit2" class="wysiwyg-editor" id="editor2"></div>
+        <hr>
+        <div class="form-actions">
+            
+            
+            <button style="float: right;" name="send-evaluacion" type="button" class="btn btn-success btn-small btn-next" value="">
+                <i class="icon-envelope-alt"></i>
+                Send
+            </button>        
+            <a id='back' href='<?php echo $this->url("usuarios",array("controller"=>"mensaje","action"=>"msgs")) ?>' class="btn btn-small">Back</a>
+        </div>
+    </form>
+<script>
+    $(document).ready(function(){
+       $("#editor").html('<?php echo $this->mensaje->getMensaje() ?>'); 
+       
+       $("#editor2").ace_wysiwyg({toolbar:[
+                'font',
+                null,
+                'fontSize',
+                null,
+                {name:'bold', className:'btn-info'},
+                {name:'italic', className:'btn-info'},
+                {name:'strikethrough', className:'btn-info'},
+                {name:'underline', className:'btn-info'},
+                null,
+                null,
+                null,
+                {name:'justifyleft', className:'btn-primary'},
+                {name:'justifycenter', className:'btn-primary'},
+                {name:'justifyright', className:'btn-primary'},
+                {name:'justifyfull', className:'btn-inverse'},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                'foreColor',
+                null,
+                null,
+                null,
+            ]
+	}).prev().addClass('wysiwyg-style2');
+        
+        $("*[name=send-evaluacion]").click(function(){
+            var textArea = $("#editor2").html();
+            $("input[name=textarea]").val(textArea);
+            
+            $("#form-send-email").submit();
+        })
+    });
+</script>
+<style>
+#back {
+    float: right;
+    margin-right: 5px;
+}
+</style>
+<?php endif; ?>

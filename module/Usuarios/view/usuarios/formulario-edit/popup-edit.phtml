@@ -1,0 +1,11 @@
+<div class="">
+    <div class="table-header">
+            <button data-dismiss="modal" class="close" type="button">×</button>
+            Nuevo Paso
+    </div>
+    <div class="inputs-text-control">
+        <input type="text" name="nombre" placeholder="Nombre" value="<?php echo $this->pagina->getTitulo() ?>">
+    </div>
+    <input id="idpagina" type="hidden" value="<?php echo $this->pagina->getId() ?>">
+    <button id="close-modal-edit-pagina" class=" btn  btn-primary">Save</button>
+</div>

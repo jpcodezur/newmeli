@@ -1,0 +1,22 @@
+<div class="row-fluid">
+    <div>
+        <h2>Salida Cron</h2>
+    </div>
+    <hr>
+</div>
+<div>
+    <div><label>Procesados: <?php echo $this->result["total"] ?></label></div>
+    <div><label>Completados: <?php echo $this->result["complete"] ?></label></div>
+    <div><label>Errores: <?php echo $this->result["error"] ?></label></div>
+<?php foreach($this->result["items"] as $r): ?>
+    <?php
+    $class = "alert alert-success";
+    if($r["success"] != "success"){
+        $class = "alert alert alert-danger";
+    }
+    ?>
+    <div class="<?php echo $class ?>">
+        <span><?php echo $r["title"] ?>&nbsp;[Status: <?php echo $r["status"] ?>] &nbsp;[HttpCode: <?php echo $r["httpCode"] ?>]</span>
+    </div>
+<?php endforeach; ?>
+</div>

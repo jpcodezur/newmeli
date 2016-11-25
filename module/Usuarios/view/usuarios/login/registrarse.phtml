@@ -1,0 +1,21 @@
+<!--<form method="post" action="<?php // echo $this->basePath("usuarios/controlador/accion")    ?>">-->
+<?php echo ($this->mensaje) ? $this->mensaje : ""; ?>
+<form id="reg_form" method="post" action="<?php echo $this->basePath("usuarios/login/registrarse") ?>">
+    <input type="text" placeholder="Ingrese nombre" name="first-name-user" required>
+    <input type="text" placeholder="Ingrese apellido" name="last-name-user" required>
+
+        <select name="level-user" required>
+            <option value="">SELECCIONAR</option>
+            <option value="4">Alumno</option>
+            <option value="3">Asesor</option>
+    </select>
+
+    <input type="email" placeholder="Ingrese email" name="email-user" required>
+    <input type="email" placeholder="Vuelva a ingresar email" name="reemail-user" required>
+    <input type="password" placeholder="Ingrese contraseña" name="pass-user" required>
+    <input type="password" placeholder="Vuelva a ingresar la contraseña" name="pass_conf" required>
+    <input type="submit" value="Registrarse" class="width-35 pull-right btn btn-small btn-primary">
+    <div class="space-4"></div>
+    <div class="space-4"></div>
+    <a href="<?php echo $this->basePath() ?>/usuarios/login">Volver</a>
+</form>
